@@ -5,7 +5,7 @@ import './index.css'
 import {StateProvider} from "./StateProvider";
 import reducer,{initialState} from "./reducer";
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById('root')as HTMLElement).render(
   <React.StrictMode>
     <StateProvider initialState={initialState} reducer={reducer}> 
     <App />
