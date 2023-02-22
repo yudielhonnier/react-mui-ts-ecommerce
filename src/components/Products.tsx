@@ -1,23 +1,21 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Unstable_Grid2";
+import { IItem } from "../context/reducer.types";
 
 import Product from "./Product";
 
-import {products} from "../products-data";
+import { products } from "../data/products-data.json";
 
 export default function Products() {
   return (
-    <Box sx={{ flexGrow: 1,margin:'auto' }}>
+    <Box sx={{ flexGrow: 1, margin: "auto" }}>
       <Grid container spacing={3}>
-        {
-        products.map(product => (
+        {products.map((product: IItem) => (
           <Grid key={product.id} xs={12} sm={6} md={4} lg={3}>
             <Product product={product} />
           </Grid>
-        ))
-        }
-
+        ))}
       </Grid>
     </Box>
   );
