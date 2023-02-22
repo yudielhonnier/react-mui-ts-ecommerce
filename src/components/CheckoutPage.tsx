@@ -7,10 +7,12 @@ import { Typography } from "@mui/material";
 import CheckoutCart from "./CheckoutCart";
 import Total from "./Total";
 
-import { useStateValue } from "../StateProvider";
+import { useStateValue } from "../context/StateProvider";
 
 export default function CheckoutPage() {
-  const [{ basket, user }, dispatch] = useStateValue();
+  const {
+    state: { basket, user },
+  } = useStateValue();
 
   function FormRow() {
     return (

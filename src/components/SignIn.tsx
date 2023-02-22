@@ -1,66 +1,69 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import {Link as RouteLink,useNavigate} from "react-router-dom";
-import { auth } from '../firebase';
+import * as React from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography, { TypographyProps } from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Link as RouteLink, useNavigate } from "react-router-dom";
+import { auth } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { useState } from 'react'
-import { useStateValue } from "../StateProvider";
+import { useState } from "react";
+import { useStateValue } from "../context/StateProvider";
 
-
-function Copyright(props) {
+function Copyright(props: TypographyProps) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
         Your Website
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
 
-
 export default function SignIn() {
-const theme = createTheme();
-const[email,setEmail]=useState("")
-const[password,setPassword]=useState("")
-const navigate=useNavigate()
-const [{ basket, user }, dispatch] = useStateValue();
+  const theme = createTheme();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const {
+    state: { basket, user },
+    dispatch,
+  } = useStateValue();
 
-
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+      email: data.get("email"),
+      password: data.get("password"),
     });
   };
 
-  const signinSubmit=(e)=>{
-    e.preventDefault()
+  const signinSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
-    .then((auth)=>{
-      if(auth){
-        (basket.length>0)
-        ?navigate('/checkout-page')
-        :navigate('/')
-      }
-    })
-    .catch(err=>alert(err.message))
+      .then((auth) => {
+        if (auth) {
+          basket.length > 0 ? navigate("/checkout-page") : navigate("/");
+        }
+      })
+      .catch((err) => alert(err.message));
   };
 
   return (
@@ -70,21 +73,26 @@ const [{ basket, user }, dispatch] = useStateValue();
         <Box
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
+          >
             <TextField
               value={email}
-              onChange={e=>setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
               margin="normal"
               required
               fullWidth
@@ -96,7 +104,7 @@ const [{ basket, user }, dispatch] = useStateValue();
             />
             <TextField
               value={password}
-              onChange={e=>setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
               margin="normal"
               required
               fullWidth
@@ -115,7 +123,7 @@ const [{ basket, user }, dispatch] = useStateValue();
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              onClick={signinSubmit}
+              onClick={(e) => signinSubmit(e)}
             >
               Sign In
             </Button>
@@ -126,7 +134,7 @@ const [{ basket, user }, dispatch] = useStateValue();
                 </Link>
               </Grid>
               <Grid item>
-                <RouteLink to="/signup" variant="body2">
+                <RouteLink to="/signup">
                   {"Don't have an account? Sign Up"}
                 </RouteLink>
               </Grid>

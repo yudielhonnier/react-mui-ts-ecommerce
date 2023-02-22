@@ -8,8 +8,8 @@ import { Routes, BrowserRouter, Route } from "react-router-dom";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import { auth } from "./firebase";
-import { actionTypes } from "./reducer";
-import { useStateValue } from "./StateProvider";
+import { actionTypes } from "./context/reducer.types";
+import { useStateValue } from "./context/StateProvider";
 import Checkout from "./components/checkoutForm/Checkout";
 import { ThemeProvider } from "@mui/material/styles";
 
@@ -28,8 +28,7 @@ const theme = createTheme({
 });
 
 function App() {
-  // TODO:Add correctly type
-  const [dispatch]: any = useStateValue();
+  const { dispatch } = useStateValue();
 
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
