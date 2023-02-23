@@ -28,6 +28,8 @@ const theme = createTheme({
 });
 
 function App() {
+  console.log(import.meta.env.REACT_APP_FIREBASE_API_KEY);
+
   const { dispatch } = useStateValue();
 
   useEffect(() => {

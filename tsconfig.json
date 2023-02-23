@@ -10,15 +10,10 @@
     "jsx": "react-jsx",                                
     "lib": ["es5", "es6","DOM", "DOM.Iterable", "ESNext"], 
     "moduleResolution": "Node",
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"],
-      "~/*": ["./public/*"]
-    },
   },
   "include": [
-    "**/*.ts",
-    "**/*.tsx",
+    "src", "src/declaration.d.ts",
     ],
+  "references": [{ "path": "./tsconfig.node.json" }]
   
 }

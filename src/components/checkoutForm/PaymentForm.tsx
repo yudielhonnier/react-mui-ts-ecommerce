@@ -13,21 +13,23 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
+import { loadStripe, StripeError } from "@stripe/stripe-js";
 import { useStateValue } from "../../context/StateProvider";
 import { getBasketTotal } from "../../context/reducer";
-import accounting from "accounting";
-import { actionTypes } from "../../context/reducer";
+import { actionTypes } from "../../context/reducer.types";
 import { useState } from "react";
 import { CircularProgress } from "@mui/material";
 
 import axios from "axios";
+import useFormatMoney from "../../hooks/useFormatMoney";
+import { IPaymentFunctions, IPaymentMethod } from "../../types/payment.types";
+import { PaymentMethod, StripeCardElementOptions } from "@stripe/stripe-js";
 
 const stripePromise = loadStripe(
   "pk_test_51LpFAZIdQtsXmsq3GwTzEFktCyQ1rI3aYtmKmTZjd4bYt6NvlwI2o7tMbpGfjPNY5TnQSVNeEBH7dDokqt6id3PE00c8NYYdgC"
 );
 
-const CARD_ELEMENT_OPTIONS = {
+const CARD_ELEMENT_OPTIONS: Partial<StripeCardElementOptions> = {
   iconStyle: "solid",
   hidePostalCode: true,
   style: {
@@ -48,17 +50,26 @@ const CARD_ELEMENT_OPTIONS = {
   },
 };
 
-const CheckoutForm = ({ handleBack, handleNext }) => {
-  const [{ basket, paymentMessage }, dispatch] = useStateValue();
+const CheckoutForm = ({ handleBack, handleNext }: IPaymentFunctions) => {
+  const {
+    state: { basket, paymentMessage },
+    dispatch,
+  } = useStateValue();
   const [loading, setLoading] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
+  const bastketFormated = useFormatMoney(getBasketTotal(basket), "€");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
+    const cardElement = elements!.getElement(CardElement);
+    if (!cardElement) {
+      return;
+    }
+
+    const { error, paymentMethod } = await stripe!.createPaymentMethod({
       type: "card",
-      card: elements.getElement(CardElement),
+      card: cardElement,
     });
     console.log(paymentMethod, error);
     setLoading(true);
@@ -86,7 +97,7 @@ const CheckoutForm = ({ handleBack, handleNext }) => {
           });
         }
         alert(data.message);
-        elements.getElement(CardElement).clear();
+        elements!.getElement(CardElement)!.clear();
         handleNext();
       } catch (error) {
         console.log(error);
@@ -115,18 +126,14 @@ const CheckoutForm = ({ handleBack, handleNext }) => {
           variant="contained"
           color="primary"
         >
-          {loading ? (
-            <CircularProgress />
-          ) : (
-            `Pay  ${accounting.formatMoney(getBasketTotal(basket), "€")}`
-          )}
+          {loading ? <CircularProgress /> : `Pay  ${bastketFormated}`}
         </Button>
       </div>
     </form>
   );
 };
 
-const PaymentForm = ({ handleBack, handleNext }) => {
+const PaymentForm = ({ handleBack, handleNext }: IPaymentFunctions) => {
   return (
     <>
       <Review />

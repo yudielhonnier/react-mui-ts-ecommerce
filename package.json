@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@babel/types": "^7.21.0",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@mui/icons-material": "^5.10.6",
@@ -25,7 +26,8 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.36.1",
     "react-router-dom": "^6.4.1",
-    "stripe": "^10.12.0"
+    "stripe": "^10.12.0",
+    "vite-plugin-svgr": "^2.4.0"
   },
   "devDependencies": {
     "@mui/types": "^7.2.3",
