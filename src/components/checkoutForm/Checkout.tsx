@@ -3,8 +3,7 @@ import Paper from "@mui/material/Paper";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
-import Button from "@mui/material/Button";
-import Link from "@mui/material/Link";
+
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import AddressForm from "./AddressForm";
@@ -16,7 +15,10 @@ const Checkout = () => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
   const steps = ["Shipping address", "Payment details"];
-  const [{ paymentMessage }, dispatch] = useStateValue();
+  const {
+    state: { paymentMessage },
+    dispatch,
+  } = useStateValue();
   const handleNext = () => {
     return setActiveStep(activeStep + 1);
   };

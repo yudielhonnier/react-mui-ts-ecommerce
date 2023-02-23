@@ -15,8 +15,8 @@ import { AddShoppingCart } from "@mui/icons-material";
 
 import { actionTypes } from "../context/reducer.types";
 import { useStateValue } from "../context/StateProvider";
-import { useFormatMoney } from "@/hooks/useFormatMoney";
-import { IItem } from "@/context/reducer.types";
+import useFormatMoney from "../hooks/useFormatMoney";
+import { IItem } from "../context/reducer.types";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;

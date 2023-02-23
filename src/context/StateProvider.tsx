@@ -27,8 +27,4 @@ export const StateProvider = ({
   );
 };
 
-export const useStateValue = () =>
-  useContext<{
-    state: AppState;
-    dispatch: Dispatch<Action>;
-  }>(StateContext);
+export const useStateValue = () => useContext(StateContext);

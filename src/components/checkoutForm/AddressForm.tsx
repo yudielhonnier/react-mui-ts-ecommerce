@@ -8,12 +8,19 @@ import AddressInput from "./AddressInput";
 import Button from "@mui/material/Button";
 import { Link as RouteLink, useNavigate } from "react-router-dom";
 import { useStateValue } from "../../context/StateProvider";
-import { actionTypes } from "../../context/reducer";
+import { actionTypes, IShipingData } from "../../context/reducer.types";
 import { useForm, FormProvider } from "react-hook-form";
 
-export default function AddressForm({ handleNext }) {
+export default function AddressForm({
+  handleNext,
+}: {
+  handleNext: () => void;
+}) {
   const methods = useForm();
-  const [{ shippingData }, dispatch] = useStateValue();
+  const {
+    state: { shipingData },
+    dispatch,
+  } = useStateValue();
 
   return (
     <>
@@ -25,7 +32,7 @@ export default function AddressForm({ handleNext }) {
           onSubmit={methods.handleSubmit((data) => {
             dispatch({
               type: actionTypes.SET_SHIPPINGDATA,
-              shippingData: data,
+              shipingData: data as IShipingData,
             });
             handleNext();
           })}

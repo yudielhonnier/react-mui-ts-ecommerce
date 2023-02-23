@@ -5,7 +5,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-import logo from "~/assets/favicon250x250.png";
+import Logo from "../assets/favicon250x250.png";
 import { ShoppingCart } from "@mui/icons-material";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -13,7 +13,6 @@ import { Badge } from "@mui/material";
 import { Link as RouteLink, useNavigate } from "react-router-dom";
 import { useStateValue } from "../context/StateProvider";
 import { auth } from "../firebase";
-import { signOut } from "firebase/auth";
 import { actionTypes } from "../context/reducer.types";
 import { getTotalItems } from "../context/reducer";
 
@@ -52,6 +51,8 @@ export default function NavBar() {
     navigate("/signin");
   };
 
+  console.log({ Logo });
+
   return (
     <Box sx={{ flexGrow: 1, marginBottom: "7rem" }}>
       <AppBar position="fixed" sx={{ boxShadow: "none" }}>
@@ -65,7 +66,7 @@ export default function NavBar() {
               sx={{ mr: 2 }}
             >
               <img
-                src={logo}
+                src={Logo}
                 style={{
                   marginRight: "10px",
                   height: "2rem",

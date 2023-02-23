@@ -11,7 +11,7 @@ import { actionTypes } from "../context/reducer.types";
 import { useStateValue } from "../context/StateProvider";
 import { Badge, Theme } from "@mui/material";
 import { IItem } from "../context/reducer.types";
-import { useFormatMoney } from "../hooks/useFormatMoney";
+import useFormatMoney from "../hooks/useFormatMoney";
 
 interface ExpandMoreProps {
   expand: boolean;
