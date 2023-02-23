@@ -1,12 +1,15 @@
-import accounting from "accounting";
-import React from "react";
 import { Button } from "@mui/material";
-import { getBasketTotal, getTotalItems } from "../reducer";
-import { useStateValue } from "../StateProvider";
+import { getBasketTotal, getTotalItems } from "../context/reducer";
+import { useStateValue } from "../context/StateProvider";
 import { Link as RouteLink, useNavigate } from "react-router-dom";
+import useFormatMoney from "../hooks/useFormatMoney";
 
 export default function Total() {
-  const [{ basket }, dispatch] = useStateValue();
+  const {
+    state: { basket },
+  } = useStateValue();
+
+  const basketsFormated = useFormatMoney(getBasketTotal(basket), "€");
 
   return (
     <div
@@ -19,7 +22,7 @@ export default function Total() {
       }}
     >
       <h5>Total items:{getTotalItems(basket)}</h5>
-      <h5>{accounting.formatMoney(getBasketTotal(basket), "€")}</h5>
+      <h5>{basketsFormated}</h5>
       <RouteLink to="/checkout">
         <Button variant="contained" color="primary">
           Check Out

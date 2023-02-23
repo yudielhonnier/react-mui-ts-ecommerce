@@ -8,16 +8,21 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Collapse from "@mui/material/Collapse";
-import IconButton from "@mui/material/IconButton";
+import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { AddShoppingCart } from "@mui/icons-material";
 
-import accounting from "accounting";
-import { actionTypes } from "../reducer";
-import { useStateValue } from "../StateProvider";
+import { actionTypes } from "../context/reducer.types";
+import { useStateValue } from "../context/StateProvider";
+import useFormatMoney from "../hooks/useFormatMoney";
+import { IItem } from "../context/reducer.types";
 
-const ExpandMore = styled((props) => {
+interface ExpandMoreProps extends IconButtonProps {
+  expand: boolean;
+}
+
+const ExpandMore = styled((props: ExpandMoreProps) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
 })(({ theme, expand }) => ({
@@ -64,10 +69,17 @@ export default function Product({
     image,
     decriptionProd,
   },
+}: {
+  product: IItem;
 }) {
   const classes = useStyles();
-  const [{ basket }, dispatch] = useStateValue();
+  const {
+    state: { basket },
+    dispatch,
+  } = useStateValue();
   const [expanded, setExpanded] = React.useState(false);
+
+  const priceFormated = useFormatMoney(price, "€");
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -91,11 +103,20 @@ export default function Product({
         })
       : dispatch({
           type: actionTypes.INCREASE_QUANTITY_ITEM,
-          id,
+          item: {
+            id,
+            name,
+            productType,
+            image,
+            price,
+            rating,
+            quantity,
+            decriptionProd,
+          },
         });
   };
 
-  const convertRating = (rating) => {
+  const convertRating = (rating: number) => {
     if (rating > 10) return Math.round(parseInt(rating.toString().slice(0, 1)));
     else return rating;
   };
@@ -109,7 +130,7 @@ export default function Product({
             variant="h5"
             color="textSecondary"
           >
-            {accounting.formatMoney(price, "€")}
+            {priceFormated}
           </Typography>
         }
         title={name}
@@ -143,7 +164,7 @@ export default function Product({
           <AddShoppingCart fontSize="large" />
         </IconButton>
         {Array(convertRating(rating))
-          .fill()
+          // .fill()
           .map((_, i) => (
             <p key={i}>&#11088;</p>
           ))}
