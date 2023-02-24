@@ -10,10 +10,19 @@
     "jsx": "react-jsx",                                
     "lib": ["es5", "es6","DOM", "DOM.Iterable", "ESNext"], 
     "moduleResolution": "Node",
+    "baseUrl":"./",
+     "paths": {
+      "@/*": ["./src/*"],
+      "~/*": ["./public/*"]
+    },
   },
   "include": [
     "src", "src/declaration.d.ts",
     ],
+      "exclude": [
+    "node_modules",
+    "vite.config.ts"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
   
 }
