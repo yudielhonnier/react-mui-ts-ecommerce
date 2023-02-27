@@ -46,18 +46,9 @@ const useStyles = makeStyles(() => ({
     height: 250,
     width: "90%",
   },
-  // expand:{
-  //         transform:"rotate(0deg)",
-  //         marginLeft:"auto",
-  //         transition:theme.transition.create("transform",{
-  //           duration:theme.transition.duration.shortest,
-  //         }),
-  //       },
-  //       expandOpen:{
-  //         transform:"rotate(180deg)"
-  //       }
 }));
 
+//TODO: Change height of the cards
 export default function CardProduct({
   product: {
     id,

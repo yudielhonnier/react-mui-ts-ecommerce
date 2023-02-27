@@ -6,7 +6,7 @@ export const Main = styled("div", {
   open?: boolean;
   marginLeft: number;
 }>(({ theme, open, marginLeft }) => ({
-  flexGrow: 1,
+  // flexGrow: 1,
   padding: theme.spacing(3),
   transition: theme.transitions.create("margin", {
     easing: theme.transitions.easing.sharp,
@@ -18,7 +18,6 @@ export const Main = styled("div", {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    // marginLeft: 0,
     marginLeft: `${marginLeft}px`,
   }),
 }));

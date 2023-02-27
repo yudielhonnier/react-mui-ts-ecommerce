@@ -3,6 +3,7 @@ import type { PropsWithChildren, ReactNode } from "react";
 import AppSpin from "../feedback/AppSpin";
 import useSetHelp from "../feedback/useSetHelp";
 import Link from "../navigation/Link";
+import { styled, Typography } from "@mui/material";
 
 export interface BreadcrumItem {
   key: string;
@@ -16,6 +17,16 @@ export interface PageProps {
   help: ReactNode;
 }
 
+const PageDiv = styled("div")(({ theme }) => ({
+  marginTop: theme.spacing(4),
+  width: "100%",
+  [theme.breakpoints.up("sm")]: {
+    marginLeft: theme.spacing(3),
+    marginRight: theme.spacing(3),
+    width: "auto",
+  },
+}));
+
 export default function Page({
   breadcrumbs,
   children,
@@ -26,8 +37,16 @@ export default function Page({
   setHelp(help);
 
   return (
-    <div className="space-y-lg">
+    <PageDiv>
+      <Typography>{title}</Typography>
+      {breadcrumbs &&
+        breadcrumbs.map((b) => (
+          // TODO:CREATE CORRECT BREADCRUMBS
+          <label key={b.key}>
+            <Link to={b.href}>{b.label}</Link>
+          </label>
+        ))}
       <Suspense fallback={<AppSpin.Block />}>{children}</Suspense>
-    </div>
+    </PageDiv>
   );
 }
