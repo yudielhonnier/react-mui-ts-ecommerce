@@ -1,8 +1,8 @@
 import { Button } from "@mui/material";
-import { getBasketTotal, getTotalItems } from "../context/reducer";
-import { useStateValue } from "../context/StateProvider";
+import { getBasketTotal, getTotalItems } from "@/context/reducer";
+import { useStateValue } from "@/context/StateProvider";
 import { Link as RouteLink, useNavigate } from "react-router-dom";
-import useFormatMoney from "../hooks/useFormatMoney";
+import useFormatMoney from "@/hooks/useFormatMoney";
 
 export default function Total() {
   const {

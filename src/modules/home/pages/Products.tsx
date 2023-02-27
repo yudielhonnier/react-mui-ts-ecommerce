@@ -1,11 +1,11 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
+import { Box } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
-import { IItem } from "../../../context/reducer.types";
+import { IItem } from "@/context/reducer.types";
 
 import CardProduct from "../components/CardProduct";
 
-import { products } from "../../../data/products-data.json";
+import { products } from "@/data/products-data.json";
 
 export default function Products() {
   return (

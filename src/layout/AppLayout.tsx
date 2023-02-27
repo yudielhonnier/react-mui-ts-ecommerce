@@ -1,40 +1,147 @@
-import { useToggle } from "ahooks";
-import { cloneElement, Suspense, useRef } from "react";
-import type { ReactElement, ReactNode } from "react";
-import { useTranslation } from "react-i18next";
+import {
+  Box,
+  Toolbar,
+  Typography,
+  Button,
+  IconButton,
+  Tooltip,
+  alpha,
+  createStyles,
+  InputBase,
+  Menu,
+  MenuItem,
+  Divider,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  useTheme,
+} from "@mui/material";
 
-import { Outlet } from "react-router-dom";
-import useAuth from "@/modules/auth/hooks/useAuth";
-import useAuthFunctions from "@/modules/auth/hooks/useAuthFunctions";
+import Logo from "../assets/ecommerce.png";
+import {
+  ShoppingCart,
+  AccountCircle,
+  Language,
+  Search,
+  Notifications,
+  Help,
+  Menu as MenuIcon,
+  Mail,
+  More,
+  ChevronLeft,
+  ChevronRight,
+  Inbox,
+} from "@mui/icons-material";
+
+import { Badge } from "@mui/material";
+import { Link as RouteLink, Outlet, useNavigate } from "react-router-dom";
+import { useStateValue } from "../context/StateProvider";
+import { getTotalItems } from "../context/reducer";
 import ChangeLanguage from "@/common/display/ChangeLanguage";
-import AppSpin from "@/common/feedback/AppSpin";
+import React, { ReactNode, Suspense, useRef } from "react";
+
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import { SetHelpContext } from "@/common/feedback/HelpContext";
-import Link from "@/common/navigation/Link";
-import useNavigate from "@/common/navigation/useNavigate";
-import NavBar from "@/layout/NavBar";
+import AppSpin from "@/common/feedback/AppSpin";
+import CustomDrawer from "./Drawer";
+import { Main } from "./Main";
+import MobileMenu from "./MobileMenu";
+import { styled } from "@mui/material";
+import CustomAppBar from "./CustomAppBar";
+
+const drawerWidth = 240;
 
 export default function AppLayout() {
-  const [collapse, { toggle }] = useToggle(true);
-  const { user } = useAuth();
-  const { logout } = useAuthFunctions();
-  const { t } = useTranslation("appLayout");
-  const { t: tCommon } = useTranslation("common");
-  const { t: tRoutes } = useTranslation("routes");
-  const navigate = useNavigate();
+  const [open, setOpen] = React.useState(true);
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
   const helpNode = useRef<ReactNode | null>(null);
 
-  // TODO:ADD DRAWER
-  return (
-    <div>
-      <NavBar />
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
+    React.useState<null | HTMLElement>(null);
 
-      <SetHelpContext.Provider
-        value={(node: ReactNode) => (helpNode.current = node)}
-      >
-        <Suspense fallback={<AppSpin.Block />}>
-          <Outlet />
-        </Suspense>
-      </SetHelpContext.Provider>
-    </div>
+  const isMenuOpen = Boolean(anchorEl);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMobileMenuClose = () => {
+    setMobileMoreAnchorEl(null);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+  };
+
+  const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+  const menuId = "primary-search-account-menu";
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+    </Menu>
+  );
+
+  const mobileMenuId = "primary-search-account-menu-mobile";
+
+  return (
+    <SetHelpContext.Provider
+      value={(node: ReactNode) => (helpNode.current = node)}
+    >
+      <Suspense fallback={<AppSpin.Block />}>
+        <Box sx={{ flexGrow: 1, marginBottom: "7rem" }}>
+          <CustomAppBar
+            drawerWidth={drawerWidth}
+            open={open}
+            handleDrawerOpen={handleDrawerOpen}
+            menuId={menuId}
+            mobileMenuId={mobileMenuId}
+            handleProfileMenuOpen={() => handleProfileMenuOpen}
+            handleMobileMenuOpen={() => handleMobileMenuOpen}
+          />
+          <CustomDrawer
+            open={open}
+            drawerWidth={drawerWidth}
+            handleDrawerClose={handleDrawerClose}
+          />
+
+          <Main open={open} marginLeft={drawerWidth}>
+            <Outlet />
+          </Main>
+          <MobileMenu
+            mobileMoreAnchorEl={mobileMoreAnchorEl}
+            mobileMenuId={mobileMenuId}
+            isMobileMenuOpen={isMobileMenuOpen}
+            handleMobileMenuClose={handleMobileMenuClose}
+            handleProfileMenuOpen={() => handleProfileMenuOpen}
+          />
+          {renderMenu}
+        </Box>
+      </Suspense>
+    </SetHelpContext.Provider>
   );
 }

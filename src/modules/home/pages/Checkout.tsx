@@ -1,13 +1,12 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
+import { Box } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 
 import { Typography } from "@mui/material";
 
-import CheckoutCart from "../../checkout/components/CheckoutCart";
-import Total from "../../checkout/components/Total";
-
 import { useStateValue } from "@/context/StateProvider";
+import CheckoutCart from "../components/CheckoutCart";
+import Total from "../components/Total";
 
 // TODO: FIX THIS PAGE
 export default function Checkout() {

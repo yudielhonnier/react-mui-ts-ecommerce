@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import AuthState from "./contexts/AuthState";
 import AuthFunctions from "./contexts/AuthFunctions";
 import { AuthFunctionsContext, AuthStateContext } from "./contexts/AuthContext";
-import SignIn from "./components/SignIn";
+// import SignIn from "./components/SignIn";
 import { Outlet } from "react-router-dom";
 import { auth } from "./services/firebase";
 
@@ -12,6 +12,7 @@ export default function AuthProvider() {
     login: setAuthState,
     logout: () => setAuthState(null),
   };
+
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
       console.log("authUser", authUser);
@@ -23,8 +24,9 @@ export default function AuthProvider() {
   return (
     <AuthFunctionsContext.Provider value={functions}>
       <AuthStateContext.Provider value={authState!}>
-        {/* TODO:SignIn route is undefine */}
-        {authState ? <Outlet /> : <SignIn />}
+        {/* TODO:CONNECT TO FIREBASE */}
+        {/* {authState ? <Outlet /> : <SignIn />} */}
+        <Outlet />
       </AuthStateContext.Provider>
     </AuthFunctionsContext.Provider>
   );
