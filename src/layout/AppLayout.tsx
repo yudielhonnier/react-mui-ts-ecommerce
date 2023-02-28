@@ -45,7 +45,7 @@ import React, { ReactNode, Suspense, useRef } from "react";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import { SetHelpContext } from "@/common/feedback/HelpContext";
 import AppSpin from "@/common/feedback/AppSpin";
-import CustomDrawer from "./Drawer";
+import CustomDrawer from "./CustomDrawer";
 import { Main } from "./Main";
 import MobileMenu from "./MobileMenu";
 import { styled } from "@mui/material";

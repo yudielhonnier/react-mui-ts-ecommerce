@@ -1,8 +1,8 @@
 import { lazy } from "react";
 import type RouteConfig from "@/routing/RouteConfig";
-import Checkout from "./Checkout";
 
 const Products = lazy(async () => import("./Products"));
+const Checkout = lazy(async () => import("./Checkout"));
 
 const config: RouteConfig[] = [
   {

@@ -123,24 +123,23 @@ const CustomAppBar = ({
       drawerWidth={drawerWidth}
     >
       <Toolbar variant="dense">
-        <RouteLink to="/">
-          {/* TODO:ADD TOOLTIP TO ALL THE BUTTONS */}
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <img
-              src={Logo}
-              style={{
-                marginRight: "10px",
-                height: "2rem",
-              }}
-            />
-          </IconButton>
-        </RouteLink>
+        {/* TODO:ADD TOOLTIP TO ALL THE BUTTONS */}
+        <IconButton
+          size="large"
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          onClick={() => navigate("/")}
+          sx={{ mr: 2 }}
+        >
+          <img
+            src={Logo}
+            style={{
+              marginRight: "10px",
+              height: "2rem",
+            }}
+          />
+        </IconButton>
 
         <IconButton
           size="large"
@@ -175,12 +174,13 @@ const CustomAppBar = ({
               </RouteLink>
             </IconButton> */}
 
-          <IconButton aria-label="show cart items">
-            <RouteLink to={"/checkout-page"}>
-              <Badge badgeContent={getTotalItems(basket)} color="error">
-                <ShoppingCart color="secondary" fontSize="medium" />
-              </Badge>
-            </RouteLink>
+          <IconButton
+            aria-label="show cart items"
+            onClick={() => navigate("/checkout")}
+          >
+            <Badge badgeContent={getTotalItems(basket)} color="error">
+              <ShoppingCart color="secondary" fontSize="medium" />
+            </Badge>
           </IconButton>
 
           <IconButton aria-label="show cart items">
