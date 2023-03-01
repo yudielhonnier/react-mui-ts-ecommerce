@@ -5,8 +5,8 @@ interface IMovilMenuProps {
   mobileMoreAnchorEl: null | HTMLElement;
   mobileMenuId: string | undefined;
   isMobileMenuOpen: boolean;
-  handleMobileMenuClose: () => void;
-  handleProfileMenuOpen: () => void;
+  handleMobileMenuClose: (event: React.MouseEvent<HTMLElement>) => void;
+  handleProfileMenuOpen: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 const MobileMenu = ({

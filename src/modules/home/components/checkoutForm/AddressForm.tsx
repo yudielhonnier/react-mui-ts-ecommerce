@@ -1,12 +1,8 @@
-import * as React from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import AddressInput from "./AddressInput";
 import Button from "@mui/material/Button";
-import { Link as RouteLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useStateValue } from "../../../../context/StateProvider";
 import { actionTypes, IShipingData } from "../../../../context/reducer.types";
 import { useForm, FormProvider } from "react-hook-form";
@@ -21,6 +17,7 @@ export default function AddressForm({
     state: { shipingData },
     dispatch,
   } = useStateValue();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -52,7 +49,7 @@ export default function AddressForm({
               marginTop: "1rem",
             }}
           >
-            <Button component={RouteLink} to="/checkout-page">
+            <Button onClick={() => navigate(-1)}>
               Back to the Checkout Page
             </Button>
             <Button type="submit" variant="contained" color="primary">

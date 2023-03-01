@@ -120,8 +120,8 @@ export default function AppLayout() {
             handleDrawerOpen={handleDrawerOpen}
             menuId={menuId}
             mobileMenuId={mobileMenuId}
-            handleProfileMenuOpen={() => handleProfileMenuOpen}
-            handleMobileMenuOpen={() => handleMobileMenuOpen}
+            handleProfileMenuOpen={handleProfileMenuOpen}
+            handleMobileMenuOpen={handleMobileMenuOpen}
           />
           <CustomDrawer
             open={open}
@@ -137,7 +137,7 @@ export default function AppLayout() {
             mobileMenuId={mobileMenuId}
             isMobileMenuOpen={isMobileMenuOpen}
             handleMobileMenuClose={handleMobileMenuClose}
-            handleProfileMenuOpen={() => handleProfileMenuOpen}
+            handleProfileMenuOpen={handleProfileMenuOpen}
           />
           {renderMenu}
         </Box>

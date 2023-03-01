@@ -1,7 +1,4 @@
-import * as React from "react";
-import { makeStyles } from "@mui/styles";
-import { createStyles, styled } from "@mui/material/styles";
-
+import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -11,12 +8,11 @@ import Collapse from "@mui/material/Collapse";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { IItem, actionTypes } from "@/context/reducer.types";
+import { useStateValue } from "@/context/StateProvider";
+import useFormatMoney from "@/hooks/useFormatMoney";
 import { AddShoppingCart } from "@mui/icons-material";
-
-import { actionTypes } from "../../../context/reducer.types";
-import { useStateValue } from "../../../context/StateProvider";
-import useFormatMoney from "../../../hooks/useFormatMoney";
-import { IItem } from "../../../context/reducer.types";
+import { useState } from "react";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -33,22 +29,10 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   }),
 }));
 
-const useStyles = makeStyles(() => ({
-  root: {
-    maxWidth: 345,
-    margin: "auto",
-  },
-  action: {
-    marginTop: "1rem",
-  },
-  media: {
-    padding: "1rem 1rem 0 1rem",
-    height: 250,
-    width: "90%",
-  },
+const StyledCard = styled(Card)(({ theme }) => ({
+  maxWidth: 345,
 }));
 
-//TODO: Change height of the cards
 export default function CardProduct({
   product: {
     id,
@@ -63,18 +47,14 @@ export default function CardProduct({
 }: {
   product: IItem;
 }) {
-  const classes = useStyles();
+  const [expanded, setExpanded] = useState(false);
+
   const {
     state: { basket },
     dispatch,
   } = useStateValue();
-  const [expanded, setExpanded] = React.useState(false);
 
   const priceFormated = useFormatMoney(price, "€");
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
 
   const addToBasket = () => {
     const index = basket.findIndex((basketItem) => basketItem.id === id);
@@ -112,47 +92,44 @@ export default function CardProduct({
     else return rating;
   };
 
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
+
   return (
-    <Card className={classes.root}>
-      <CardHeader
-        action={
-          <Typography
-            className={classes.action}
-            variant="h5"
-            color="textSecondary"
-          >
-            {priceFormated}
-          </Typography>
-        }
-        title={name}
-        titleTypographyProps={{ noWrap: true }}
-        sx={{
-          "& .MuiCardHeader-content": {
-            overflow: "hidden",
-          },
-        }}
-        subheader="In Stock"
-      />
+    <Card sx={{ maxWidth: 200, margin: "auto" }}>
       <CardMedia
-        // todo:see the diference
-        //  className={classes.media}
         component="img"
         image={image}
         alt="Running Shoes"
         sx={{
-          padding: "1rem 1rem 0 1rem",
-          height: 250,
-          width: "90%",
+          padding: "0",
+          width: "100%",
+          height: "150px",
+          objectFit: "cover",
         }}
       />
-      <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          {productType}
+
+      <CardContent sx={{ padding: ".5rem" }}>
+        <Typography
+          sx={{
+            fontSize: ".8rem",
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+          color="textSecondary"
+        >
+          <span>{name}</span>
+          <span> {priceFormated}</span>
         </Typography>
+        {/* <Typography variant="body2" color="text.secondary">
+          {productType}
+        </Typography> */}
       </CardContent>
-      <CardActions disableSpacing>
+      <CardActions disableSpacing sx={{ height: 20 }}>
+        {/* TODO:Add iconbutton globally */}
         <IconButton aria-label="Add to Cart" onClick={addToBasket}>
-          <AddShoppingCart fontSize="large" />
+          <AddShoppingCart fontSize="medium" />
         </IconButton>
         {Array(convertRating(rating))
           // .fill()
@@ -171,7 +148,9 @@ export default function CardProduct({
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>{decriptionProd}</Typography>
+          <Typography variant="body2" paragraph>
+            {decriptionProd}
+          </Typography>
         </CardContent>
       </Collapse>
     </Card>

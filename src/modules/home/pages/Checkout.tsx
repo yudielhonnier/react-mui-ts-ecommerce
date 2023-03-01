@@ -1,51 +1,92 @@
-import * as React from "react";
-import { Box } from "@mui/material";
-import Grid from "@mui/material/Unstable_Grid2";
+import Paper from "@mui/material/Paper";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
 
-import { Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import { useState } from "react";
+import AddressForm from "../components/checkoutForm/AddressForm";
+import PaymentForm from "../components/checkoutForm/PaymentForm";
+import Confirmation from "../components/checkoutForm/Confirmation";
+import { useStateValue } from "../../../context/StateProvider";
 
-import { useStateValue } from "@/context/StateProvider";
-import CheckoutCart from "../components/CheckoutCart";
-import Total from "../components/Total";
-import Page from "@/common/layout/Page";
+import { styled } from "@mui/material/styles";
 
-// TODO: FIX THIS PAGE
-export default function Checkout() {
+const Main = styled("div")(({ theme }) => ({
+  width: "auto",
+  marginLeft: theme.spacing(2),
+  marginRight: theme.spacing(2),
+  [theme.breakpoints.up("sm")]: {
+    // [theme.breakpoints.up(600)]:{
+    width: 600,
+    marginLeft: "auto",
+    marginRight: "auto",
+  },
+}));
+
+const CustomPaper = styled(Paper)(({ theme }) => {
+  // convert themeSpacing into a unknoww to cast about in a number
+  const themeSpacing: unknown = theme.spacing(3);
+
+  return {
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+    padding: theme.spacing(2),
+    [theme.breakpoints.up(600 + (themeSpacing as number) * 2)]: {
+      marginTop: theme.spacing(6),
+      marginBottom: theme.spacing(6),
+      marginRigth: theme.spacing(3),
+    },
+  };
+});
+
+const Checkout = () => {
+  const [activeStep, setActiveStep] = useState(0);
+  const steps = ["Shipping address", "Payment details"];
   const {
-    state: { basket, user },
+    state: { paymentMessage },
+    dispatch,
   } = useStateValue();
 
-  function FormRow() {
-    return (
-      <>
-        {basket?.map((item) => (
-          <Grid key={item.id} xs={12} sm={6} md={4} lg={3}>
-            <CheckoutCart product={item} />
-          </Grid>
-        ))}
-      </>
+  const handleNext = () => {
+    return setActiveStep(activeStep + 1);
+  };
+
+  const handleBack = () => {
+    return setActiveStep(activeStep - 1);
+  };
+
+  const Form = () => {
+    return activeStep === 0 ? (
+      <AddressForm handleNext={handleNext} />
+    ) : (
+      <PaymentForm handleNext={handleNext} handleBack={handleBack} />
     );
-  }
+  };
 
   return (
-    <Page title={"Products"} help={<Typography>'title'</Typography>}>
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={3}>
-          <Grid xs={12}>
-            <Typography align="center" gutterBottom variant="h4">
-              Shopping Cart
-            </Typography>
-          </Grid>
-          <Grid xs={12} sm={8} md={9} container spacing={3}>
-            <FormRow />
-          </Grid>
-          <Grid xs={12} sm={4} md={3}>
-            <Typography align="center" gutterBottom variant="h4">
-              <Total />
-            </Typography>
-          </Grid>
-        </Grid>
-      </Box>
-    </Page>
+    <>
+      <Main>
+        <CustomPaper variant="outlined">
+          <Typography component="h1" variant="h4" align="center">
+            Checkout
+          </Typography>
+          <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+            {steps.map((label) => (
+              <Step key={label}>
+                <StepLabel>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+          {activeStep === steps.length ? (
+            <Confirmation message={paymentMessage} />
+          ) : (
+            <Form />
+          )}
+        </CustomPaper>
+      </Main>
+    </>
   );
-}
+};
+
+export default Checkout;

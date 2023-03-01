@@ -23,9 +23,29 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   alignItems: "center",
   justifyContent: "flex-end",
   padding: theme.spacing(0, 1),
-  height: "40px",
+  height: "48px",
+  "& .MuiBackdrop-root": {
+    invisible: true,
+  },
+
+  // root: {
+  //   position: "relative !important",
+  //   "& .MuiBackdrop-root": {
+  //     position: "relative !important",
+  //     height: "100vh",
+  //   },
+  // },
+  // paper: {
+  //   position: "absolute !important",
+  // },
   // necessary for content to be below app bar
 }));
+
+//let use both drawer and main at the same time
+const drawerVariant = (open: boolean) => {
+  if (open) return "permanent";
+  else return "temporary";
+};
 
 const CustomDrawer = ({
   open,
@@ -36,6 +56,7 @@ const CustomDrawer = ({
 
   return (
     <Drawer
+      variant={drawerVariant(open)}
       sx={{
         width: drawerWidth,
         flexShrink: 0,
@@ -44,9 +65,14 @@ const CustomDrawer = ({
           boxSizing: "border-box",
         },
       }}
-      variant="persistent"
       anchor="left"
       open={open}
+      PaperProps={{
+        sx: {
+          height: "100%",
+          top: "44px",
+        },
+      }}
     >
       <DrawerHeader>
         <IconButton onClick={handleDrawerClose} size="small">

@@ -16,11 +16,10 @@ import {
   Badge,
   alpha,
   InputBase,
-  Theme,
 } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 
-import { Link as RouteLink, Outlet, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import Logo from "../assets/ecommerce.png";
 
@@ -31,8 +30,8 @@ interface ICustomAppBarProps {
   open?: boolean;
   drawerWidth: number;
   handleDrawerOpen: () => void;
-  handleProfileMenuOpen: () => void;
-  handleMobileMenuOpen: () => void;
+  handleProfileMenuOpen: (event: React.MouseEvent<HTMLElement>) => void;
+  handleMobileMenuOpen: (event: React.MouseEvent<HTMLElement>) => void;
   menuId: string;
   mobileMenuId: string;
 }
@@ -49,15 +48,7 @@ const AppBar = styled(MuiAppBar, {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  ...(open && {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: `${drawerWidth}px`,
-
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
+  zIndex: theme.zIndex.drawer + 1,
 }));
 
 const SearchDiv = styled("div")(({ theme }) => ({
@@ -67,11 +58,10 @@ const SearchDiv = styled("div")(({ theme }) => ({
   "&:hover": {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
-  marginRight: theme.spacing(2),
   marginLeft: 0,
   width: "100%",
+  height: "78%",
   [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
     width: "auto",
   },
 }));
@@ -89,15 +79,21 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
+    padding: theme.spacing(1),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     width: "100%",
+    height: "100%",
     [theme.breakpoints.up("md")]: {
       width: "20ch",
     },
   },
+}));
+
+// TODO:TO ANALIZE IF PUT THIS BUTTON GLOBALLY
+const SytledIconButton = styled(IconButton)(({ theme }) => ({
+  outline: "0px !important",
 }));
 
 const CustomAppBar = ({
@@ -124,33 +120,32 @@ const CustomAppBar = ({
     >
       <Toolbar variant="dense">
         {/* TODO:ADD TOOLTIP TO ALL THE BUTTONS */}
-        <IconButton
+        <SytledIconButton
           size="large"
           edge="start"
           color="inherit"
           aria-label="menu"
-          onClick={() => navigate("/")}
-          sx={{ mr: 2 }}
+          onClick={() => navigate("")}
+          // sx={{ mr: 2 }}
         >
           <img
             src={Logo}
             style={{
-              marginRight: "10px",
               height: "2rem",
             }}
           />
-        </IconButton>
+        </SytledIconButton>
 
-        <IconButton
+        <SytledIconButton
           size="large"
           edge="start"
           color="inherit"
           aria-label="open drawer"
           onClick={handleDrawerOpen}
-          sx={{ mr: 5, ...(open && { display: "none" }) }}
+          sx={{ mr: 5 }}
         >
           <MenuIcon />
-        </IconButton>
+        </SytledIconButton>
 
         <SearchDiv>
           <SearchIconWrapper>
@@ -166,34 +161,34 @@ const CustomAppBar = ({
         <Box sx={{ display: { xs: "none", md: "flex" } }}>
           {/* TODO:ADD MUI ADAPTATION    */}
           {/* <ChangeLanguage /> */}
-          {/* <IconButton aria-label="show cart items">
+          {/* <SytledIconButton aria-label="show cart items">
               <RouteLink to={"/checkout-page"}>
                 <Badge badgeContent={getTotalItems(basket)} color="error">
                   <Language color="secondary" fontSize="large" />
                 </Badge>
               </RouteLink>
-            </IconButton> */}
+            </SytledIconButton> */}
 
-          <IconButton
+          <SytledIconButton
             aria-label="show cart items"
-            onClick={() => navigate("/checkout")}
+            onClick={() => navigate("selected-products")}
           >
             <Badge badgeContent={getTotalItems(basket)} color="error">
               <ShoppingCart color="secondary" fontSize="medium" />
             </Badge>
-          </IconButton>
+          </SytledIconButton>
 
-          <IconButton aria-label="show cart items">
+          <SytledIconButton aria-label="show cart items">
             <Help color="secondary" fontSize="medium" />
-          </IconButton>
+          </SytledIconButton>
 
-          <IconButton aria-label="show cart items">
+          <SytledIconButton aria-label="show cart items">
             <Badge>
               <Notifications color="secondary" fontSize="medium" />
             </Badge>
-          </IconButton>
+          </SytledIconButton>
 
-          <IconButton
+          <SytledIconButton
             edge="end"
             aria-label="account of current user"
             aria-controls={menuId}
@@ -202,7 +197,7 @@ const CustomAppBar = ({
             color="inherit"
           >
             <AccountCircle color="secondary" fontSize="medium" />
-          </IconButton>
+          </SytledIconButton>
         </Box>
         <Box sx={{ display: { xs: "flex", md: "none" } }}>
           <IconButton

@@ -16,6 +16,7 @@ export default function AuthProvider() {
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
       console.log("authUser", authUser);
+      // TODO:MAKE SOME WITH THIS AUTHUSER
       if (authUser) {
       }
     });
