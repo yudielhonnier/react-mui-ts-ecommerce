@@ -8,6 +8,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Typography,
 } from "@mui/material";
 
 import { styled, useTheme } from "@mui/material/styles";
@@ -21,24 +22,13 @@ interface ICustomDrawerProps {
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  justifyContent: "flex-end",
+  justifyContent: "space-between",
   padding: theme.spacing(0, 1),
   height: "48px",
+
   "& .MuiBackdrop-root": {
     invisible: true,
   },
-
-  // root: {
-  //   position: "relative !important",
-  //   "& .MuiBackdrop-root": {
-  //     position: "relative !important",
-  //     height: "100vh",
-  //   },
-  // },
-  // paper: {
-  //   position: "absolute !important",
-  // },
-  // necessary for content to be below app bar
 }));
 
 //let use both drawer and main at the same time
@@ -75,13 +65,14 @@ const CustomDrawer = ({
       }}
     >
       <DrawerHeader>
+        <Typography sx={{}}>Categories</Typography>
         <IconButton onClick={handleDrawerClose} size="small">
           {theme.direction === "rtl" ? <ChevronRight /> : <ChevronLeft />}
         </IconButton>
       </DrawerHeader>
       <Divider />
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+        {["Products"].map((text, index) => (
           <ListItem key={text} disablePadding sx={{ display: "block" }}>
             <ListItemButton
               sx={{
@@ -106,7 +97,7 @@ const CustomDrawer = ({
       </List>
       <Divider />
       <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
+        {["Administration"].map((text, index) => (
           <ListItem key={text} disablePadding sx={{ display: "block" }}>
             <ListItemButton
               sx={{

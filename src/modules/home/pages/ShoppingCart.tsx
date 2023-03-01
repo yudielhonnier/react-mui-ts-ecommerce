@@ -10,7 +10,7 @@ import Total from "../components/Total";
 import Page from "@/common/layout/Page";
 
 // TODO: FIX THIS PAGE
-export default function Checkout() {
+export default function ShoppingCart() {
   const {
     state: { basket, user },
   } = useStateValue();
@@ -31,11 +31,6 @@ export default function Checkout() {
     <Page title={"Products"} help={<Typography>'title'</Typography>}>
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={3}>
-          <Grid xs={12}>
-            <Typography align="center" gutterBottom variant="h4">
-              Shopping Cart
-            </Typography>
-          </Grid>
           <Grid xs={12} sm={8} md={9} container spacing={3}>
             <FormRow />
           </Grid>

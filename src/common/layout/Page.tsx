@@ -21,8 +21,8 @@ const PageDiv = styled("div")(({ theme }) => ({
   marginTop: theme.spacing(4),
   width: "100%",
   [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
-    marginRight: theme.spacing(3),
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(3),
     width: "auto",
   },
 }));
@@ -38,7 +38,7 @@ export default function Page({
 
   return (
     <PageDiv>
-      <Typography>{title}</Typography>
+      <Typography sx={{ paddingBottom: "1rem" }}>{title}</Typography>
       {breadcrumbs &&
         breadcrumbs.map((b) => (
           // TODO:CREATE CORRECT BREADCRUMBS

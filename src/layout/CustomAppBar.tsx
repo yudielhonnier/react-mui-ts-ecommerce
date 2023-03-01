@@ -25,6 +25,7 @@ import Logo from "../assets/ecommerce.png";
 
 import { styled } from "@mui/material";
 import { useStateValue } from "@/context/StateProvider";
+import { SytledIconButton } from "@/common/layout/StyledIconButton";
 
 interface ICustomAppBarProps {
   open?: boolean;
@@ -91,11 +92,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-// TODO:TO ANALIZE IF PUT THIS BUTTON GLOBALLY
-const SytledIconButton = styled(IconButton)(({ theme }) => ({
-  outline: "0px !important",
-}));
-
 const CustomAppBar = ({
   drawerWidth,
   open,
@@ -110,6 +106,9 @@ const CustomAppBar = ({
     dispatch,
   } = useStateValue();
   const navigate = useNavigate();
+
+  // TODO:ADD VALIDATION TO LOGGIN
+  const isLoggin = false;
 
   return (
     <AppBar
@@ -146,6 +145,7 @@ const CustomAppBar = ({
         >
           <MenuIcon />
         </SytledIconButton>
+        <Box sx={{ flexGrow: 1 }} />
 
         <SearchDiv>
           <SearchIconWrapper>
@@ -157,6 +157,18 @@ const CustomAppBar = ({
           />
         </SearchDiv>
 
+        <SytledIconButton
+          aria-label="show cart items"
+          onClick={() => navigate("shopping-cart")}
+        >
+          <Badge
+            badgeContent={getTotalItems(basket)}
+            color="error"
+            showZero={true}
+          >
+            <ShoppingCart color="secondary" fontSize="medium" />
+          </Badge>
+        </SytledIconButton>
         <Box sx={{ flexGrow: 1 }} />
         <Box sx={{ display: { xs: "none", md: "flex" } }}>
           {/* TODO:ADD MUI ADAPTATION    */}
@@ -168,15 +180,6 @@ const CustomAppBar = ({
                 </Badge>
               </RouteLink>
             </SytledIconButton> */}
-
-          <SytledIconButton
-            aria-label="show cart items"
-            onClick={() => navigate("selected-products")}
-          >
-            <Badge badgeContent={getTotalItems(basket)} color="error">
-              <ShoppingCart color="secondary" fontSize="medium" />
-            </Badge>
-          </SytledIconButton>
 
           <SytledIconButton aria-label="show cart items">
             <Help color="secondary" fontSize="medium" />
@@ -196,7 +199,11 @@ const CustomAppBar = ({
             onClick={handleProfileMenuOpen}
             color="inherit"
           >
-            <AccountCircle color="secondary" fontSize="medium" />
+            {isLoggin ? (
+              <AccountCircle color="secondary" fontSize="medium" />
+            ) : (
+              <p>SignIn</p>
+            )}
           </SytledIconButton>
         </Box>
         <Box sx={{ display: { xs: "flex", md: "none" } }}>

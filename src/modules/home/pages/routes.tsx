@@ -2,7 +2,7 @@ import { lazy } from "react";
 import type RouteConfig from "@/routing/RouteConfig";
 
 const Products = lazy(async () => import("./Products"));
-const SelectedProducts = lazy(async () => import("./SelectedProducts"));
+const SelectedProducts = lazy(async () => import("./ShoppingCart"));
 const Checkout = lazy(async () => import("./Checkout"));
 
 const config: RouteConfig[] = [
@@ -14,12 +14,12 @@ const config: RouteConfig[] = [
   {
     name: "SelectedProducts",
     element: <SelectedProducts />,
-    path: "selected-products",
+    path: "shopping-cart",
   },
   {
     name: "Checkout",
     element: <Checkout />,
-    path: "selected-products/checkout",
+    path: "shopping-cart/checkout",
   },
 ];
 
