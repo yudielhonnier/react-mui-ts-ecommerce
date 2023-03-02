@@ -72,32 +72,15 @@ const CustomDrawer = ({
       </DrawerHeader>
       <Divider />
       <List>
-        {["Products"].map((text, index) => (
-          <ListItem key={text} disablePadding sx={{ display: "block" }}>
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                {index % 2 === 0 ? <Inbox /> : <Mail />}
-              </ListItemIcon>
-              <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {["Administration"].map((text, index) => (
+        {[
+          "Shoes",
+          "Technology",
+          "Clothes",
+          "Jewerly & Watches",
+          "Bags & Shoes",
+          "Toy, Kids & Babies",
+          "Automobiles & Motocycles",
+        ].map((text, index) => (
           <ListItem key={text} disablePadding sx={{ display: "block" }}>
             <ListItemButton
               sx={{
