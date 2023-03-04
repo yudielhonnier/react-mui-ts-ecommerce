@@ -1,4 +1,4 @@
-import { ChevronRight, ChevronLeft, Inbox, Mail } from "@mui/icons-material";
+import { ChevronLeft, ChevronRight, Inbox, Mail } from '@mui/icons-material'
 import {
   Divider,
   Drawer,
@@ -9,40 +9,35 @@ import {
   ListItemIcon,
   ListItemText,
   Typography,
-} from "@mui/material";
-
-import { styled, useTheme } from "@mui/material/styles";
+} from '@mui/material'
+import { styled, useTheme } from '@mui/material/styles'
 
 interface ICustomDrawerProps {
-  open: boolean;
-  drawerWidth: number;
-  handleDrawerClose: () => void;
+  open: boolean
+  drawerWidth: number
+  handleDrawerClose: () => void
 }
 
-const DrawerHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
   padding: theme.spacing(0, 1),
-  height: "48px",
+  height: '48px',
 
-  "& .MuiBackdrop-root": {
+  '& .MuiBackdrop-root': {
     invisible: true,
   },
-}));
+}))
 
-//let use both drawer and main at the same time
+// let use both drawer and main at the same time
 const drawerVariant = (open: boolean) => {
-  if (open) return "permanent";
-  else return "temporary";
-};
+  if (open) return 'permanent'
+  else return 'temporary'
+}
 
-const CustomDrawer = ({
-  open,
-  drawerWidth,
-  handleDrawerClose,
-}: ICustomDrawerProps) => {
-  const theme = useTheme();
+const CustomDrawer = ({ open, drawerWidth, handleDrawerClose }: ICustomDrawerProps) => {
+  const theme = useTheme()
 
   return (
     <Drawer
@@ -50,50 +45,50 @@ const CustomDrawer = ({
       sx={{
         width: drawerWidth,
         flexShrink: 0,
-        "& .MuiDrawer-paper": {
+        '& .MuiDrawer-paper': {
           width: drawerWidth,
-          boxSizing: "border-box",
+          boxSizing: 'border-box',
         },
       }}
-      anchor="left"
+      anchor='left'
       open={open}
       PaperProps={{
         sx: {
-          height: "100%",
-          top: "44px",
+          height: '100%',
+          top: '44px',
         },
       }}
     >
       <DrawerHeader>
         <Typography sx={{}}>Categories</Typography>
-        <IconButton onClick={handleDrawerClose} size="small">
-          {theme.direction === "rtl" ? <ChevronRight /> : <ChevronLeft />}
+        <IconButton onClick={handleDrawerClose} size='small'>
+          {theme.direction === 'rtl' ? <ChevronRight /> : <ChevronLeft />}
         </IconButton>
       </DrawerHeader>
       <Divider />
       <List>
         {[
-          "Shoes",
-          "Technology",
-          "Clothes",
-          "Jewerly & Watches",
-          "Bags & Shoes",
-          "Toy, Kids & Babies",
-          "Automobiles & Motocycles",
+          'Shoes',
+          'Technology',
+          'Clothes',
+          'Jewerly & Watches',
+          'Bags & Shoes',
+          'Toy, Kids & Babies',
+          'Automobiles & Motocycles',
         ].map((text, index) => (
-          <ListItem key={text} disablePadding sx={{ display: "block" }}>
+          <ListItem key={text} disablePadding sx={{ display: 'block' }}>
             <ListItemButton
               sx={{
                 minHeight: 48,
-                justifyContent: open ? "initial" : "center",
+                justifyContent: open ? 'initial' : 'center',
                 px: 2.5,
               }}
             >
               <ListItemIcon
                 sx={{
                   minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
+                  mr: open ? 3 : 'auto',
+                  justifyContent: 'center',
                 }}
               >
                 {index % 2 === 0 ? <Inbox /> : <Mail />}
@@ -104,7 +99,7 @@ const CustomDrawer = ({
         ))}
       </List>
     </Drawer>
-  );
-};
+  )
+}
 
-export default CustomDrawer;
+export default CustomDrawer

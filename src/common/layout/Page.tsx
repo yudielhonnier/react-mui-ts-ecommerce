@@ -1,44 +1,40 @@
-import { Suspense } from "react";
-import type { PropsWithChildren, ReactNode } from "react";
-import AppSpin from "../feedback/AppSpin";
-import useSetHelp from "../feedback/useSetHelp";
-import Link from "../navigation/Link";
-import { styled, Typography } from "@mui/material";
+import { styled, Typography } from '@mui/material'
+import type { PropsWithChildren, ReactNode } from 'react'
+import { Suspense } from 'react'
+
+import AppSpin from '../feedback/AppSpin'
+import useSetHelp from '../feedback/useSetHelp'
+import Link from '../navigation/Link'
 
 export interface BreadcrumItem {
-  key: string;
-  href: string;
-  label: string;
+  key: string
+  href: string
+  label: string
 }
 
 export interface PageProps {
-  breadcrumbs?: BreadcrumItem[];
-  title: string;
-  help: ReactNode;
+  breadcrumbs?: BreadcrumItem[]
+  title: string
+  help: ReactNode
 }
 
-const PageDiv = styled("div")(({ theme }) => ({
+const PageDiv = styled('div')(({ theme }) => ({
   marginTop: theme.spacing(4),
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
     paddingLeft: theme.spacing(3),
     paddingRight: theme.spacing(3),
-    width: "auto",
+    width: 'auto',
   },
-}));
+}))
 
-export default function Page({
-  breadcrumbs,
-  children,
-  help,
-  title,
-}: PropsWithChildren<PageProps>) {
-  const setHelp = useSetHelp();
-  setHelp(help);
+export default function Page({ breadcrumbs, children, help, title }: PropsWithChildren<PageProps>) {
+  const setHelp = useSetHelp()
+  setHelp(help)
 
   return (
     <PageDiv>
-      <Typography sx={{ paddingBottom: "1rem" }}>{title}</Typography>
+      <Typography sx={{ paddingBottom: '1rem' }}>{title}</Typography>
       {breadcrumbs &&
         breadcrumbs.map((b) => (
           // TODO:CREATE CORRECT BREADCRUMBS
@@ -48,5 +44,5 @@ export default function Page({
         ))}
       <Suspense fallback={<AppSpin.Block />}>{children}</Suspense>
     </PageDiv>
-  );
+  )
 }

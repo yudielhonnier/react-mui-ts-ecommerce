@@ -1,26 +1,27 @@
-import { lazy } from "react";
-import type RouteConfig from "@/routing/RouteConfig";
+import { lazy } from 'react'
 
-const Products = lazy(async () => import("./Products"));
-const SelectedProducts = lazy(async () => import("./ShoppingCart"));
-const Checkout = lazy(async () => import("./Checkout"));
+import type RouteConfig from '@/routing/RouteConfig'
+
+const Products = lazy(async () => import('./Products'))
+const SelectedProducts = lazy(async () => import('./ShoppingCart'))
+const Checkout = lazy(async () => import('./Checkout'))
 
 const config: RouteConfig[] = [
   {
-    name: "Products",
+    name: 'Products',
     element: <Products />,
     index: true,
   },
   {
-    name: "SelectedProducts",
+    name: 'SelectedProducts',
     element: <SelectedProducts />,
-    path: "shopping-cart",
+    path: 'shopping-cart',
   },
   {
-    name: "Checkout",
+    name: 'Checkout',
     element: <Checkout />,
-    path: "shopping-cart/checkout",
+    path: 'shopping-cart/checkout',
   },
-];
+]
 
-export default config;
+export default config

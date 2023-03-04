@@ -1,63 +1,55 @@
-import { styled } from "@mui/material/styles";
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import Collapse from "@mui/material/Collapse";
-import IconButton, { IconButtonProps } from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { IItem, actionTypes } from "@/context/reducer.types";
-import { useStateValue } from "@/context/StateProvider";
-import useFormatMoney from "@/hooks/useFormatMoney";
-import { AddShoppingCart } from "@mui/icons-material";
-import { useState } from "react";
+import { AddShoppingCart } from '@mui/icons-material'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import Card from '@mui/material/Card'
+import CardActions from '@mui/material/CardActions'
+import CardContent from '@mui/material/CardContent'
+import CardMedia from '@mui/material/CardMedia'
+import Collapse from '@mui/material/Collapse'
+import IconButton, { IconButtonProps } from '@mui/material/IconButton'
+import { styled } from '@mui/material/styles'
+import Typography from '@mui/material/Typography'
+import { useState } from 'react'
+
+import useFormatMoney from '@/hooks/useFormatMoney'
+
+import { actionTypes, IItem } from '@/context/reducer.types'
+import { useStateValue } from '@/context/StateProvider'
 
 interface ExpandMoreProps extends IconButtonProps {
-  expand: boolean;
+  expand: boolean
 }
 
 const ExpandMore = styled((props: ExpandMoreProps) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
+  const { ...other } = props
+  return <IconButton {...other} />
 })(({ theme, expand }) => ({
-  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
-  marginLeft: "auto",
-  transition: theme.transitions.create("transform", {
+  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+  marginLeft: 'auto',
+  transition: theme.transitions.create('transform', {
     duration: theme.transitions.duration.shortest,
   }),
-}));
+}))
 
-const StyledCard = styled(Card)(({ theme }) => ({
+const StyledCard = styled(Card)(() => ({
   maxWidth: 345,
-}));
+}))
 
 export default function CardProduct({
-  product: {
-    id,
-    name,
-    productType,
-    price,
-    rating,
-    quantity,
-    image,
-    decriptionProd,
-  },
+  product: { id, name, productType, price, rating, quantity, image, decriptionProd },
 }: {
-  product: IItem;
+  product: IItem
 }) {
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(false)
 
   const {
     state: { basket },
     dispatch,
-  } = useStateValue();
+  } = useStateValue()
 
-  const priceFormated = useFormatMoney(price, "€");
+  const priceFormated = useFormatMoney(price, '€')
 
   const addToBasket = () => {
-    const index = basket.findIndex((basketItem) => basketItem.id === id);
+    const index = basket.findIndex((basketItem) => basketItem.id === id)
     index === -1
       ? dispatch({
           type: actionTypes.ADD_TO_BASKET,
@@ -84,40 +76,40 @@ export default function CardProduct({
             quantity,
             decriptionProd,
           },
-        });
-  };
+        })
+  }
 
   const convertRating = (rating: number) => {
-    if (rating > 10) return Math.round(parseInt(rating.toString().slice(0, 1)));
-    else return rating;
-  };
+    if (rating > 10) return Math.round(parseInt(rating.toString().slice(0, 1)))
+    else return rating
+  }
 
   const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
+    setExpanded(!expanded)
+  }
 
   return (
-    <Card sx={{ maxWidth: 200, margin: "auto" }}>
+    <Card sx={{ maxWidth: 200, margin: 'auto' }}>
       <CardMedia
-        component="img"
+        component='img'
         image={image}
-        alt="Running Shoes"
+        alt='Running Shoes'
         sx={{
-          padding: "0",
-          width: "100%",
-          height: "150px",
-          objectFit: "cover",
+          padding: '0',
+          width: '100%',
+          height: '150px',
+          objectFit: 'cover',
         }}
       />
 
-      <CardContent sx={{ padding: ".5rem" }}>
+      <CardContent sx={{ padding: '.5rem' }}>
         <Typography
           sx={{
-            fontSize: ".8rem",
-            display: "flex",
-            justifyContent: "space-between",
+            fontSize: '.8rem',
+            display: 'flex',
+            justifyContent: 'space-between',
           }}
-          color="textSecondary"
+          color='textSecondary'
         >
           <span>{name}</span>
           <span> {priceFormated}</span>
@@ -128,8 +120,8 @@ export default function CardProduct({
       </CardContent>
       <CardActions disableSpacing sx={{ height: 20 }}>
         {/* TODO:Add iconbutton globally */}
-        <IconButton aria-label="Add to Cart" onClick={addToBasket}>
-          <AddShoppingCart fontSize="medium" />
+        <IconButton aria-label='Add to Cart' onClick={addToBasket}>
+          <AddShoppingCart fontSize='medium' />
         </IconButton>
         {Array(convertRating(rating))
           // .fill()
@@ -141,18 +133,18 @@ export default function CardProduct({
           expand={expanded}
           onClick={handleExpandClick}
           aria-expanded={expanded}
-          aria-label="show more"
+          aria-label='show more'
         >
           <ExpandMoreIcon />
         </ExpandMore>
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
+      <Collapse in={expanded} timeout='auto' unmountOnExit>
         <CardContent>
-          <Typography variant="body2" paragraph>
+          <Typography variant='body2' paragraph>
             {decriptionProd}
           </Typography>
         </CardContent>
       </Collapse>
     </Card>
-  );
+  )
 }
