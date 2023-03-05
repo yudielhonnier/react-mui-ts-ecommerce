@@ -1,9 +1,9 @@
-import { createContext } from 'react'
+import { createContext } from 'react';
 
-import AuthFunctions from './AuthFunctions'
-import AuthState from './AuthState'
+import AuthFunctions from './AuthFunctions';
+import AuthState from './AuthState';
 
-export const AuthStateContext = createContext<AuthState>(null!)
+export const AuthStateContext = createContext<AuthState>(null!);
 
 // @ts-ignore
-export const AuthFunctionsContext = createContext<AuthFunctions>()
+export const AuthFunctionsContext = createContext<AuthFunctions>();

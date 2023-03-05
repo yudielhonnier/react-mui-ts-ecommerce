@@ -1,16 +1,16 @@
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import ListItemText from '@mui/material/ListItemText'
-import Typography from '@mui/material/Typography'
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Typography from '@mui/material/Typography';
 
-import { getBasketTotal } from '../../../../context/reducer'
-import { useStateValue } from '../../../../context/StateProvider'
-import useFormatMoney from '../../../../hooks/useFormatMoney'
+import { getBasketTotal } from '../../../../context/reducer';
+import { useStateValue } from '../../../../context/StateProvider';
+import useFormatMoney from '../../../../hooks/useFormatMoney';
 
 const Review = () => {
   const {
     state: { basket },
-  } = useStateValue()
+  } = useStateValue();
 
   return (
     <>
@@ -35,7 +35,7 @@ const Review = () => {
         </ListItem>
       </List>
     </>
-  )
-}
+  );
+};
 
-export default Review
+export default Review;

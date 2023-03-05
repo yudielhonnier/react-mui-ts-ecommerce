@@ -1,12 +1,12 @@
-import { AccountCircle, Mail, Notifications } from '@mui/icons-material'
-import { Badge, IconButton, Menu, MenuItem } from '@mui/material'
+import { AccountCircle, Mail, Notifications } from '@mui/icons-material';
+import { Badge, IconButton, Menu, MenuItem } from '@mui/material';
 
 interface IMovilMenuProps {
-  mobileMoreAnchorEl: null | HTMLElement
-  mobileMenuId: string | undefined
-  isMobileMenuOpen: boolean
-  handleMobileMenuClose: (event: React.MouseEvent<HTMLElement>) => void
-  handleProfileMenuOpen: (event: React.MouseEvent<HTMLElement>) => void
+  mobileMoreAnchorEl: null | HTMLElement;
+  mobileMenuId: string | undefined;
+  isMobileMenuOpen: boolean;
+  handleMobileMenuClose: (event: React.MouseEvent<HTMLElement>) => void;
+  handleProfileMenuOpen: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 const MobileMenu = ({
@@ -54,7 +54,7 @@ const MobileMenu = ({
         <p>Profile</p>
       </MenuItem>
     </Menu>
-  )
-}
+  );
+};
 
-export default MobileMenu
+export default MobileMenu;

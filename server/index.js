@@ -1,7 +1,14 @@
+// to run server command: node server
+
+//restar the server after any change 
+
 const express=require("express")
 const Stripe =require("stripe")
 const cors=require("cors")
- 
+
+const products = require('./data/products-data.json')
+
+
 const stripe=new Stripe("sk_test_51LpFAZIdQtsXmsq3o3v45uCDXuW6DsR1hIQ72KxA9DNWujQ34PVEvpvJdLwK7nQ44uvmy1TAGtV80A2agrSXdHmF002XGPN9qJ")
 console.log(stripe)
 const app=express();
@@ -36,6 +43,10 @@ app.post("/api/checkout",async (req,res)=>{
 
 }) 
 
+
+app.get('/api/products', (req, res) => { 
+    console.log('products----------',products.products)
+    return res.status(200).json(products.products)});
 
 
 app.listen(3001,()=>console.log("Server listening port",3001))

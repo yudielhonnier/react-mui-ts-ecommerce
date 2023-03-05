@@ -6,31 +6,30 @@ import {
   Notifications,
   Search,
   ShoppingCart,
-} from '@mui/icons-material'
-import { alpha, Badge, Box, IconButton, InputBase, Toolbar, styled } from '@mui/material'
+} from '@mui/icons-material';
+import { alpha, Badge, Box, IconButton, InputBase, Toolbar, styled } from '@mui/material';
 
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar'
-import { useNavigate } from 'react-router-dom'
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import { useNavigate } from 'react-router-dom';
 
-import { SytledIconButton } from '@/common/layout/StyledIconButton'
-import { getTotalItems } from '@/context/reducer'
-import { useStateValue } from '@/context/StateProvider'
+import { SytledIconButton } from '@/common/layout/StyledIconButton';
 
-import Logo from '../assets/ecommerce.png'
+import Logo from '../assets/ecommerce.png';
+import { useAppSelector } from '@/store/hooks';
+import Product from '@/modules/home/models/Product';
 
 interface ICustomAppBarProps {
-  open?: boolean
-  drawerWidth: number
-  handleDrawerOpen: () => void
-  handleProfileMenuOpen: (event: React.MouseEvent<HTMLElement>) => void
-  handleMobileMenuOpen: (event: React.MouseEvent<HTMLElement>) => void
-  menuId: string
-  mobileMenuId: string
+  open?: boolean;
+  drawerWidth: number;
+  handleDrawerOpen: () => void;
+  handleProfileMenuOpen: (event: React.MouseEvent<HTMLElement>) => void;
+  handleMobileMenuOpen: (event: React.MouseEvent<HTMLElement>) => void;
+  menuId: string;
+  mobileMenuId: string;
 }
 
 interface AppBarProps extends MuiAppBarProps {
-  open?: boolean
-  drawerWidth: number
+  open?: boolean;
 }
 
 const AppBar = styled(MuiAppBar, {
@@ -41,7 +40,7 @@ const AppBar = styled(MuiAppBar, {
     duration: theme.transitions.duration.leavingScreen,
   }),
   zIndex: theme.zIndex.drawer + 1,
-}))
+}));
 
 const SearchDiv = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -56,7 +55,7 @@ const SearchDiv = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
     width: 'auto',
   },
-}))
+}));
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),
@@ -66,7 +65,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-}))
+}));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
@@ -81,10 +80,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
       width: '20ch',
     },
   },
-}))
+}));
 
 const CustomAppBar = ({
-  drawerWidth,
   open,
   handleDrawerOpen,
   menuId,
@@ -92,16 +90,21 @@ const CustomAppBar = ({
   handleProfileMenuOpen,
   handleMobileMenuOpen,
 }: ICustomAppBarProps) => {
-  const {
-    state: { basket },
-  } = useStateValue()
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const { basket } = useAppSelector((state) => state.basket);
 
   // TODO:ADD VALIDATION TO LOGGIN
-  const isLoggin = false
+  const isLoggin = false;
+
+  const getQuantityProducts = (basket: Product[]) => {
+    let total = 0;
+    basket.forEach((el) => (total += el.quantity));
+    console.log('totallll', total);
+    return total;
+  };
 
   return (
-    <AppBar position='fixed' sx={{ boxShadow: 'none' }} open={open} drawerWidth={drawerWidth}>
+    <AppBar position='fixed' sx={{ boxShadow: 'none' }} open={open}>
       <Toolbar variant='dense'>
         {/* TODO:ADD TOOLTIP TO ALL THE BUTTONS */}
         <SytledIconButton
@@ -117,6 +120,7 @@ const CustomAppBar = ({
             style={{
               height: '2rem',
             }}
+            alt='logo'
           />
         </SytledIconButton>
 
@@ -140,7 +144,7 @@ const CustomAppBar = ({
         </SearchDiv>
 
         <SytledIconButton aria-label='show cart items' onClick={() => navigate('shopping-cart')}>
-          <Badge badgeContent={getTotalItems(basket)} color='error' showZero={true}>
+          <Badge badgeContent={getQuantityProducts(basket)} color='error' showZero={true}>
             <ShoppingCart color='secondary' fontSize='medium' />
           </Badge>
         </SytledIconButton>
@@ -190,7 +194,7 @@ const CustomAppBar = ({
         </Box>
       </Toolbar>
     </AppBar>
-  )
-}
+  );
+};
 
-export default CustomAppBar
+export default CustomAppBar;

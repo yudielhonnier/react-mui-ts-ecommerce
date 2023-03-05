@@ -4,7 +4,7 @@ function Screen() {
       {/* TODO: ADD SPIN COMPONENT */}
       Spin Component
     </div>
-  )
+  );
 }
 
 function Block() {
@@ -13,7 +13,7 @@ function Block() {
       {/* TODO: ADD SPIN COMPONENT */}
       Spin Component
     </div>
-  )
+  );
 }
 
-export default { Screen, Block }
+export default { Screen, Block };
