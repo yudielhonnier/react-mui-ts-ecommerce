@@ -1,28 +1,30 @@
-import { Delete as DeleteIcon } from '@mui/icons-material'
-import { Badge, Theme } from '@mui/material'
-import Card from '@mui/material/Card'
-import CardActions from '@mui/material/CardActions'
-import CardHeader from '@mui/material/CardHeader'
-import CardMedia from '@mui/material/CardMedia'
-import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
-import { useState } from 'react'
+import { Delete as DeleteIcon } from '@mui/icons-material';
+import { Badge } from '@mui/material';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardHeader from '@mui/material/CardHeader';
+import CardMedia from '@mui/material/CardMedia';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import { useState } from 'react';
 
-import useFormatMoney from '@/hooks/useFormatMoney'
+import useFormatMoney from '@/hooks/useFormatMoney';
 
-import { actionTypes, IItem } from '@/context/reducer.types'
-import { useStateValue } from '@/context/StateProvider'
+import { actionTypes, IItem } from '@/context/reducer.types';
+import { useAppDispatch } from '@/store/store';
+import { decQtyItem, removeFromBasket } from '@/store/slices/basket/basketSlice';
 
 export default function CheckoutCart({
   product: { id, name, productType, price, rating, quantity, image, decriptionProd },
 }: {
-  product: IItem
+  product: IItem;
 }) {
   // const classes=useStyles();
-  const { dispatch } = useStateValue()
-  const [expanded, setExpanded] = useState(false)
+  const dispatch = useAppDispatch();
 
-  const priceFormated = useFormatMoney(price, '€')
+  const [expanded, setExpanded] = useState(false);
+
+  const priceFormated = useFormatMoney(price, '€');
 
   const CardMediaProps = {
     heigth: '0',
@@ -34,17 +36,16 @@ export default function CheckoutCart({
       height: 250,
       width: '90%',
     },
-  }
+  };
 
   const handleExpandClick = () => {
-    setExpanded(!expanded)
-  }
+    setExpanded(!expanded);
+  };
 
   const removeItem = () => {
     quantity > 1
-      ? dispatch({
-          type: actionTypes.DECREASE_QUANTITY_ITEM,
-          item: {
+      ? dispatch(
+          decQtyItem({
             id,
             name,
             productType,
@@ -53,11 +54,10 @@ export default function CheckoutCart({
             quantity,
             image,
             decriptionProd,
-          },
-        })
-      : dispatch({
-          type: actionTypes.DELETE_FROM_BASKET,
-          item: {
+          })
+        )
+      : dispatch(
+          removeFromBasket({
             id,
             name,
             productType,
@@ -66,9 +66,9 @@ export default function CheckoutCart({
             quantity,
             image,
             decriptionProd,
-          },
-        })
-  }
+          })
+        );
+  };
 
   return (
     <Card
@@ -115,5 +115,5 @@ export default function CheckoutCart({
         </IconButton>
       </CardActions>
     </Card>
-  )
+  );
 }

@@ -1,21 +1,21 @@
-import { styled, Typography } from '@mui/material'
-import type { PropsWithChildren, ReactNode } from 'react'
-import { Suspense } from 'react'
+import { styled, Typography } from '@mui/material';
+import type { PropsWithChildren, ReactNode } from 'react';
+import { Suspense } from 'react';
 
-import AppSpin from '../feedback/AppSpin'
-import useSetHelp from '../feedback/useSetHelp'
-import Link from '../navigation/Link'
+import AppSpin from '../feedback/AppSpin';
+import useSetHelp from '../feedback/useSetHelp';
+import Link from '../navigation/Link';
 
 export interface BreadcrumItem {
-  key: string
-  href: string
-  label: string
+  key: string;
+  href: string;
+  label: string;
 }
 
 export interface PageProps {
-  breadcrumbs?: BreadcrumItem[]
-  title: string
-  help: ReactNode
+  breadcrumbs?: BreadcrumItem[];
+  title: string;
+  help: ReactNode;
 }
 
 const PageDiv = styled('div')(({ theme }) => ({
@@ -26,11 +26,11 @@ const PageDiv = styled('div')(({ theme }) => ({
     paddingRight: theme.spacing(3),
     width: 'auto',
   },
-}))
+}));
 
 export default function Page({ breadcrumbs, children, help, title }: PropsWithChildren<PageProps>) {
-  const setHelp = useSetHelp()
-  setHelp(help)
+  const setHelp = useSetHelp();
+  setHelp(help);
 
   return (
     <PageDiv>
@@ -44,5 +44,5 @@ export default function Page({ breadcrumbs, children, help, title }: PropsWithCh
         ))}
       <Suspense fallback={<AppSpin.Block />}>{children}</Suspense>
     </PageDiv>
-  )
+  );
 }

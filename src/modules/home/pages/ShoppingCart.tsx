@@ -1,29 +1,29 @@
-import { Box, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material';
 
-import Grid from '@mui/material/Unstable_Grid2'
+import Grid from '@mui/material/Unstable_Grid2';
 
-import Page from '@/common/layout/Page'
-import { useStateValue } from '@/context/StateProvider'
+import Page from '@/common/layout/Page';
+import { useStateValue } from '@/context/StateProvider';
 
-import CheckoutCart from '../components/CheckoutCart'
-import Total from '../components/Total'
+import CheckoutCart from '../components/CheckoutCart';
+import Total from '../components/Total';
+import { useAppSelector } from '@/store/hooks';
+import Product from '../models/Product';
 
 // TODO: FIX THIS PAGE
 export default function ShoppingCart() {
-  const {
-    state: { basket, user },
-  } = useStateValue()
-
+  const { basket } = useAppSelector((state) => state.basket);
   function FormRow() {
     return (
       <>
-        {basket?.map((item) => (
-          <Grid key={item.id} xs={12} sm={6} md={4} lg={3}>
-            <CheckoutCart product={item} />
-          </Grid>
-        ))}
+        {basket &&
+          basket?.map((item: Product) => (
+            <Grid key={item.id} xs={12} sm={6} md={4} lg={3}>
+              <CheckoutCart product={item} />
+            </Grid>
+          ))}
       </>
-    )
+    );
   }
 
   return (
@@ -41,5 +41,5 @@ export default function ShoppingCart() {
         </Grid>
       </Box>
     </Page>
-  )
+  );
 }

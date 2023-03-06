@@ -1,15 +1,14 @@
-import Paper from '@mui/material/Paper'
-import Step from '@mui/material/Step'
-import StepLabel from '@mui/material/StepLabel'
-import Stepper from '@mui/material/Stepper'
-import { styled } from '@mui/material/styles'
-import Typography from '@mui/material/Typography'
-import { useState } from 'react'
+import Paper from '@mui/material/Paper';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
+import Stepper from '@mui/material/Stepper';
+import { styled } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
+import { useState } from 'react';
 
-import AddressForm from '../components/checkoutForm/AddressForm'
-import Confirmation from '../components/checkoutForm/Confirmation'
-import PaymentForm from '../components/checkoutForm/PaymentForm'
-import { useStateValue } from '../../../context/StateProvider'
+import AddressForm from '../components/checkoutForm/AddressForm';
+import Confirmation from '../components/checkoutForm/Confirmation';
+import PaymentForm from '../components/checkoutForm/PaymentForm';
 
 const Main = styled('div')(({ theme }) => ({
   width: 'auto',
@@ -21,11 +20,11 @@ const Main = styled('div')(({ theme }) => ({
     marginLeft: 'auto',
     marginRight: 'auto',
   },
-}))
+}));
 
 const CustomPaper = styled(Paper)(({ theme }) => {
   // convert themeSpacing into a unknoww to cast about in a number
-  const themeSpacing: unknown = theme.spacing(3)
+  const themeSpacing: unknown = theme.spacing(3);
 
   return {
     marginTop: theme.spacing(3),
@@ -36,32 +35,28 @@ const CustomPaper = styled(Paper)(({ theme }) => {
       marginBottom: theme.spacing(6),
       marginRigth: theme.spacing(3),
     },
-  }
-})
+  };
+});
 
 const Checkout = () => {
-  const [activeStep, setActiveStep] = useState(0)
-  const steps = ['Shipping address', 'Payment details']
-  const {
-    state: { paymentMessage },
-    dispatch,
-  } = useStateValue()
+  const [activeStep, setActiveStep] = useState(0);
+  const steps = ['Shipping address', 'Payment details'];
 
   const handleNext = () => {
-    return setActiveStep(activeStep + 1)
-  }
+    return setActiveStep(activeStep + 1);
+  };
 
   const handleBack = () => {
-    return setActiveStep(activeStep - 1)
-  }
+    return setActiveStep(activeStep - 1);
+  };
 
   const Form = () => {
     return activeStep === 0 ? (
       <AddressForm handleNext={handleNext} />
     ) : (
       <PaymentForm handleNext={handleNext} handleBack={handleBack} />
-    )
-  }
+    );
+  };
 
   return (
     <>
@@ -77,11 +72,12 @@ const Checkout = () => {
               </Step>
             ))}
           </Stepper>
-          {activeStep === steps.length ? <Confirmation message={paymentMessage} /> : <Form />}
+          {/* TODO:add payment method */}
+          {activeStep === steps.length ? <Confirmation message='paymentMessage' /> : <Form />}
         </CustomPaper>
       </Main>
     </>
-  )
-}
+  );
+};
 
-export default Checkout
+export default Checkout;

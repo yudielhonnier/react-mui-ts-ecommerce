@@ -1,4 +1,4 @@
 export default interface User {
-  name: string
-  claims: string[]
+  name: string;
+  claims: string[];
 }

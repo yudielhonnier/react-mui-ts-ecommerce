@@ -1,7 +1,7 @@
-import Button from '@mui/material/Button'
-import Divider from '@mui/material/Divider'
-import Typography from '@mui/material/Typography'
-import { Link as RouteLink } from 'react-router-dom'
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
+import { Link as RouteLink } from 'react-router-dom';
 
 const Confirmation = ({ message }: { message: string }) => {
   return (
@@ -20,7 +20,7 @@ const Confirmation = ({ message }: { message: string }) => {
         Back to the Home Page
       </Button>
     </>
-  )
-}
+  );
+};
 
-export default Confirmation
+export default Confirmation;

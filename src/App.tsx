@@ -1,64 +1,39 @@
-// import { useEffect } from "react";
-// import "./App.css";
+import AppSpin from './common/feedback/AppSpin';
+import reducer, { initialState } from './context/reducer';
+import { StateProvider } from './context/StateProvider';
+import I18n from './providers/I18n';
+import ReactQuery from './providers/ReactQuery';
+import Routes from './routing/Routes';
+import { Provider } from 'react-redux';
+import { store } from '@/store/store';
 
-// import NavBar from "./layout/NavBar";
-// import Products from "./modules/home/pages/Products";
-// import CheckoutPage from "./components/CheckoutPage";
-// import { Routes, BrowserRouter, Route } from "react-router-dom";
-// import SignIn from "./modules/auth/components/SignIn";
-// import SignUp from "./components/SignUp";
-// import { auth } from "./firebase";
-// import { actionTypes } from "./context/reducer.types";
-// import { useStateValue } from "./context/StateProvider";
-// import Checkout from "./components/checkoutForm/Checkout";
-// import { ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider, CssBaseline } from '@mui/material';
+import { Suspense } from 'react';
 
-// import { createTheme } from "@mui/material/styles";
-// import { blue, lightBlue, yellow } from "@mui/material/colors";
+import { ColorModeContext, useMode } from './theme';
+import { Theme } from '@mui/material/styles';
 
-// const theme = createTheme({
-//   palette: {
-//     primary: {
-//       main: blue[500],
-//     },
-//     secondary: {
-//       main: lightBlue[500],
-//     },
-//   },
-// });
+function App() {
+  const [theme, colorMode] = useMode();
 
-// function App() {
-//   console.log(import.meta.env.REACT_APP_FIREBASE_API_KEY);
+  return (
+    <ColorModeContext.Provider value={colorMode as { toggleColorMode: () => void }}>
+      <Provider store={store}>
+        <StateProvider initialState={initialState} reducer={reducer}>
+          <ReactQuery>
+            <Suspense fallback={<AppSpin.Screen />}>
+              <ThemeProvider theme={theme as Theme}>
+                <I18n>
+                  <CssBaseline />
+                  <Routes />
+                </I18n>
+              </ThemeProvider>
+            </Suspense>
+          </ReactQuery>
+        </StateProvider>
+      </Provider>
+    </ColorModeContext.Provider>
+  );
+}
 
-//   const { dispatch } = useStateValue();
-
-//   useEffect(() => {
-//     auth.onAuthStateChanged((authUser) => {
-//       console.log("authUser", authUser);
-//       if (authUser) {
-//         dispatch({
-//           type: actionTypes.SET_USER,
-//           user: authUser,
-//         });
-//       }
-//     });
-//   }, []);
-
-//   return (
-//     <ThemeProvider theme={theme}>
-//       <BrowserRouter>
-//         <div className="App">
-//           <Routes>
-//             <Route path="/" element={<Products />} />
-//             <Route path="/checkout-page" element={<CheckoutPage />} />
-//             <Route path="/signin" element={<SignIn />} />
-//             <Route path="/signup" element={<SignUp />} />
-//             <Route path="/checkout" element={<Checkout />} />
-//           </Routes>
-//         </div>
-//       </BrowserRouter>
-//     </ThemeProvider>
-//   );
-// }
-
-// export default App;
+export default App;

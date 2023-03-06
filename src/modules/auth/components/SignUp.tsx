@@ -1,22 +1,22 @@
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-import { Box } from '@mui/material'
-import Avatar from '@mui/material/Avatar'
-import Button from '@mui/material/Button'
-import Checkbox from '@mui/material/Checkbox'
-import Container from '@mui/material/Container'
-import CssBaseline from '@mui/material/CssBaseline'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Grid from '@mui/material/Grid'
-import Link from '@mui/material/Link'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
-import TextField from '@mui/material/TextField'
-import Typography, { TypographyProps } from '@mui/material/Typography'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
-import * as React from 'react'
-import { useState } from 'react'
-import { Link as RouteLink, useNavigate } from 'react-router-dom'
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { Box } from '@mui/material';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
+import Container from '@mui/material/Container';
+import CssBaseline from '@mui/material/CssBaseline';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
+import Typography, { TypographyProps } from '@mui/material/Typography';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import * as React from 'react';
+import { useState } from 'react';
+import { Link as RouteLink, useNavigate } from 'react-router-dom';
 
-import { auth } from '../services/firebase'
+import { auth } from '../services/firebase';
 
 function Copyright(props: TypographyProps) {
   return (
@@ -27,35 +27,35 @@ function Copyright(props: TypographyProps) {
       </Link>{' '}
       {new Date().getFullYear()}.
     </Typography>
-  )
+  );
 }
 
 export default function SignUp() {
-  const theme = createTheme()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const navigate = useNavigate()
+  const theme = createTheme();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const data = new FormData(event.currentTarget)
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
     console.log({
       email: data.get('email'),
       password: data.get('password'),
-    })
-  }
+    });
+  };
 
   const signupSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault()
+    e.preventDefault();
     createUserWithEmailAndPassword(auth, email, password)
       .then((auth) => {
-        console.log(auth)
+        console.log(auth);
         if (auth) {
-          navigate('/')
+          navigate('/');
         }
       })
-      .catch((err) => alert(err.message))
-  }
+      .catch((err) => alert(err.message));
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -85,7 +85,6 @@ export default function SignUp() {
                   fullWidth
                   id='firstName'
                   label='First Name'
-                  autoFocus
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -149,5 +148,5 @@ export default function SignUp() {
         <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
-  )
+  );
 }

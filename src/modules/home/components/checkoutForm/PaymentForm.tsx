@@ -1,24 +1,22 @@
-import { CircularProgress } from '@mui/material'
-import Button from '@mui/material/Button'
-import Divider from '@mui/material/Divider'
-import Typography from '@mui/material/Typography'
-import { CardElement, Elements, useElements, useStripe } from '@stripe/react-stripe-js'
-import { loadStripe, StripeCardElementOptions } from '@stripe/stripe-js'
+import { CircularProgress } from '@mui/material';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
+import { CardElement, Elements, useElements, useStripe } from '@stripe/react-stripe-js';
+import { loadStripe, StripeCardElementOptions } from '@stripe/stripe-js';
 
-import axios from 'axios'
-import * as React from 'react'
-import { useState } from 'react'
+import axios from 'axios';
+import * as React from 'react';
+import { useState } from 'react';
 
-import Review from './Review'
-import { getBasketTotal } from '../../../../context/reducer'
-import { actionTypes } from '../../../../context/reducer.types'
-import { useStateValue } from '../../../../context/StateProvider'
-import useFormatMoney from '../../../../hooks/useFormatMoney'
-import { IPaymentFunctions } from '../../../../types/payment.types'
+import Review from './Review';
+import { getBasketTotal } from '../../../../context/reducer';
+import { actionTypes } from '../../../../context/reducer.types';
+import { useStateValue } from '../../../../context/StateProvider';
+import useFormatMoney from '../../../../hooks/useFormatMoney';
+import { IPaymentFunctions } from '../../../../types/payment.types';
 
-const stripePromise = loadStripe(
-  'pk_test_51LpFAZIdQtsXmsq3GwTzEFktCyQ1rI3aYtmKmTZjd4bYt6NvlwI2o7tMbpGfjPNY5TnQSVNeEBH7dDokqt6id3PE00c8NYYdgC',
-)
+const stripePromise = loadStripe(import.meta.env.VITE_APP_STRIPE_KEY);
 
 const CARD_ELEMENT_OPTIONS: Partial<StripeCardElementOptions> = {
   iconStyle: 'solid',
@@ -39,61 +37,62 @@ const CARD_ELEMENT_OPTIONS: Partial<StripeCardElementOptions> = {
       },
     },
   },
-}
+};
 
+// TODO:ADD THIS TO ASYNC THUNK
 const CheckoutForm = ({ handleBack, handleNext }: IPaymentFunctions) => {
   const {
-    state: { basket, paymentMessage },
+    state: { basket },
     dispatch,
-  } = useStateValue()
-  const [loading, setLoading] = useState(false)
-  const stripe = useStripe()
-  const elements = useElements()
-  const bastketFormated = useFormatMoney(getBasketTotal(basket), '€')
+  } = useStateValue();
+  const [loading, setLoading] = useState(false);
+  const stripe = useStripe();
+  const elements = useElements();
+  const bastketFormated = useFormatMoney(getBasketTotal(basket), '€');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const cardElement = elements!.getElement(CardElement)
+    e.preventDefault();
+    const cardElement = elements!.getElement(CardElement);
     if (!cardElement) {
-      return
+      return;
     }
 
     const { error, paymentMethod } = await stripe!.createPaymentMethod({
       type: 'card',
       card: cardElement,
-    })
-    console.log(paymentMethod, error)
-    setLoading(true)
+    });
+    console.log(paymentMethod, error);
+    setLoading(true);
     if (!error) {
-      const { id } = paymentMethod
+      const { id } = paymentMethod;
       try {
         const { data } = await axios.post('http://localhost:3001/api/checkout', {
           id,
 
           amount: getBasketTotal(basket),
-        })
-        console.log('data : ', data)
+        });
+        console.log('data : ', data);
 
         dispatch({
           type: actionTypes.SET_PAYMENT_MESSAGE,
           paymentMessage: data.message,
-        })
+        });
         if (data.message == 'Successful Payment') {
           dispatch({
             type: actionTypes.EMPTY_BASKET,
             basket: [],
-          })
+          });
         }
-        alert(data.message)
-        elements!.getElement(CardElement)!.clear()
-        handleNext()
+        alert(data.message);
+        elements!.getElement(CardElement)!.clear();
+        handleNext();
       } catch (error) {
-        console.log(error)
-        handleNext()
+        console.log(error);
+        handleNext();
       }
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -113,8 +112,8 @@ const CheckoutForm = ({ handleBack, handleNext }: IPaymentFunctions) => {
         </Button>
       </div>
     </form>
-  )
-}
+  );
+};
 
 const PaymentForm = ({ handleBack, handleNext }: IPaymentFunctions) => {
   return (
@@ -128,7 +127,7 @@ const PaymentForm = ({ handleBack, handleNext }: IPaymentFunctions) => {
         <CheckoutForm handleBack={handleBack} handleNext={handleNext} />
       </Elements>
     </>
-  )
-}
+  );
+};
 
-export default PaymentForm
+export default PaymentForm;

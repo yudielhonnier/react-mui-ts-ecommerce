@@ -1,28 +1,28 @@
-import AuthProvider from '@/modules/auth/AuthProvider'
-import { lazy } from 'react'
-import { createBrowserRouter, RouteObject, RouterProvider } from 'react-router-dom'
+import AuthProvider from '@/modules/auth/AuthProvider';
+import { lazy } from 'react';
+import { createBrowserRouter, RouteObject, RouterProvider } from 'react-router-dom';
 
-import NotFound from './NotFound'
-import RedirectToLocale from './RedirectToLocale'
-import type RouteConfig from './RouteConfig'
-import RouteError from './RouteError'
+import NotFound from './NotFound';
+import RedirectToLocale from './RedirectToLocale';
+import type RouteConfig from './RouteConfig';
+import RouteError from './RouteError';
 
 type NamedRouteObject = RouteObject & {
-  name?: string
-}
-const AppLayout = lazy(() => import('@/layout/AppLayout'))
+  name?: string;
+};
+const AppLayout = lazy(() => import('@/layout/AppLayout'));
 
 const routeConfigs = import.meta.glob('../modules/**/pages/**/routes.tsx', {
   eager: true,
   import: 'default',
-})
-const routeObjects: NamedRouteObject[] = []
+});
+const routeObjects: NamedRouteObject[] = [];
 
-const keys: string[] = []
-const configKeys = Object.keys(routeConfigs)
-configKeys.forEach((path) => keys.push(path))
+const keys: string[] = [];
+const configKeys = Object.keys(routeConfigs);
+configKeys.forEach((path) => keys.push(path));
 // eslint-disable-next-line security/detect-object-injection
-keys.sort((a, b) => a.split('/').length - b.split('/').length) // To add parents first
+keys.sort((a, b) => a.split('/').length - b.split('/').length); // To add parents first
 
 keys.forEach((path) => {
   // eslint-disable-next-line security/detect-object-injection
@@ -31,25 +31,25 @@ keys.forEach((path) => {
       // eslint-disable-next-line security/detect-object-injection
       ...routeConfig,
       errorElement: <RouteError />,
-    }
+    };
     if (config.parent) {
-      const parent = routeObjects.filter((r) => r.name === config.parent)[0]
+      const parent = routeObjects.filter((r) => r.name === config.parent)[0];
       if (parent.children) {
-        parent.children.push(config)
+        parent.children.push(config);
       } else {
-        parent.children = [config]
+        parent.children = [config];
       }
     } else {
       // @ts-ignore
-      routeObjects.push(config)
+      routeObjects.push(config);
     }
   }
-})
+});
 
 routeObjects.push({
   element: <NotFound />,
   path: '*',
-})
+});
 
 const router = createBrowserRouter([
   {
@@ -67,8 +67,8 @@ const router = createBrowserRouter([
     path: '/*',
     element: <RedirectToLocale />,
   },
-])
+]);
 
 export default function Routes() {
-  return <RouterProvider router={router} />
+  return <RouterProvider router={router} />;
 }

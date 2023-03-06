@@ -1,92 +1,70 @@
-import { AddShoppingCart } from '@mui/icons-material'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import Card from '@mui/material/Card'
-import CardActions from '@mui/material/CardActions'
-import CardContent from '@mui/material/CardContent'
-import CardMedia from '@mui/material/CardMedia'
-import Collapse from '@mui/material/Collapse'
-import IconButton, { IconButtonProps } from '@mui/material/IconButton'
-import { styled } from '@mui/material/styles'
-import Typography from '@mui/material/Typography'
-import { useState } from 'react'
+import { AddShoppingCart } from '@mui/icons-material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Collapse from '@mui/material/Collapse';
+import IconButton, { IconButtonProps } from '@mui/material/IconButton';
+import { styled } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
+import { useState } from 'react';
 
-import useFormatMoney from '@/hooks/useFormatMoney'
+import useFormatMoney from '@/hooks/useFormatMoney';
 
-import { actionTypes, IItem } from '@/context/reducer.types'
-import { useStateValue } from '@/context/StateProvider'
+import { IItem } from '@/context/reducer.types';
+import { useAppDispatch } from '@/store/store';
+import { useAppSelector } from '@/store/hooks';
+import { addToBasket } from '@/store/slices/basket/basketSlice';
 
 interface ExpandMoreProps extends IconButtonProps {
-  expand: boolean
+  expand: boolean;
 }
 
 const ExpandMore = styled((props: ExpandMoreProps) => {
-  const { ...other } = props
-  return <IconButton {...other} />
+  const { ...other } = props;
+  return <IconButton {...other} />;
 })(({ theme, expand }) => ({
   transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
   marginLeft: 'auto',
   transition: theme.transitions.create('transform', {
     duration: theme.transitions.duration.shortest,
   }),
-}))
-
-const StyledCard = styled(Card)(() => ({
-  maxWidth: 345,
-}))
+}));
 
 export default function CardProduct({
   product: { id, name, productType, price, rating, quantity, image, decriptionProd },
 }: {
-  product: IItem
+  product: IItem;
 }) {
-  const [expanded, setExpanded] = useState(false)
+  const [expanded, setExpanded] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
 
-  const {
-    state: { basket },
-    dispatch,
-  } = useStateValue()
+  const priceFormated = useFormatMoney(price, '€');
 
-  const priceFormated = useFormatMoney(price, '€')
-
-  const addToBasket = () => {
-    const index = basket.findIndex((basketItem) => basketItem.id === id)
-    index === -1
-      ? dispatch({
-          type: actionTypes.ADD_TO_BASKET,
-          item: {
-            id,
-            name,
-            productType,
-            image,
-            price,
-            rating,
-            quantity,
-            decriptionProd,
-          },
-        })
-      : dispatch({
-          type: actionTypes.INCREASE_QUANTITY_ITEM,
-          item: {
-            id,
-            name,
-            productType,
-            image,
-            price,
-            rating,
-            quantity,
-            decriptionProd,
-          },
-        })
-  }
+  const addProductToBasket = () => {
+    dispatch(
+      addToBasket({
+        id,
+        name,
+        productType,
+        image,
+        price,
+        rating,
+        quantity,
+        decriptionProd,
+      })
+    );
+  };
 
   const convertRating = (rating: number) => {
-    if (rating > 10) return Math.round(parseInt(rating.toString().slice(0, 1)))
-    else return rating
-  }
+    if (rating > 10) return Math.round(parseInt(rating.toString().slice(0, 1)));
+    else return rating;
+  };
 
   const handleExpandClick = () => {
-    setExpanded(!expanded)
-  }
+    setExpanded((expanded) => !expanded);
+  };
 
   return (
     <Card sx={{ maxWidth: 200, margin: 'auto' }}>
@@ -120,7 +98,7 @@ export default function CardProduct({
       </CardContent>
       <CardActions disableSpacing sx={{ height: 20 }}>
         {/* TODO:Add iconbutton globally */}
-        <IconButton aria-label='Add to Cart' onClick={addToBasket}>
+        <IconButton aria-label='Add to Cart' onClick={addProductToBasket}>
           <AddShoppingCart fontSize='medium' />
         </IconButton>
         {Array(convertRating(rating))
@@ -146,5 +124,5 @@ export default function CardProduct({
         </CardContent>
       </Collapse>
     </Card>
-  )
+  );
 }

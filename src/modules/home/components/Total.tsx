@@ -1,18 +1,18 @@
-import { Button } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
+import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
-import useFormatMoney from '@/hooks/useFormatMoney'
+import useFormatMoney from '@/hooks/useFormatMoney';
 
-import { getBasketTotal, getTotalItems } from '@/context/reducer'
-import { useStateValue } from '@/context/StateProvider'
+import { getBasketTotal, getTotalItems } from '@/context/reducer';
+import { useStateValue } from '@/context/StateProvider';
 
 export default function Total() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const {
     state: { basket },
-  } = useStateValue()
+  } = useStateValue();
 
-  const basketsFormated = useFormatMoney(getBasketTotal(basket), '€')
+  const basketsFormated = useFormatMoney(getBasketTotal(basket), '€');
 
   return (
     <div
@@ -30,5 +30,5 @@ export default function Total() {
         Check Out
       </Button>
     </div>
-  )
+  );
 }
