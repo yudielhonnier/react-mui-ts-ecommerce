@@ -1,11 +1,11 @@
-import { styled } from '@mui/material/styles'
+import { styled } from '@mui/material/styles';
 
 export const Main = styled('div', {
   shouldForwardProp: (prop) => prop !== 'open',
 })<{
-  open?: boolean
-  marginLeft: number
-}>(({ theme, open, marginLeft }) => ({
+  open?: boolean;
+  marginleft: number;
+}>(({ theme, open, marginleft }) => ({
   // flexGrow: 1,
   padding: theme.spacing(3),
   transition: theme.transitions.create('margin', {
@@ -18,6 +18,6 @@ export const Main = styled('div', {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    marginLeft: `${marginLeft}px`,
+    marginLeft: `${marginleft}px`,
   }),
-}))
+}));

@@ -10,32 +10,32 @@ export enum actionTypes {
 }
 
 export interface IItem {
-  id: number
-  name: string
-  productType: string
-  price: number
-  rating: number
-  quantity: number
-  image: string
-  decriptionProd: string
+  id: number;
+  name: string;
+  productType: string;
+  price: number;
+  rating: number;
+  quantity: number;
+  image: string;
+  decriptionProd: string;
 }
 
 export interface IInitialState {
-  basket: IItem[]
-  user: IUser | null
-  shipingData: {}
-  paymentMessage: string
+  basket: IItem[];
+  user: IUser | null;
+  shipingData: {};
+  paymentMessage: string;
 }
 
 export interface IUser {
-  email: string | null
+  email: string | null;
 }
 
 export interface IShipingData {
-  firstName: string
-  lastName: string
-  address: string
-  email: string
-  city: string
-  postcode: string
+  firstName: string;
+  lastName: string;
+  address: string;
+  email: string;
+  city: string;
+  postcode: string;
 }

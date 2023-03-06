@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight, Inbox, Mail } from '@mui/icons-material'
+import { ChevronLeft, ChevronRight, Inbox, Mail } from '@mui/icons-material';
 import {
   Divider,
   Drawer,
@@ -9,13 +9,13 @@ import {
   ListItemIcon,
   ListItemText,
   Typography,
-} from '@mui/material'
-import { styled, useTheme } from '@mui/material/styles'
+} from '@mui/material';
+import { styled, useTheme } from '@mui/material/styles';
 
 interface ICustomDrawerProps {
-  open: boolean
-  drawerWidth: number
-  handleDrawerClose: () => void
+  open: boolean;
+  drawerWidth: number;
+  handleDrawerClose: () => void;
 }
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -28,16 +28,16 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   '& .MuiBackdrop-root': {
     invisible: true,
   },
-}))
+}));
 
 // let use both drawer and main at the same time
 const drawerVariant = (open: boolean) => {
-  if (open) return 'permanent'
-  else return 'temporary'
-}
+  if (open) return 'permanent';
+  else return 'temporary';
+};
 
 const CustomDrawer = ({ open, drawerWidth, handleDrawerClose }: ICustomDrawerProps) => {
-  const theme = useTheme()
+  const theme = useTheme();
 
   return (
     <Drawer
@@ -99,7 +99,7 @@ const CustomDrawer = ({ open, drawerWidth, handleDrawerClose }: ICustomDrawerPro
         ))}
       </List>
     </Drawer>
-  )
-}
+  );
+};
 
-export default CustomDrawer
+export default CustomDrawer;

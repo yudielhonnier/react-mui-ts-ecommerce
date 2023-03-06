@@ -1,36 +1,39 @@
 import {
   AccountCircle,
+  DarkModeOutlined,
   Help,
+  LightModeOutlined,
   Menu as MenuIcon,
   More,
   Notifications,
   Search,
   ShoppingCart,
-} from '@mui/icons-material'
-import { alpha, Badge, Box, IconButton, InputBase, Toolbar, styled } from '@mui/material'
+} from '@mui/icons-material';
+import { alpha, Badge, Box, IconButton, InputBase, Toolbar, styled, useTheme } from '@mui/material';
 
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar'
-import { useNavigate } from 'react-router-dom'
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import { useNavigate } from 'react-router-dom';
 
-import { SytledIconButton } from '@/common/layout/StyledIconButton'
-import { getTotalItems } from '@/context/reducer'
-import { useStateValue } from '@/context/StateProvider'
+import { SytledIconButton } from '@/common/layout/StyledIconButton';
 
-import Logo from '../assets/ecommerce.png'
+import Logo from '../assets/ecommerce.png';
+import { useAppSelector } from '@/store/hooks';
+import Product from '@/modules/home/models/Product';
+import { tokens, ColorModeContext } from '@/theme';
+import { useContext } from 'react';
 
 interface ICustomAppBarProps {
-  open?: boolean
-  drawerWidth: number
-  handleDrawerOpen: () => void
-  handleProfileMenuOpen: (event: React.MouseEvent<HTMLElement>) => void
-  handleMobileMenuOpen: (event: React.MouseEvent<HTMLElement>) => void
-  menuId: string
-  mobileMenuId: string
+  open?: boolean;
+  drawerWidth: number;
+  handleDrawerOpen: () => void;
+  handleProfileMenuOpen: (event: React.MouseEvent<HTMLElement>) => void;
+  handleMobileMenuOpen: (event: React.MouseEvent<HTMLElement>) => void;
+  menuId: string;
+  mobileMenuId: string;
 }
 
 interface AppBarProps extends MuiAppBarProps {
-  open?: boolean
-  drawerWidth: number
+  open?: boolean;
 }
 
 const AppBar = styled(MuiAppBar, {
@@ -41,7 +44,7 @@ const AppBar = styled(MuiAppBar, {
     duration: theme.transitions.duration.leavingScreen,
   }),
   zIndex: theme.zIndex.drawer + 1,
-}))
+}));
 
 const SearchDiv = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -56,7 +59,7 @@ const SearchDiv = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
     width: 'auto',
   },
-}))
+}));
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),
@@ -66,10 +69,9 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-}))
+}));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1),
     // vertical padding + font size from searchIcon
@@ -81,10 +83,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
       width: '20ch',
     },
   },
-}))
+}));
 
 const CustomAppBar = ({
-  drawerWidth,
   open,
   handleDrawerOpen,
   menuId,
@@ -92,22 +93,30 @@ const CustomAppBar = ({
   handleProfileMenuOpen,
   handleMobileMenuOpen,
 }: ICustomAppBarProps) => {
-  const {
-    state: { basket },
-  } = useStateValue()
-  const navigate = useNavigate()
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const colorMode = useContext(ColorModeContext);
+
+  const navigate = useNavigate();
+  const { basket } = useAppSelector((state) => state.basket);
 
   // TODO:ADD VALIDATION TO LOGGIN
-  const isLoggin = false
+  const isLoggin = false;
+
+  const getQuantityProducts = (basket: Product[]) => {
+    let total = 0;
+    basket.forEach((el) => (total += el.quantity));
+    console.log('totallll', total);
+    return total;
+  };
 
   return (
-    <AppBar position='fixed' sx={{ boxShadow: 'none' }} open={open} drawerWidth={drawerWidth}>
+    <AppBar position='fixed' sx={{ boxShadow: 'none' }} open={open}>
       <Toolbar variant='dense'>
         {/* TODO:ADD TOOLTIP TO ALL THE BUTTONS */}
         <SytledIconButton
           size='large'
           edge='start'
-          color='inherit'
           aria-label='menu'
           onClick={() => navigate('')}
           // sx={{ mr: 2 }}
@@ -117,13 +126,13 @@ const CustomAppBar = ({
             style={{
               height: '2rem',
             }}
+            alt='logo'
           />
         </SytledIconButton>
 
         <SytledIconButton
           size='large'
           edge='start'
-          color='inherit'
           aria-label='open drawer'
           onClick={handleDrawerOpen}
           sx={{ mr: 5 }}
@@ -140,8 +149,8 @@ const CustomAppBar = ({
         </SearchDiv>
 
         <SytledIconButton aria-label='show cart items' onClick={() => navigate('shopping-cart')}>
-          <Badge badgeContent={getTotalItems(basket)} color='error' showZero={true}>
-            <ShoppingCart color='secondary' fontSize='medium' />
+          <Badge badgeContent={getQuantityProducts(basket)} color='error' showZero={true}>
+            <ShoppingCart fontSize='medium' />
           </Badge>
         </SytledIconButton>
         <Box sx={{ flexGrow: 1 }} />
@@ -156,13 +165,18 @@ const CustomAppBar = ({
               </RouteLink>
             </SytledIconButton> */}
 
+          {/* TODO:FIX APPBAR COLOR */}
+          <SytledIconButton onClick={colorMode.toggleColorMode}>
+            {theme.palette.mode === 'dark' ? <DarkModeOutlined /> : <LightModeOutlined />}
+          </SytledIconButton>
+
           <SytledIconButton aria-label='show cart items'>
-            <Help color='secondary' fontSize='medium' />
+            <Help fontSize='medium' />
           </SytledIconButton>
 
           <SytledIconButton aria-label='show cart items'>
             <Badge>
-              <Notifications color='secondary' fontSize='medium' />
+              <Notifications fontSize='medium' />
             </Badge>
           </SytledIconButton>
 
@@ -172,9 +186,8 @@ const CustomAppBar = ({
             aria-controls={menuId}
             aria-haspopup='true'
             onClick={handleProfileMenuOpen}
-            color='inherit'
           >
-            {isLoggin ? <AccountCircle color='secondary' fontSize='medium' /> : <p>SignIn</p>}
+            {isLoggin ? <AccountCircle fontSize='medium' /> : <p>SignIn</p>}
           </SytledIconButton>
         </Box>
         <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
@@ -183,14 +196,13 @@ const CustomAppBar = ({
             aria-controls={mobileMenuId}
             aria-haspopup='true'
             onClick={handleMobileMenuOpen}
-            color='inherit'
           >
             <More />
           </IconButton>
         </Box>
       </Toolbar>
     </AppBar>
-  )
-}
+  );
+};
 
-export default CustomAppBar
+export default CustomAppBar;

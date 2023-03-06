@@ -1,4 +1,4 @@
 export default interface Rating {
-  rate: number
-  count: number
+  rate: number;
+  count: number;
 }

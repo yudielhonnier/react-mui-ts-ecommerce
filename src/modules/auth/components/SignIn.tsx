@@ -1,4 +1,4 @@
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {
   Avatar,
   Box,
@@ -10,15 +10,15 @@ import {
   Link,
   TextField,
   Typography,
-} from '@mui/material'
-import Container from '@mui/material/Container'
-import { TypographyProps } from '@mui/material/Typography'
-import * as React from 'react'
-import { useState } from 'react'
-import { Link as RouteLink } from 'react-router-dom'
+} from '@mui/material';
+import Container from '@mui/material/Container';
+import { TypographyProps } from '@mui/material/Typography';
+import * as React from 'react';
+import { useState } from 'react';
+import { Link as RouteLink } from 'react-router-dom';
 
-import useAuthFunctions from '../hooks/useAuthFunctions'
-import useSignIn from '../hooks/useSignIn'
+import useAuthFunctions from '../hooks/useAuthFunctions';
+import useSignIn from '../hooks/useSignIn';
 
 function Copyright(props: TypographyProps) {
   return (
@@ -29,35 +29,35 @@ function Copyright(props: TypographyProps) {
       </Link>{' '}
       {new Date().getFullYear()}.
     </Typography>
-  )
+  );
 }
 
 export default function SignIn() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const { login } = useAuthFunctions()
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { login } = useAuthFunctions();
   // TODO: here it possible destructure isLoading
-  const { signIn, isLoading } = useSignIn()
+  const { signIn, isLoading } = useSignIn();
 
   // TODO:SEE WHAT TO DO WITH THIS FUNCTION
   const handleSubmit = (ev: React.FormEvent<HTMLFormElement>) => {
-    ev.preventDefault()
-    ev.stopPropagation()
+    ev.preventDefault();
+    ev.stopPropagation();
 
-    const data = new FormData(ev.currentTarget)
+    const data = new FormData(ev.currentTarget);
     console.log({
       email: data.get('email'),
       password: data.get('password'),
-    })
+    });
 
     signIn({ email, password })
       .then(login)
-      .catch((err) => alert(err.message))
-  }
+      .catch((err) => alert(err.message));
+  };
 
   const signinSubmit = (ev: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    ev.preventDefault()
-  }
+    ev.preventDefault();
+  };
 
   return (
     <Container component='main' maxWidth='xs'>
@@ -87,7 +87,6 @@ export default function SignIn() {
             label='Email Address'
             name='email'
             autoComplete='email'
-            autoFocus
           />
           <TextField
             value={password}
@@ -128,5 +127,5 @@ export default function SignIn() {
       </Box>
       <Copyright sx={{ mt: 8, mb: 4 }} />
     </Container>
-  )
+  );
 }

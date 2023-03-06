@@ -1,13 +1,13 @@
-import { Button, Typography } from '@mui/material'
-import { Box } from '@mui/system'
-import { useTranslation } from 'react-i18next'
+import { Button, Typography } from '@mui/material';
+import { Box } from '@mui/system';
+import { useTranslation } from 'react-i18next';
 
-import useSetHelp from '@/common/feedback/useSetHelp'
+import useSetHelp from '@/common/feedback/useSetHelp';
 
 export default function NotFound() {
-  const { t } = useTranslation('routes')
-  const setHelp = useSetHelp()
-  setHelp(<Typography>{t('404help')}</Typography>)
+  const { t } = useTranslation('routes');
+  const setHelp = useSetHelp();
+  setHelp(<Typography>{t('404help')}</Typography>);
 
   // return <Result status='404' title={t('404')} />;
   return (
@@ -29,5 +29,5 @@ export default function NotFound() {
       </Typography>
       <Button variant='contained'>Back Home</Button>
     </Box>
-  )
+  );
 }

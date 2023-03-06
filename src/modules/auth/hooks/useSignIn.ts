@@ -1,7 +1,7 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query';
 
-import AuthState from '../contexts/AuthState'
-import AuthService from '../services/AuthService'
+import AuthState from '../contexts/AuthState';
+import AuthService from '../services/AuthService';
 
 // TODO:USE RTK QUERY INSTEAD OF THIS
 export default function useSignIn() {
@@ -9,6 +9,6 @@ export default function useSignIn() {
     AuthState,
     Error,
     { email: string; password: string }
-  >(({ email, password }) => AuthService.login(email, password))
-  return { signIn: mutateAsync, isLoading }
+  >(({ email, password }) => AuthService.login(email, password));
+  return { signIn: mutateAsync, isLoading };
 }

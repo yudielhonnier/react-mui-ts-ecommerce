@@ -1,4 +1,5 @@
-import type { createContext, ReactNode } from 'react'
+import type { ReactNode } from 'react';
+import { createContext } from 'react';
 
 // @ts-ignore
-export const SetHelpContext = createContext<(node: ReactNode) => void>()
+export const SetHelpContext = createContext<(node: ReactNode) => void>();

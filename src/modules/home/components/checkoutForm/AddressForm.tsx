@@ -1,17 +1,17 @@
-import Button from '@mui/material/Button'
-import Grid from '@mui/material/Grid'
-import Typography from '@mui/material/Typography'
-import { FormProvider, useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
-import AddressInput from './AddressInput'
-import { actionTypes, IShipingData } from '../../../../context/reducer.types'
-import { useStateValue } from '../../../../context/StateProvider'
+import AddressInput from './AddressInput';
+import { actionTypes, IShipingData } from '../../../../context/reducer.types';
+import { useStateValue } from '../../../../context/StateProvider';
 
 export default function AddressForm({ handleNext }: { handleNext: () => void }) {
-  const methods = useForm()
-  const { dispatch } = useStateValue()
-  const navigate = useNavigate()
+  const methods = useForm();
+  const { dispatch } = useStateValue();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -24,8 +24,8 @@ export default function AddressForm({ handleNext }: { handleNext: () => void }) 
             dispatch({
               type: actionTypes.SET_SHIPPINGDATA,
               shipingData: data as IShipingData,
-            })
-            handleNext()
+            });
+            handleNext();
           })}
         >
           <Grid container spacing={3}>
@@ -51,5 +51,5 @@ export default function AddressForm({ handleNext }: { handleNext: () => void }) 
         </form>
       </FormProvider>
     </>
-  )
+  );
 }

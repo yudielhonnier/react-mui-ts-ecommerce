@@ -1,9 +1,10 @@
-import { Button, Typography } from '@mui/material'
-import { Box } from '@mui/system'
-import { useTranslation } from 'react-i18next'
+import { Button, Typography } from '@mui/material';
+import { Box } from '@mui/system';
+import { useTranslation } from 'react-i18next';
 
 export default function RouteError() {
-  const { t } = useTranslation('routes')
+  // TODO:USE THIS t variable
+  const { t } = useTranslation('routes');
   // return <Result status='500' title={t('500')} />;
   return (
     <Box
@@ -21,5 +22,5 @@ export default function RouteError() {
       </Typography>
       <Button variant='contained'>Back Home</Button>
     </Box>
-  )
+  );
 }
