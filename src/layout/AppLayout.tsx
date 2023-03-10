@@ -68,36 +68,33 @@ export default function AppLayout() {
 
   return (
     <SetHelpContext.Provider value={(node: ReactNode) => (helpNode.current = node)}>
-      <Suspense fallback={<AppSpin.Block />}>
-        <Box sx={{ flexGrow: 1, marginBottom: '7rem' }}>
-          <CustomAppBar
-            drawerWidth={drawerWidth}
-            open={open}
-            handleDrawerOpen={handleDrawerOpen}
-            menuId={menuId}
-            mobileMenuId={mobileMenuId}
-            handleProfileMenuOpen={handleProfileMenuOpen}
-            handleMobileMenuOpen={handleMobileMenuOpen}
-          />
-          <CustomDrawer
-            open={open}
-            drawerWidth={drawerWidth}
-            handleDrawerClose={handleDrawerClose}
-          />
+      <Box sx={{ flexGrow: 1 }}>
+        <CustomAppBar
+          drawerWidth={drawerWidth}
+          open={open}
+          handleDrawerOpen={handleDrawerOpen}
+          menuId={menuId}
+          mobileMenuId={mobileMenuId}
+          handleProfileMenuOpen={handleProfileMenuOpen}
+          handleMobileMenuOpen={handleMobileMenuOpen}
+        />
+        <CustomDrawer open={open} drawerWidth={drawerWidth} handleDrawerClose={handleDrawerClose} />
 
-          <Main open={open} marginleft={drawerWidth}>
+        {/* resize main section depending on the drawerWidth */}
+        <Main open={open} marginleft={drawerWidth}>
+          <Suspense fallback={<AppSpin.Block />}>
             <Outlet />
-          </Main>
-          <MobileMenu
-            mobileMoreAnchorEl={mobileMoreAnchorEl}
-            mobileMenuId={mobileMenuId}
-            isMobileMenuOpen={isMobileMenuOpen}
-            handleMobileMenuClose={handleMobileMenuClose}
-            handleProfileMenuOpen={handleProfileMenuOpen}
-          />
-          {renderMenu}
-        </Box>
-      </Suspense>
+          </Suspense>
+        </Main>
+        <MobileMenu
+          mobileMoreAnchorEl={mobileMoreAnchorEl}
+          mobileMenuId={mobileMenuId}
+          isMobileMenuOpen={isMobileMenuOpen}
+          handleMobileMenuClose={handleMobileMenuClose}
+          handleProfileMenuOpen={handleProfileMenuOpen}
+        />
+        {renderMenu}
+      </Box>
     </SetHelpContext.Provider>
   );
 }

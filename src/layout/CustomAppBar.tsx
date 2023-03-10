@@ -14,13 +14,14 @@ import { alpha, Badge, Box, IconButton, InputBase, Toolbar, styled, useTheme } f
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import { useNavigate } from 'react-router-dom';
 
-import { SytledIconButton } from '@/common/layout/StyledIconButton';
+// import { SytledIconButton } from '@/common/layout/StyledIconButton';
 
 import Logo from '../assets/ecommerce.png';
 import { useAppSelector } from '@/store/hooks';
 import Product from '@/modules/home/models/Product';
 import { tokens, ColorModeContext } from '@/theme';
 import { useContext } from 'react';
+import { SytledIconButton } from '@/common/layout/StyledIconButton';
 
 interface ICustomAppBarProps {
   open?: boolean;
@@ -35,6 +36,12 @@ interface ICustomAppBarProps {
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
+
+// const SytledIconButton = styled(IconButton)(({ theme }) => ({
+//   outline: '0px !important',
+//   // color: alpha(theme.palette.primary, 0.15),
+//   color: theme.palette.common.white,
+// }));
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -74,6 +81,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   '& .MuiInputBase-input': {
     padding: theme.spacing(1),
+    color: theme.palette.common.white,
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
@@ -111,7 +119,13 @@ const CustomAppBar = ({
   };
 
   return (
-    <AppBar position='fixed' sx={{ boxShadow: 'none' }} open={open}>
+    <AppBar
+      position='fixed'
+      sx={{ boxShadow: 'none' }}
+      open={open}
+      color='primary'
+      enableColorOnDark={true}
+    >
       <Toolbar variant='dense'>
         {/* TODO:ADD TOOLTIP TO ALL THE BUTTONS */}
         <SytledIconButton
@@ -119,6 +133,8 @@ const CustomAppBar = ({
           edge='start'
           aria-label='menu'
           onClick={() => navigate('')}
+          theme={theme}
+          // color='white'
           // sx={{ mr: 2 }}
         >
           <img
@@ -131,6 +147,7 @@ const CustomAppBar = ({
         </SytledIconButton>
 
         <SytledIconButton
+          theme={theme}
           size='large'
           edge='start'
           aria-label='open drawer'
@@ -148,7 +165,11 @@ const CustomAppBar = ({
           <StyledInputBase placeholder='Search…' inputProps={{ 'aria-label': 'search' }} />
         </SearchDiv>
 
-        <SytledIconButton aria-label='show cart items' onClick={() => navigate('shopping-cart')}>
+        <SytledIconButton
+          theme={theme}
+          aria-label='show cart items'
+          onClick={() => navigate('shopping-cart')}
+        >
           <Badge badgeContent={getQuantityProducts(basket)} color='error' showZero={true}>
             <ShoppingCart fontSize='medium' />
           </Badge>
@@ -166,21 +187,22 @@ const CustomAppBar = ({
             </SytledIconButton> */}
 
           {/* TODO:FIX APPBAR COLOR */}
-          <SytledIconButton onClick={colorMode.toggleColorMode}>
-            {theme.palette.mode === 'dark' ? <DarkModeOutlined /> : <LightModeOutlined />}
+          <SytledIconButton theme={theme} onClick={colorMode.toggleColorMode}>
+            {theme.palette.mode === 'dark' ? <LightModeOutlined /> : <DarkModeOutlined />}
           </SytledIconButton>
 
-          <SytledIconButton aria-label='show cart items'>
+          <SytledIconButton theme={theme} aria-label='show cart items'>
             <Help fontSize='medium' />
           </SytledIconButton>
 
-          <SytledIconButton aria-label='show cart items'>
+          <SytledIconButton theme={theme} aria-label='show cart items'>
             <Badge>
               <Notifications fontSize='medium' />
             </Badge>
           </SytledIconButton>
 
           <SytledIconButton
+            theme={theme}
             edge='end'
             aria-label='account of current user'
             aria-controls={menuId}

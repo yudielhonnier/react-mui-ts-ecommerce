@@ -1,18 +1,18 @@
+import { Box, CircularProgress, Stack } from '@mui/material';
+
 function Screen() {
   return (
-    <div className='flex h-screen items-center justify-center'>
-      {/* TODO: ADD SPIN COMPONENT */}
-      Spin Component
-    </div>
+    <Box display='flex' alignItems='center' justifyContent='center' height='100vh'>
+      <CircularProgress />
+    </Box>
   );
 }
 
 function Block() {
   return (
-    <div className='flex justify-center'>
-      {/* TODO: ADD SPIN COMPONENT */}
-      Spin Component
-    </div>
+    <Box display='flex' alignItems='center' justifyContent='center' height='100vh'>
+      <CircularProgress />
+    </Box>
   );
 }
 

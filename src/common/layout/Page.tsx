@@ -35,13 +35,16 @@ export default function Page({ breadcrumbs, children, help, title }: PropsWithCh
   return (
     <PageDiv>
       <Typography sx={{ paddingBottom: '1rem' }}>{title}</Typography>
-      {breadcrumbs &&
+      {breadcrumbs ? (
         breadcrumbs.map((b) => (
           // TODO:CREATE CORRECT BREADCRUMBS
           <label key={b.key}>
             <Link to={b.href}>{b.label}</Link>
           </label>
-        ))}
+        ))
+      ) : (
+        <></>
+      )}
       <Suspense fallback={<AppSpin.Block />}>{children}</Suspense>
     </PageDiv>
   );

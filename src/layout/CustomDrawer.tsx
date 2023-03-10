@@ -24,7 +24,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'space-between',
   padding: theme.spacing(0, 1),
   height: '48px',
-
   '& .MuiBackdrop-root': {
     invisible: true,
   },
@@ -48,6 +47,7 @@ const CustomDrawer = ({ open, drawerWidth, handleDrawerClose }: ICustomDrawerPro
         '& .MuiDrawer-paper': {
           width: drawerWidth,
           boxSizing: 'border-box',
+          // backgroundColor: theme.palette.primary.main,
         },
       }}
       anchor='left'

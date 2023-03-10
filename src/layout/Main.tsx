@@ -5,7 +5,7 @@ export const Main = styled('div', {
 })<{
   open?: boolean;
   marginleft: number;
-}>(({ theme, open, marginleft }) => ({
+}>(({ theme, open, marginleft: marginleft }) => ({
   // flexGrow: 1,
   padding: theme.spacing(3),
   transition: theme.transitions.create('margin', {
