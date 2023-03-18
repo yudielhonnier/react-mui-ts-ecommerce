@@ -1,12 +1,12 @@
-import { Theme, IconButton, alpha } from '@mui/material';
-import styled from '@emotion/styled';
+import { Theme, IconButton, IconButtonProps, styled } from '@mui/material';
 
 interface IIconButton {
-  theme: Theme;
-  coloricon?: string;
+  colorIcon?: string;
 }
 
-export const SytledIconButton = styled(IconButton)(({ theme, coloricon }: IIconButton) => ({
+export const SytledIconButton = styled(IconButton, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})<IIconButton>(({ theme, colorIcon }) => ({
   outline: '0px !important',
-  color: coloricon ?? 'white',
+  color: colorIcon ?? 'white',
 }));

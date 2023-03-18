@@ -45,7 +45,7 @@ export default function Page({ breadcrumbs, children, help, title }: PropsWithCh
       ) : (
         <></>
       )}
-      <Suspense fallback={<AppSpin.Block />}>{children}</Suspense>
+      <Suspense fallback={<AppSpin.Screen />}>{children}</Suspense>
     </PageDiv>
   );
 }

@@ -6,7 +6,8 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Collapse from '@mui/material/Collapse';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
-import { styled } from '@mui/material/styles';
+import { SytledIconButton } from '@/common/layout/StyledIconButton';
+import { styled, useTheme } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 
@@ -32,6 +33,13 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   }),
 }));
 
+const StyledCardMedia = styled(CardMedia)(() => ({
+  padding: '0',
+  width: '100%',
+  height: '150px',
+  objectFit: 'cover',
+}));
+
 export default function CardProduct({
   product: { id, name, productType, price, rating, quantity, image, decriptionProd },
 }: {
@@ -39,6 +47,7 @@ export default function CardProduct({
 }) {
   const [expanded, setExpanded] = useState<boolean>(false);
   const dispatch = useAppDispatch();
+  const theme = useTheme();
 
   const priceFormated = useFormatMoney(price, '€');
 
@@ -68,19 +77,8 @@ export default function CardProduct({
 
   return (
     <Card sx={{ maxWidth: 200, margin: 'auto' }}>
-      <CardMedia
-        component='img'
-        image={image}
-        alt='Running Shoes'
-        sx={{
-          padding: '0',
-          width: '100%',
-          height: '150px',
-          objectFit: 'cover',
-        }}
-      />
-
-      <CardContent sx={{ padding: '.5rem' }}>
+      <StyledCardMedia image={image} />
+      <CardContent sx={{ padding: '.5rem .5rem 0 .5rem' }}>
         <Typography
           sx={{
             fontSize: '.8rem',
@@ -92,15 +90,11 @@ export default function CardProduct({
           <span>{name}</span>
           <span> {priceFormated}</span>
         </Typography>
-        {/* <Typography variant="body2" color="text.secondary">
-          {productType}
-        </Typography> */}
       </CardContent>
-      <CardActions disableSpacing sx={{ height: 20 }}>
-        {/* TODO:Add iconbutton globally */}
-        <IconButton aria-label='Add to Cart' onClick={addProductToBasket}>
+      <CardActions disableSpacing sx={{ height: '2.4rem' }}>
+        <SytledIconButton aria-label='Add to Cart' onClick={addProductToBasket} colorIcon={'white'}>
           <AddShoppingCart fontSize='medium' />
-        </IconButton>
+        </SytledIconButton>
         {Array(convertRating(rating))
           // .fill()
           .map((_, i) => (
@@ -112,6 +106,7 @@ export default function CardProduct({
           onClick={handleExpandClick}
           aria-expanded={expanded}
           aria-label='show more'
+          sx={{ p: 1 }}
         >
           <ExpandMoreIcon />
         </ExpandMore>

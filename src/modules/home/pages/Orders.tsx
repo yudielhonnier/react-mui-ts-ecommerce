@@ -1,10 +1,10 @@
-import Calendar from '@/common/display/Calendar';
+import CustomDateTimePicker from '@/common/display/CustomDateTimePicker';
 import { Box } from '@mui/material';
 
 const Orders = () => {
   return (
     <Box marginTop={4}>
-      <Calendar />
+      <CustomDateTimePicker />
     </Box>
   );
 };

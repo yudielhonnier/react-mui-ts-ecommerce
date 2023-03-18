@@ -37,12 +37,6 @@ interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
 
-// const SytledIconButton = styled(IconButton)(({ theme }) => ({
-//   outline: '0px !important',
-//   // color: alpha(theme.palette.primary, 0.15),
-//   color: theme.palette.common.white,
-// }));
-
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })<AppBarProps>(({ theme }) => ({
@@ -147,7 +141,6 @@ const CustomAppBar = ({
         </SytledIconButton>
 
         <SytledIconButton
-          theme={theme}
           size='large'
           edge='start'
           aria-label='open drawer'
@@ -165,11 +158,7 @@ const CustomAppBar = ({
           <StyledInputBase placeholder='Search…' inputProps={{ 'aria-label': 'search' }} />
         </SearchDiv>
 
-        <SytledIconButton
-          theme={theme}
-          aria-label='show cart items'
-          onClick={() => navigate('shopping-cart')}
-        >
+        <SytledIconButton aria-label='show cart items' onClick={() => navigate('shopping-cart')}>
           <Badge badgeContent={getQuantityProducts(basket)} color='error' showZero={true}>
             <ShoppingCart fontSize='medium' />
           </Badge>
@@ -187,15 +176,15 @@ const CustomAppBar = ({
             </SytledIconButton> */}
 
           {/* TODO:FIX APPBAR COLOR */}
-          <SytledIconButton theme={theme} onClick={colorMode.toggleColorMode}>
+          <SytledIconButton onClick={colorMode.toggleColorMode}>
             {theme.palette.mode === 'dark' ? <LightModeOutlined /> : <DarkModeOutlined />}
           </SytledIconButton>
 
-          <SytledIconButton theme={theme} aria-label='show cart items'>
+          <SytledIconButton aria-label='show cart items'>
             <Help fontSize='medium' />
           </SytledIconButton>
 
-          <SytledIconButton theme={theme} aria-label='show cart items'>
+          <SytledIconButton aria-label='show cart items'>
             <Badge>
               <Notifications fontSize='medium' />
             </Badge>

@@ -17,7 +17,6 @@ import {
 } from '@mui/icons-material';
 import ProductTable from '../components/ProductTable';
 import { tokens } from '@/theme';
-import Calendar from '@/common/display/Calendar';
 import Link from '@/common/navigation/Link';
 
 export default function Products() {
@@ -42,7 +41,6 @@ export default function Products() {
             aria-label='toggle-view-products'
             onClick={() => setView('cards')}
             sx={{ display: 'flex', alignSelf: 'end', height: '30%' }}
-            theme={theme}
             colorIcon={colors.greenAccent[400]}
           >
             <GridViewOutlinedIcon />
@@ -53,23 +51,24 @@ export default function Products() {
             aria-label='toggle-view-products'
             onClick={() => setView('grid')}
             sx={{ display: 'flex', alignSelf: 'end', height: '30%' }}
-            theme={theme}
             colorIcon={colors.greenAccent[400]}
           >
             <ViewListOutlinedIcon />
           </SytledIconButton>
-          <Link to='orders'>TestCalendar</Link>
         </Box>
         {view === 'grid' ? (
           <ProductTable />
         ) : (
           <Grid container spacing={3}>
-            {products &&
+            {products ? (
               products.map((product: IItem) => (
                 <Grid key={product.id} xs={12} sm={6} md={4} lg={3}>
                   <CardProduct product={product} />
                 </Grid>
-              ))}
+              ))
+            ) : (
+              <></>
+            )}
           </Grid>
         )}
       </Box>
