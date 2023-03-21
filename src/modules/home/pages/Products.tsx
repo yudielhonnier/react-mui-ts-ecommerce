@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Box, Typography, useTheme } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 
@@ -19,17 +18,6 @@ import {
 import ProductTable from '../components/ProductTable';
 import { tokens } from '@/theme';
 import Link from '@/common/navigation/Link';
-=======
-import { Box, Typography } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
-
-import { products } from '@/data/products-data.json';
-
-import Page from '@/common/layout/Page';
-import { IItem } from '@/context/reducer.types';
-
-import CardProduct from '../components/CardProduct';
->>>>>>> 6d42ad3 (fix: lint fix)
 
 export default function Products() {
   const [view, setView] = useState<'grid' | 'cards'>('cards');

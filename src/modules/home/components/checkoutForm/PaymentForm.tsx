@@ -16,13 +16,7 @@ import { useStateValue } from '../../../../context/StateProvider';
 import useFormatMoney from '../../../../hooks/useFormatMoney';
 import { IPaymentFunctions } from '../../../../types/payment.types';
 
-<<<<<<< HEAD
 const stripePromise = loadStripe(import.meta.env.VITE_APP_STRIPE_KEY);
-=======
-const stripePromise = loadStripe(
-  'pk_test_51LpFAZIdQtsXmsq3GwTzEFktCyQ1rI3aYtmKmTZjd4bYt6NvlwI2o7tMbpGfjPNY5TnQSVNeEBH7dDokqt6id3PE00c8NYYdgC'
-);
->>>>>>> 6d42ad3 (fix: lint fix)
 
 const CARD_ELEMENT_OPTIONS: Partial<StripeCardElementOptions> = {
   iconStyle: 'solid',

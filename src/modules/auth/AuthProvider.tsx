@@ -17,13 +17,8 @@ export default function AuthProvider() {
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
       // TODO:MAKE SOME WITH THIS AUTHUSER
-<<<<<<< HEAD
-      // if (authUser) {
-      // }
-=======
       if (authUser) {
       }
->>>>>>> 6d42ad3 (fix: lint fix)
     });
   }, []);
 

@@ -1,17 +1,13 @@
 import { Box, Typography } from '@mui/material';
 
 import Grid from '@mui/material/Unstable_Grid2';
-<<<<<<< HEAD
 import { FlexBetween, FlexBox, FlexRowCenter } from '@/common/flex-box';
-=======
->>>>>>> 6d42ad3 (fix: lint fix)
 
 import Page from '@/common/layout/Page';
 import { useStateValue } from '@/context/StateProvider';
 
 import CheckoutCart from '../components/CheckoutCart';
 import Total from '../components/Total';
-<<<<<<< HEAD
 import { useAppSelector } from '@/store/hooks';
 import Product from '../models/Product';
 import FlexBetweenStart from '@/common/flex-box/FlexBetweenStart';
@@ -19,15 +15,6 @@ import FlexBetweenStart from '@/common/flex-box/FlexBetweenStart';
 // TODO: FIX THIS PAGE
 export default function ShoppingCart() {
   const { basket } = useAppSelector((state) => state.basket);
-=======
-
-// TODO: FIX THIS PAGE
-export default function ShoppingCart() {
-  const {
-    state: { basket, user },
-  } = useStateValue();
-
->>>>>>> 6d42ad3 (fix: lint fix)
   function FormRow() {
     return (
       <>

@@ -9,10 +9,6 @@ import { useState } from 'react';
 import AddressForm from '../components/checkoutForm/AddressForm';
 import Confirmation from '../components/checkoutForm/Confirmation';
 import PaymentForm from '../components/checkoutForm/PaymentForm';
-<<<<<<< HEAD
-=======
-import { useStateValue } from '../../../context/StateProvider';
->>>>>>> 6d42ad3 (fix: lint fix)
 
 const Main = styled('div')(({ theme }) => ({
   width: 'auto',
@@ -45,13 +41,6 @@ const CustomPaper = styled(Paper)(({ theme }) => {
 const Checkout = () => {
   const [activeStep, setActiveStep] = useState(0);
   const steps = ['Shipping address', 'Payment details'];
-<<<<<<< HEAD
-=======
-  const {
-    state: { paymentMessage },
-    dispatch,
-  } = useStateValue();
->>>>>>> 6d42ad3 (fix: lint fix)
 
   const handleNext = () => {
     return setActiveStep(activeStep + 1);

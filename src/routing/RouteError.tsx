@@ -3,10 +3,7 @@ import { Box } from '@mui/system';
 import { useTranslation } from 'react-i18next';
 
 export default function RouteError() {
-<<<<<<< HEAD
   // TODO:USE THIS t variable
-=======
->>>>>>> 6d42ad3 (fix: lint fix)
   const { t } = useTranslation('routes');
   // return <Result status='500' title={t('500')} />;
   return (

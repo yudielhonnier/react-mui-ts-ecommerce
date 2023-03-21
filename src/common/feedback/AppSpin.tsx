@@ -24,7 +24,6 @@ const FullWrapper = styled(Box)(({ theme, done }: IWrapper) => ({
 function Screen() {
   const theme = useTheme();
   return (
-<<<<<<< HEAD
     <FullWrapper done={false} theme={theme}>
       <Lottie
         // lottieRef={animRef}
@@ -33,27 +32,14 @@ function Screen() {
         // onComplete={onLoopComplete}
       />
     </FullWrapper>
-=======
-    <div className='flex h-screen items-center justify-center'>
-      {/* TODO: ADD SPIN COMPONENT */}
-      Spin Component
-    </div>
->>>>>>> 6d42ad3 (fix: lint fix)
   );
 }
 
 function Block() {
   return (
-<<<<<<< HEAD
     <Box display='flex' alignItems='center' justifyContent='center' height='100vh'>
       <CircularProgress />
     </Box>
-=======
-    <div className='flex justify-center'>
-      {/* TODO: ADD SPIN COMPONENT */}
-      Spin Component
-    </div>
->>>>>>> 6d42ad3 (fix: lint fix)
   );
 }
 
