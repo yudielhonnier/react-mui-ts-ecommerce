@@ -91,12 +91,12 @@ export default function CardProduct({
           <span> {priceFormated}</span>
         </Typography>
       </CardContent>
-      <CardActions disableSpacing sx={{ height: '2.4rem' }}>
+      <CardActions disableSpacing sx={{ height: '2.4rem', px: '0.1rem' }}>
         <SytledIconButton aria-label='Add to Cart' onClick={addProductToBasket} colorIcon={'white'}>
           <AddShoppingCart fontSize='medium' />
         </SytledIconButton>
         {Array(convertRating(rating))
-          // .fill()
+          .fill(0)
           .map((_, i) => (
             <p key={i}>&#11088;</p>
           ))}
