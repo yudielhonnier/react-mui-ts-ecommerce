@@ -22,8 +22,6 @@ export default function CheckoutCart({
   // const classes=useStyles();
   const dispatch = useAppDispatch();
 
-  const [expanded, setExpanded] = useState(false);
-
   const priceFormated = useFormatMoney(price, '€');
 
   const CardMediaProps = {
@@ -33,13 +31,9 @@ export default function CheckoutCart({
     alt: 'Running Shoes',
     sx: {
       padding: '1rem 1rem 0 1rem',
-      height: 250,
-      width: '90%',
+      height: '7rem',
+      width: '10rem',
     },
-  };
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
   };
 
   const removeItem = () => {
@@ -73,7 +67,7 @@ export default function CheckoutCart({
   return (
     <Card
       sx={{
-        maxWidth: 345,
+        // maxWidth: 345,
         margin: 'auto',
       }}
     >
@@ -104,7 +98,7 @@ export default function CheckoutCart({
       >
         <div style={{ display: 'flex' }}>
           {Array(rating)
-            // .fill()
+            .fill(0)
             .map((_, i) => (
               <p key={i}>&#11088;</p>
             ))}
