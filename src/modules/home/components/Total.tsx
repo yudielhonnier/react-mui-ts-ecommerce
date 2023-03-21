@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { Box, Button } from '@mui/material';
+=======
+import { Button } from '@mui/material';
+>>>>>>> 6d42ad3 (fix: lint fix)
 import { useNavigate } from 'react-router-dom';
 
 import useFormatMoney from '@/hooks/useFormatMoney';
@@ -29,6 +33,10 @@ export default function Total() {
       <Button variant='contained' color='primary' onClick={() => navigate('checkout')}>
         Check Out
       </Button>
+<<<<<<< HEAD
     </Box>
+=======
+    </div>
+>>>>>>> 6d42ad3 (fix: lint fix)
   );
 }

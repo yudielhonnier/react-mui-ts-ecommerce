@@ -9,11 +9,16 @@ import {
   Search,
   ShoppingCart,
 } from '@mui/icons-material';
+<<<<<<< HEAD
 import { alpha, Badge, Box, IconButton, InputBase, Toolbar, styled, useTheme } from '@mui/material';
+=======
+import { alpha, Badge, Box, IconButton, InputBase, Toolbar, styled } from '@mui/material';
+>>>>>>> 6d42ad3 (fix: lint fix)
 
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import { useNavigate } from 'react-router-dom';
 
+<<<<<<< HEAD
 // import { SytledIconButton } from '@/common/layout/StyledIconButton';
 
 import Logo from '../assets/ecommerce.png';
@@ -22,6 +27,13 @@ import Product from '@/modules/home/models/Product';
 import { tokens, ColorModeContext } from '@/theme';
 import { useContext } from 'react';
 import { SytledIconButton } from '@/common/layout/StyledIconButton';
+=======
+import { SytledIconButton } from '@/common/layout/StyledIconButton';
+import { getTotalItems } from '@/context/reducer';
+import { useStateValue } from '@/context/StateProvider';
+
+import Logo from '../assets/ecommerce.png';
+>>>>>>> 6d42ad3 (fix: lint fix)
 
 interface ICustomAppBarProps {
   open?: boolean;
@@ -35,6 +47,10 @@ interface ICustomAppBarProps {
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
+<<<<<<< HEAD
+=======
+  drawerWidth: number;
+>>>>>>> 6d42ad3 (fix: lint fix)
 }
 
 const AppBar = styled(MuiAppBar, {
@@ -95,6 +111,7 @@ const CustomAppBar = ({
   handleProfileMenuOpen,
   handleMobileMenuOpen,
 }: ICustomAppBarProps) => {
+<<<<<<< HEAD
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
@@ -111,6 +128,15 @@ const CustomAppBar = ({
     console.log('totallll', total);
     return total;
   };
+=======
+  const {
+    state: { basket },
+  } = useStateValue();
+  const navigate = useNavigate();
+
+  // TODO:ADD VALIDATION TO LOGGIN
+  const isLoggin = false;
+>>>>>>> 6d42ad3 (fix: lint fix)
 
   return (
     <AppBar

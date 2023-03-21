@@ -11,7 +11,11 @@ export default function useNavigate() {
       if (typeof to === 'string') _navigate(`/${i18n.language}/${to}`, options);
       else _navigate({ ...to, pathname: `/${i18n.language}/${to.pathname}` }, options);
     },
+<<<<<<< HEAD
     [_navigate, i18n.language]
+=======
+    [i18n]
+>>>>>>> 6d42ad3 (fix: lint fix)
   );
   return navigate;
 }

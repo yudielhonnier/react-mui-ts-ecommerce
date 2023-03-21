@@ -4,8 +4,13 @@ export const Main = styled('div', {
   shouldForwardProp: (prop) => prop !== 'open',
 })<{
   open?: boolean;
+<<<<<<< HEAD
   marginleft: number;
 }>(({ theme, open, marginleft: marginleft }) => ({
+=======
+  marginLeft: number;
+}>(({ theme, open, marginLeft }) => ({
+>>>>>>> 6d42ad3 (fix: lint fix)
   // flexGrow: 1,
   padding: theme.spacing(3),
   transition: theme.transitions.create('margin', {
