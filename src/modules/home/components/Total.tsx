@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import useFormatMoney from '@/hooks/useFormatMoney';
@@ -15,11 +15,11 @@ export default function Total() {
   const basketsFormated = useFormatMoney(getBasketTotal(basket), '€');
 
   return (
-    <div
-      style={{
+    <Box
+      sx={{
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
         height: '20vh',
       }}
@@ -29,6 +29,6 @@ export default function Total() {
       <Button variant='contained' color='primary' onClick={() => navigate('checkout')}>
         Check Out
       </Button>
-    </div>
+    </Box>
   );
 }

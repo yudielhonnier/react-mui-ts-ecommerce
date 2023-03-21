@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 
 import Page from '@/common/layout/Page';
@@ -10,44 +10,65 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { useEffect, useState } from 'react';
 import { getProducts } from '@/store/slices/products';
 import { SytledIconButton } from '@/common/layout/StyledIconButton';
-import { Menu as MenuIcon, GridViewOutlined, ViewListOutlined } from '@mui/icons-material';
+import {
+  Menu as MenuIcon,
+  GridViewOutlined as GridViewOutlinedIcon,
+  ViewListOutlined as ViewListOutlinedIcon,
+} from '@mui/icons-material';
 import ProductTable from '../components/ProductTable';
+import { tokens } from '@/theme';
+import Link from '@/common/navigation/Link';
 
 export default function Products() {
-  const [toggleView, setToggleView] = useState(false);
+  const [view, setView] = useState<'grid' | 'cards'>('cards');
   const dispatch = useAppDispatch();
   const { products } = useAppSelector((state) => state.products);
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   useEffect(() => {
     dispatch(getProducts(100));
   }, [dispatch]);
 
-  const handleChangeViewList = () => {
-    setToggleView((toggleView) => !toggleView);
-  };
-
   return (
     <Page title='Products' help={<Typography>title</Typography>}>
       <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-        <SytledIconButton
-          size='large'
-          edge='start'
-          aria-label='toggle-view-products'
-          onClick={handleChangeViewList}
-          sx={{ display: 'flex', alignSelf: 'end', height: '30%' }}
-        >
-          {toggleView ? <GridViewOutlined /> : <ViewListOutlined />}
-        </SytledIconButton>
-        {toggleView ? (
+        <Box display='flex' flexDirection='row' justifyContent='end' alignItems='center'>
+          View :
+          <SytledIconButton
+            size='large'
+            edge='start'
+            aria-label='toggle-view-products'
+            onClick={() => setView('cards')}
+            sx={{ display: 'flex', alignSelf: 'end', height: '30%' }}
+            colorIcon={colors.greenAccent[400]}
+          >
+            <GridViewOutlinedIcon />
+          </SytledIconButton>
+          <SytledIconButton
+            size='large'
+            edge='start'
+            aria-label='toggle-view-products'
+            onClick={() => setView('grid')}
+            sx={{ display: 'flex', alignSelf: 'end', height: '30%' }}
+            colorIcon={colors.greenAccent[400]}
+          >
+            <ViewListOutlinedIcon />
+          </SytledIconButton>
+        </Box>
+        {view === 'grid' ? (
           <ProductTable />
         ) : (
           <Grid container spacing={3}>
-            {products &&
+            {products ? (
               products.map((product: IItem) => (
                 <Grid key={product.id} xs={12} sm={6} md={4} lg={3}>
                   <CardProduct product={product} />
                 </Grid>
-              ))}
+              ))
+            ) : (
+              <></>
+            )}
           </Grid>
         )}
       </Box>

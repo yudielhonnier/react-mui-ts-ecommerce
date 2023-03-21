@@ -5,6 +5,7 @@ import type RouteConfig from '@/routing/RouteConfig';
 const Products = lazy(async () => import('./Products'));
 const SelectedProducts = lazy(async () => import('./ShoppingCart'));
 const Checkout = lazy(async () => import('./Checkout'));
+const Orders = lazy(async () => import('./Orders'));
 
 const config: RouteConfig[] = [
   {
@@ -16,6 +17,11 @@ const config: RouteConfig[] = [
     name: 'SelectedProducts',
     element: <SelectedProducts />,
     path: 'shopping-cart',
+  },
+  {
+    name: 'Orders',
+    element: <Orders />,
+    path: 'orders',
   },
   {
     name: 'Checkout',
