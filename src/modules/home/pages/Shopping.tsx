@@ -13,7 +13,7 @@ import Product from '../models/Product';
 import FlexBetweenStart from '@/common/flex-box/FlexBetweenStart';
 
 // TODO: FIX THIS PAGE
-export default function ShoppingCart() {
+export default function Shopping() {
   const { basket } = useAppSelector((state) => state.basket);
   function FormRow() {
     return (

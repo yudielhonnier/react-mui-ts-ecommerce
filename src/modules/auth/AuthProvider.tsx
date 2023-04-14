@@ -18,6 +18,7 @@ export default function AuthProvider() {
     auth.onAuthStateChanged((authUser) => {
       // TODO:MAKE SOME WITH THIS AUTHUSER
       if (authUser) {
+        console.log('authUser', authUser);
       }
     });
   }, []);

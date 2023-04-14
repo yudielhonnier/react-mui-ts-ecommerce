@@ -1,5 +1,5 @@
 import { Delete as DeleteIcon } from '@mui/icons-material';
-import { Badge, Theme } from '@mui/material';
+import { Badge, Box, Theme } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardHeader from '@mui/material/CardHeader';
@@ -12,7 +12,10 @@ import useFormatMoney from '@/hooks/useFormatMoney';
 
 import { actionTypes, IItem } from '@/context/reducer.types';
 import { useAppDispatch } from '@/store/store';
-import { decQtyItem, removeFromBasket } from '@/store/slices/basket/basketSlice';
+import { decQtyItem, removeFromBasket, addToBasket } from '@/store/slices/basket/basketSlice';
+import { FlexBox, FlexRowCenter } from '@/common/flex-box';
+import { SytledIconButton } from '@/common/layout/StyledIconButton';
+import FlexBetweenCenter from '@/common/flex-box/FlexBetweenCenter';
 
 export default function CheckoutCart({
   product: { id, name, productType, price, rating, quantity, image, decriptionProd },
@@ -64,6 +67,21 @@ export default function CheckoutCart({
         );
   };
 
+  const incItem = () => {
+    dispatch(
+      addToBasket({
+        id,
+        name,
+        productType,
+        image,
+        price,
+        rating,
+        quantity,
+        decriptionProd,
+      })
+    );
+  };
+
   return (
     <Card
       sx={{
@@ -94,19 +112,38 @@ export default function CheckoutCart({
           display: 'flex',
           justifyContent: 'space-between',
           textAlign: 'center',
+          p: '1rem',
+          py: '.5rem',
         }}
       >
-        <div style={{ display: 'flex' }}>
+        <Box style={{ display: 'flex' }}>
           {Array(rating)
             .fill(0)
             .map((_, i) => (
               <p key={i}>&#11088;</p>
             ))}
-        </div>
-        <Badge color='error' badgeContent={quantity}></Badge>
-        <IconButton onClick={removeItem}>
-          <DeleteIcon fontSize='large' />
-        </IconButton>
+        </Box>
+        <FlexBetweenCenter gap={2} width='4rem'>
+          <SytledIconButton
+            sx={{ height: '1rem', width: '1rem' }}
+            size='small'
+            edge='start'
+            aria-label='increment items'
+            onClick={incItem}
+          >
+            +
+          </SytledIconButton>
+          <Typography sx={{ p: '0ppx' }}>{quantity}</Typography>
+          <SytledIconButton
+            sx={{ height: '1rem', width: '1rem' }}
+            size='small'
+            edge='start'
+            aria-label='increment items'
+            onClick={removeItem}
+          >
+            -
+          </SytledIconButton>
+        </FlexBetweenCenter>
       </CardActions>
     </Card>
   );
