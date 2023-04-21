@@ -5,12 +5,14 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import AddressInput from './AddressInput';
-import { actionTypes, IShipingData } from '../../../../context/reducer.types';
-import { useStateValue } from '../../../../context/StateProvider';
+import { useAppSelector } from '@/store/hooks';
+import { useAppDispatch } from '@/store/store';
+import { setShippingData } from '@/store/slices/checkout';
 
 export default function AddressForm({ handleNext }: { handleNext: () => void }) {
   const methods = useForm();
-  const { dispatch } = useStateValue();
+  // const { shippingData } = useAppSelector((state) => state.checkout);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   return (
@@ -21,10 +23,7 @@ export default function AddressForm({ handleNext }: { handleNext: () => void }) 
       <FormProvider {...methods}>
         <form
           onSubmit={methods.handleSubmit((data) => {
-            dispatch({
-              type: actionTypes.SET_SHIPPINGDATA,
-              shipingData: data as IShipingData,
-            });
+            dispatch(setShippingData(data));
             handleNext();
           })}
         >

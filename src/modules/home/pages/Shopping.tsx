@@ -1,10 +1,8 @@
 import { Box, Typography } from '@mui/material';
 
 import Grid from '@mui/material/Unstable_Grid2';
-import { FlexBetween, FlexBox, FlexRowCenter } from '@/common/flex-box';
 
 import Page from '@/common/layout/Page';
-import { useStateValue } from '@/context/StateProvider';
 
 import CheckoutCart from '../components/CheckoutCart';
 import Total from '../components/Total';
@@ -37,10 +35,8 @@ export default function Shopping() {
         <Grid container spacing={3} xs={8} direction='column'>
           <FormRow />
         </Grid>
-        <Grid xs={4}>
-          <Typography align='center' gutterBottom variant='h4'>
-            <Total />
-          </Typography>
+        <Grid container xs={4}>
+          <Total />
         </Grid>
       </FlexBetweenStart>
     </Page>

@@ -5,6 +5,7 @@ import { Suspense } from 'react';
 import AppSpin from '../feedback/AppSpin';
 import useSetHelp from '../feedback/useSetHelp';
 import Link from '../navigation/Link';
+import { H5 } from '../Typography';
 
 export interface BreadcrumItem {
   key: string;
@@ -34,7 +35,7 @@ export default function Page({ breadcrumbs, children, help, title }: PropsWithCh
 
   return (
     <PageDiv>
-      <Typography sx={{ paddingBottom: '1rem' }}>{title}</Typography>
+      <H5 sx={{ paddingBottom: '1rem' }}>{title}</H5>
       {breadcrumbs ? (
         breadcrumbs.map((b) => (
           // TODO:CREATE CORRECT BREADCRUMBS

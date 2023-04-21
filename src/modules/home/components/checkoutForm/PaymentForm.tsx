@@ -12,9 +12,12 @@ import { useState } from 'react';
 import Review from './Review';
 import { getBasketTotal } from '../../../../context/reducer';
 import { actionTypes } from '../../../../context/reducer.types';
-import { useStateValue } from '../../../../context/StateProvider';
 import useFormatMoney from '../../../../hooks/useFormatMoney';
 import { IPaymentFunctions } from '../../../../types/payment.types';
+import { useAppSelector } from '@/store/hooks';
+import { useAppDispatch } from '@/store/store';
+import { log } from 'console';
+import { postCheckout } from '@/store/slices/checkout';
 
 const stripePromise = loadStripe(import.meta.env.VITE_APP_STRIPE_KEY);
 
@@ -39,12 +42,18 @@ const CARD_ELEMENT_OPTIONS: Partial<StripeCardElementOptions> = {
   },
 };
 
+interface IPostData {
+  id: string;
+  amount: number;
+  limit: number;
+}
+
 // TODO:ADD THIS TO ASYNC THUNK
 const CheckoutForm = ({ handleBack, handleNext }: IPaymentFunctions) => {
-  const {
-    state: { basket },
-    dispatch,
-  } = useStateValue();
+  const { basket } = useAppSelector((state) => state.basket);
+  const { message } = useAppSelector((state) => state.checkout);
+  const dispatch = useAppDispatch();
+
   const [loading, setLoading] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
@@ -64,26 +73,33 @@ const CheckoutForm = ({ handleBack, handleNext }: IPaymentFunctions) => {
     console.log(paymentMethod, error);
     setLoading(true);
     if (!error) {
+      console.log('no error we go to make payment');
+
       const { id } = paymentMethod;
+
       try {
-        const { data } = await axios.post('http://localhost:3001/api/checkout', {
-          id,
+        console.log('paymentForminggg ', id);
 
-          amount: getBasketTotal(basket),
-        });
-        console.log('data : ', data);
+        dispatch(postCheckout({ limit: 100, id: id, amount: getBasketTotal(basket) }));
 
-        dispatch({
-          type: actionTypes.SET_PAYMENT_MESSAGE,
-          paymentMessage: data.message,
-        });
-        if (data.message == 'Successful Payment') {
-          dispatch({
-            type: actionTypes.EMPTY_BASKET,
-            basket: [],
-          });
-        }
-        alert(data.message);
+        // const { data } = await axios.post('http://localhost:3001/api/checkout', {
+        //   id,
+
+        //   amount: getBasketTotal(basket),
+        // });
+        // console.log('data : ', data);
+
+        // dispatch({
+        //   type: actionTypes.SET_PAYMENT_MESSAGE,
+        //   paymentMessage: data.message,
+        // });
+        // if (message == 'Successful Payment') {
+        //   dispatch({
+        //     type: actionTypes.EMPTY_BASKET,
+        //     basket: [],
+        //   });
+        // }
+        alert(message);
         elements!.getElement(CardElement)!.clear();
         handleNext();
       } catch (error) {

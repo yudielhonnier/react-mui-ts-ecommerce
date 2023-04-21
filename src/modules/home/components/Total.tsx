@@ -1,34 +1,37 @@
-import { Box, Button } from '@mui/material';
+import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import useFormatMoney from '@/hooks/useFormatMoney';
 
 import { getBasketTotal, getTotalItems } from '@/context/reducer';
-import { useStateValue } from '@/context/StateProvider';
+import { FlexRowBetween } from '@/common/flex-box';
+import FlexColBetween from '@/common/flex-box/FlexColBetween';
+import { H5, H6 } from '@/common/Typography';
+import { useAppSelector } from '@/store/hooks';
 
 export default function Total() {
   const navigate = useNavigate();
-  const {
-    state: { basket },
-  } = useStateValue();
+  const { basket } = useAppSelector((state) => state.basket);
 
   const basketsFormated = useFormatMoney(getBasketTotal(basket), '€');
 
   return (
-    <Box
+    <FlexColBetween
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
+        width: '25%',
         height: '20vh',
+        position: 'fixed',
+        top: '100',
       }}
     >
-      <h5>Total items:{getTotalItems(basket)}</h5>
-      <h5>{basketsFormated}</h5>
+      <H5>Summary</H5>
+      <FlexRowBetween>
+        <h5>Total :</h5>
+        <H6>{basketsFormated}</H6>
+      </FlexRowBetween>
       <Button variant='contained' color='primary' onClick={() => navigate('checkout')}>
         Check Out
       </Button>
-    </Box>
+    </FlexColBetween>
   );
 }

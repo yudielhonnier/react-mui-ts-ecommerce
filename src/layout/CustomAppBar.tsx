@@ -39,7 +39,7 @@ interface AppBarProps extends MuiAppBarProps {
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
-})<AppBarProps>(({ theme }) => ({
+})<AppBarProps>(({ theme }): {} => ({
   transition: theme.transitions.create(['margin', 'width'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -108,7 +108,6 @@ const CustomAppBar = ({
   const getQuantityProducts = (basket: Product[]) => {
     let total = 0;
     basket.forEach((el) => (total += el.quantity));
-    console.log('totallll', total);
     return total;
   };
 

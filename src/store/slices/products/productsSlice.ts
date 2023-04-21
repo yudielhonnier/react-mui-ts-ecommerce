@@ -28,7 +28,7 @@ export const getProducts = createAsyncThunk<Product[], number, { rejectValue: Fe
     if (response.status !== 200) {
       // Return the error message:
       return thunkAPI.rejectWithValue({
-        message: 'Failed to fetch todos.',
+        message: 'Failed to fetch products.',
       });
     }
     return data;

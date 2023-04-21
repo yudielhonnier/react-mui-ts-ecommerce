@@ -1,5 +1,4 @@
 // to run server command: node server
-
 //restar the server after any change 
 
 const express=require("express")
@@ -22,6 +21,7 @@ app.use(express.json())
 app.post("/api/checkout",async (req,res)=>{
     const {id,amount}=req.body
     console.log("amount :",amount)
+    console.log("id  :",id)
     try{
      const payment=   await stripe.paymentIntents.create({
         payment_method:id,
@@ -33,11 +33,11 @@ app.post("/api/checkout",async (req,res)=>{
         payment_method_types: ['card'],
      });
      console.log('Intent payment : ',payment)
-     return res.status(200).json({message:'Successful Payment'})
+     return res.status(200).json('Successful Payment')
 
     }catch(error){
         console.log('errorrrrrrrrrrrrrr :',error)
-        return res.json({message:error.raw.message})
+        return res.json(error.raw.message)
     }
 
 

@@ -47,7 +47,7 @@ export default function CardProduct({
 }) {
   const [expanded, setExpanded] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-  const theme = useTheme();
+  // const theme = useTheme();
 
   const priceFormated = useFormatMoney(price, '€');
 
