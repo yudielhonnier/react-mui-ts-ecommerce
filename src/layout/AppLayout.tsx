@@ -59,8 +59,8 @@ export default function AppLayout() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
+      {/* TODO:ADD MORE FEACTURES . CHANGE ONCLICK ACCTION */}
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
   );
 

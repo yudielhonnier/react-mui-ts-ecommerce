@@ -1,3 +1,4 @@
+import { useState, useContext } from 'react';
 import {
   AccountCircle,
   DarkModeOutlined,
@@ -20,8 +21,16 @@ import Logo from '../assets/ecommerce.png';
 import { useAppSelector } from '@/store/hooks';
 import Product from '@/modules/home/models/Product';
 import { tokens, ColorModeContext } from '@/theme';
-import { useContext } from 'react';
 import { SytledIconButton } from '@/common/layout/StyledIconButton';
+import useAuth from '@/modules/auth/hooks/useAuth';
+import { H4 } from '@/common/Typography';
+import { FlexBox, FlexRowCenter } from '@/common/flex-box';
+
+import { getNameFromEmail } from '@/utils/utilString';
+import OvalButton from '@/common/buttons/OvalButton';
+import LayoutModal from '@/common/modal/LayoutModal';
+import Login from '@/common/modal/login';
+import { af } from 'date-fns/locale';
 
 interface ICustomAppBarProps {
   open?: boolean;
@@ -98,12 +107,15 @@ const CustomAppBar = ({
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
+  const [openLogin, setOpenLogin] = useState<boolean>(false);
 
   const navigate = useNavigate();
   const { basket } = useAppSelector((state) => state.basket);
 
   // TODO:ADD VALIDATION TO LOGGIN
-  const isLoggin = false;
+  const authState = useAuth();
+  const user = authState?.user;
+  const isLoggin = user ?? false;
 
   const getQuantityProducts = (basket: Product[]) => {
     let total = 0;
@@ -188,17 +200,32 @@ const CustomAppBar = ({
               <Notifications fontSize='medium' />
             </Badge>
           </SytledIconButton>
-
-          <SytledIconButton
-            theme={theme}
-            edge='end'
-            aria-label='account of current user'
-            aria-controls={menuId}
-            aria-haspopup='true'
-            onClick={handleProfileMenuOpen}
-          >
-            {isLoggin ? <AccountCircle fontSize='medium' /> : <p>SignIn</p>}
-          </SytledIconButton>
+          <FlexRowCenter gap={1}>
+            {isLoggin ? (
+              <SytledIconButton
+                theme={theme}
+                edge='end'
+                aria-label='account of current user'
+                aria-controls={menuId}
+                aria-haspopup='true'
+                onClick={handleProfileMenuOpen}
+              >
+                <AccountCircle fontSize='medium' />
+                <H4>Hi, {user?.email && getNameFromEmail(user?.email)}</H4>
+              </SytledIconButton>
+            ) : (
+              // todo: make a cta for this
+              <OvalButton
+                background={{
+                  normal: `${colors.redAccent[500]}`,
+                  hover: `${colors.greenAccent[500]}`,
+                }}
+                onClick={() => setOpenLogin(true)}
+              >
+                <H4>Sign in</H4>
+              </OvalButton>
+            )}
+          </FlexRowCenter>
         </Box>
         <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
           <IconButton
@@ -211,6 +238,12 @@ const CustomAppBar = ({
           </IconButton>
         </Box>
       </Toolbar>
+      <Login
+        open={openLogin}
+        onClose={() => setOpenLogin(false)}
+        //todo : see what do when te user is logged in
+        onSingIn={() => console.log('singIn user')}
+      />
     </AppBar>
   );
 };

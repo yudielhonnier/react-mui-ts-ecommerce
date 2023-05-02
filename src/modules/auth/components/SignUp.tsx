@@ -17,6 +17,7 @@ import { useState } from 'react';
 import { Link as RouteLink, useNavigate } from 'react-router-dom';
 
 import { auth } from '../services/firebase';
+import useAuthFunctions from '../hooks/useAuthFunctions';
 
 function Copyright(props: TypographyProps) {
   return (

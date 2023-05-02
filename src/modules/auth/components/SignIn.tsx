@@ -10,6 +10,7 @@ import {
   Link,
   TextField,
   Typography,
+  useTheme,
 } from '@mui/material';
 import Container from '@mui/material/Container';
 import { TypographyProps } from '@mui/material/Typography';
@@ -19,20 +20,13 @@ import { Link as RouteLink } from 'react-router-dom';
 
 import useAuthFunctions from '../hooks/useAuthFunctions';
 import useSignIn from '../hooks/useSignIn';
+import OvalButton from '@/common/buttons/OvalButton';
+import { H4 } from '@/common/Typography';
+import { tokens } from '@/theme';
 
-function Copyright(props: TypographyProps) {
-  return (
-    <Typography variant='body2' color='text.secondary' align='center' {...props}>
-      {'Copyright © '}
-      <Link color='inherit' href='https://mui.com/'>
-        Yudiel Robert
-      </Link>{' '}
-      {new Date().getFullYear()}.
-    </Typography>
-  );
-}
-
-export default function SignIn() {
+export default function SignIn({ onSingIn }: { onSingIn: () => void }) {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { login } = useAuthFunctions();
@@ -70,9 +64,6 @@ export default function SignIn() {
           alignItems: 'center',
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <LockOutlinedIcon />
-        </Avatar>
         <Typography component='h1' variant='h5'>
           Sign in
         </Typography>
@@ -100,19 +91,6 @@ export default function SignIn() {
             id='password'
             autoComplete='current-password'
           />
-          <FormControlLabel
-            control={<Checkbox value='remember' color='primary' />}
-            label='Remember me'
-          />
-          <Button
-            type='submit'
-            fullWidth
-            variant='contained'
-            sx={{ mt: 3, mb: 2 }}
-            // onClick={(e) => signinSubmit(e)}
-          >
-            Sign In
-          </Button>
           <Grid container>
             <Grid item xs>
               <Link href='#' variant='body2'>
@@ -123,9 +101,28 @@ export default function SignIn() {
               <RouteLink to='/signup'>{"Don't have an account? Sign Up"}</RouteLink>
             </Grid>
           </Grid>
+          {/* <Button
+            type='submit'
+            fullWidth
+            variant='contained'
+            sx={{ mt: 3, mb: 2 }}
+            // onClick={(e) => signinSubmit(e)}
+          >
+            Sign In
+          </Button> */}
+          <OvalButton
+            sx={{ mt: 3, mb: 2 }}
+            fullWidth
+            type='submit'
+            background={{
+              normal: `${colors.redAccent[500]}`,
+              hover: `${colors.greenAccent[500]}`,
+            }}
+          >
+            <H4>Sign in..</H4>
+          </OvalButton>
         </Box>
       </Box>
-      <Copyright sx={{ mt: 8, mb: 4 }} />
     </Container>
   );
 }

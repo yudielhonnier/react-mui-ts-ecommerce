@@ -10,7 +10,6 @@ import * as React from 'react';
 import { useState } from 'react';
 
 import Review from './Review';
-import { getBasketTotal } from '../../../../context/reducer';
 import { actionTypes } from '../../../../context/reducer.types';
 import useFormatMoney from '../../../../hooks/useFormatMoney';
 import { IPaymentFunctions } from '../../../../types/payment.types';
@@ -18,6 +17,7 @@ import { useAppSelector } from '@/store/hooks';
 import { useAppDispatch } from '@/store/store';
 import { log } from 'console';
 import { postCheckout } from '@/store/slices/checkout';
+import { getBasketTotal } from '@/context/reducer';
 
 const stripePromise = loadStripe(import.meta.env.VITE_APP_STRIPE_KEY);
 

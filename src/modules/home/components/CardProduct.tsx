@@ -47,7 +47,7 @@ export default function CardProduct({
 }) {
   const [expanded, setExpanded] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-  // const theme = useTheme();
+  const theme = useTheme();
 
   const priceFormated = useFormatMoney(price, '€');
 
@@ -92,7 +92,11 @@ export default function CardProduct({
         </Typography>
       </CardContent>
       <CardActions disableSpacing sx={{ height: '2.4rem', px: '0.1rem' }}>
-        <SytledIconButton aria-label='Add to Cart' onClick={addProductToBasket} colorIcon={'white'}>
+        <SytledIconButton
+          aria-label='Add to Cart'
+          onClick={addProductToBasket}
+          colorIcon={theme.palette.mode}
+        >
           <AddShoppingCart fontSize='medium' />
         </SytledIconButton>
         {Array(convertRating(rating))

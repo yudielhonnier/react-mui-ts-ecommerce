@@ -194,6 +194,14 @@ export const themeSettings = (mode: PaletteMode) => {
           },
         },
       },
+      MuiButtonBase: {
+        defaultProps: {
+          // The props to apply
+          disableRipple: true, // No more ripple, on the whole application 💣!
+          disableFocusRipple: true,
+          pointerEvent: 'none',
+        },
+      },
     },
   };
 };

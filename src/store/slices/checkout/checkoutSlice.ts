@@ -21,9 +21,14 @@ export const postCheckout = createAsyncThunk<string, IPostData, { rejectValue: P
   'checkout/postCheckout',
   async ({ limit, id, amount }: IPostData, thunkAPI) => {
     console.log('postCheckoutinggggg ', id);
+    console.log('postCheckoutinggggg ', amount);
 
     const response = await fetch('http://localhost:3001/api/checkout', {
       method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({ id: id, amount: amount }),
     });
     const data = response.json();

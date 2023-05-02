@@ -8,7 +8,11 @@ const cors=require("cors")
 const products = require('./data/products-data.json')
 
 
-const stripe=new Stripe("sk_test_51LpFAZIdQtsXmsq3o3v45uCDXuW6DsR1hIQ72KxA9DNWujQ34PVEvpvJdLwK7nQ44uvmy1TAGtV80A2agrSXdHmF002XGPN9qJ")
+const stripe=new Stripe("sk_test_51LpFAZIdQtsXmsq3o3v45uCDXuW6DsR1hIQ72KxA9DNWujQ34PVEvpvJdLwK7nQ44uvmy1TAGtV80A2agrSXdHmF002XGPN9qJ",{
+    maxNetworkRetries: 3,
+    timeout: 100000,
+    telemetry: false,
+})
 console.log(stripe)
 const app=express();
 
@@ -19,14 +23,15 @@ app.use(cors())
 app.use(express.json())
 
 app.post("/api/checkout",async (req,res)=>{
-    const {id,amount}=req.body
-    console.log("amount :",amount)
-    console.log("id  :",id)
+    const { id, amount } =req.body;
+    console.log("amounttttt :",amount)
+    console.log("req.body :", req.body)
+    console.log("idddddd  :",id)
     try{
      const payment=   await stripe.paymentIntents.create({
         payment_method:id,
         //todo:this math.round is because paymentIntents need a integer amount
-        amount:Math.round(amount),
+        amount:10000,
         currency:"EUR",
         description:'Basket of products',
         confirm:true,

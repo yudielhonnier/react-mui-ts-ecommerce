@@ -6,11 +6,10 @@ import Typography from '@mui/material/Typography';
 import { getBasketTotal } from '../../../../context/reducer';
 import { useStateValue } from '../../../../context/StateProvider';
 import useFormatMoney from '../../../../hooks/useFormatMoney';
+import { useAppSelector } from '@/store/hooks';
 
 const Review = () => {
-  const {
-    state: { basket },
-  } = useStateValue();
+  const { basket } = useAppSelector((state) => state.basket);
 
   return (
     <>
