@@ -8,6 +8,7 @@ import {
   FormControlLabel,
   Grid,
   Link,
+  styled,
   TextField,
   Typography,
   useTheme,
@@ -23,6 +24,7 @@ import useSignIn from '../hooks/useSignIn';
 import OvalButton from '@/common/buttons/OvalButton';
 import { H4 } from '@/common/Typography';
 import { tokens } from '@/theme';
+import { StyledTextField } from '@/common/styledComponents';
 
 export default function SignIn({ onSingIn }: { onSingIn: () => void }) {
   const theme = useTheme();
@@ -64,11 +66,8 @@ export default function SignIn({ onSingIn }: { onSingIn: () => void }) {
           alignItems: 'center',
         }}
       >
-        <Typography component='h1' variant='h5'>
-          Sign in
-        </Typography>
         <Box component='form' onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <TextField
+          <StyledTextField
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             margin='normal'
@@ -79,7 +78,7 @@ export default function SignIn({ onSingIn }: { onSingIn: () => void }) {
             name='email'
             autoComplete='email'
           />
-          <TextField
+          <StyledTextField
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             margin='normal'
@@ -91,7 +90,7 @@ export default function SignIn({ onSingIn }: { onSingIn: () => void }) {
             id='password'
             autoComplete='current-password'
           />
-          <Grid container>
+          {/* <Grid container>
             <Grid item xs>
               <Link href='#' variant='body2'>
                 Forgot password?
@@ -100,18 +99,9 @@ export default function SignIn({ onSingIn }: { onSingIn: () => void }) {
             <Grid item>
               <RouteLink to='/signup'>{"Don't have an account? Sign Up"}</RouteLink>
             </Grid>
-          </Grid>
-          {/* <Button
-            type='submit'
-            fullWidth
-            variant='contained'
-            sx={{ mt: 3, mb: 2 }}
-            // onClick={(e) => signinSubmit(e)}
-          >
-            Sign In
-          </Button> */}
+          </Grid> */}
           <OvalButton
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mt: 3, mb: 2, height: '2.5rem' }}
             fullWidth
             type='submit'
             background={{
