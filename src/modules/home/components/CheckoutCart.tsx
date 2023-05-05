@@ -14,6 +14,7 @@ import { SytledIconButton } from '@/common/layout/StyledIconButton';
 import FlexBetweenCenter from '@/common/flex-box/FlexBetweenCenter';
 import FlexColBetween from '@/common/flex-box/FlexColBetween';
 import { H5 } from '@/common/Typography';
+import { tokens } from '@/theme';
 
 export default function CheckoutCart({
   product: { id, name, productType, price, rating, quantity, image, decriptionProd },
@@ -22,6 +23,8 @@ export default function CheckoutCart({
 }) {
   const dispatch = useAppDispatch();
   const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   const priceFormated = useFormatMoney(price, '€');
 
   const CardMediaProps = {
@@ -83,7 +86,9 @@ export default function CheckoutCart({
     <Card
       sx={{
         margin: 'auto',
+        background: `${theme.palette.mode === 'dark' ? colors.primary[500] : colors.primary[400]}`,
       }}
+      color='primary'
     >
       <CardContent sx={{ padding: '.5rem 1rem 0 1rem' }}>
         <Typography
@@ -92,7 +97,6 @@ export default function CheckoutCart({
             display: 'flex',
             justifyContent: 'space-between',
           }}
-          color='textSecondary'
         >
           <span>{name}</span>
         </Typography>

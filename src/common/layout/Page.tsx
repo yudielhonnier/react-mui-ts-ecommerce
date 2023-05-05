@@ -1,4 +1,4 @@
-import { styled, Typography } from '@mui/material';
+import { Box, styled, Typography } from '@mui/material';
 import type { PropsWithChildren, ReactNode } from 'react';
 import { Suspense } from 'react';
 
@@ -19,12 +19,12 @@ export interface PageProps {
   help: ReactNode;
 }
 
-const PageDiv = styled('div')(({ theme }) => ({
+const PageDiv = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(4),
-  width: '100%',
+  width: '80%',
   [theme.breakpoints.up('sm')]: {
-    paddingLeft: theme.spacing(3),
-    paddingRight: theme.spacing(3),
+    // paddingLeft: theme.spacing(3),
+    // paddingRight: theme.spacing(3),
     width: 'auto',
   },
 }));

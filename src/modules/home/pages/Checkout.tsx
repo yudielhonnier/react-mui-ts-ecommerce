@@ -2,13 +2,14 @@ import Paper from '@mui/material/Paper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Stepper from '@mui/material/Stepper';
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 
 import AddressForm from '../components/checkoutForm/AddressForm';
 import Confirmation from '../components/checkoutForm/Confirmation';
 import PaymentForm from '../components/checkoutForm/PaymentForm';
+import { tokens } from '@/theme';
 
 const Main = styled('div')(({ theme }) => ({
   width: 'auto',
@@ -39,6 +40,8 @@ const CustomPaper = styled(Paper)(({ theme }) => {
 });
 
 const Checkout = () => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const [activeStep, setActiveStep] = useState(0);
   const steps = ['Shipping address', 'Payment details'];
 
@@ -61,7 +64,14 @@ const Checkout = () => {
   return (
     <>
       <Main>
-        <CustomPaper variant='outlined'>
+        <CustomPaper
+          variant='outlined'
+          sx={{
+            background: `${
+              theme.palette.mode === 'dark' ? colors.primary[500] : colors.primary[400]
+            }`,
+          }}
+        >
           <Typography component='h1' variant='h4' align='center'>
             Checkout
           </Typography>

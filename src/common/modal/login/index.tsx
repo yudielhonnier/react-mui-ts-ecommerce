@@ -3,16 +3,10 @@ import SignIn from '@/modules/auth/components/SignIn';
 import SignUp from '@/modules/auth/components/SignUp';
 import LayoutModal from '../LayoutModal';
 import { FlexBox, FlexColCenter, FlexRowCenter } from '@/common/flex-box';
-import { Button, useTheme } from '@mui/material';
+import { Button, Typography, useTheme } from '@mui/material';
 import { H4 } from '@/common/Typography';
 import { tokens } from '@/theme';
-import FlexColBetween from '@/common/flex-box/FlexColBetween';
-
-interface ILoginPorps {
-  open: boolean;
-  onClose: () => void;
-  onSingIn: () => void;
-}
+import { ILoginPorps } from '@/types';
 
 function Login({ open, onClose, onSingIn }: ILoginPorps) {
   const theme = useTheme();
@@ -23,7 +17,9 @@ function Login({ open, onClose, onSingIn }: ILoginPorps) {
       <FlexRowCenter>
         <FlexColCenter>
           <Button onClick={() => setSingIn(false)}>
-            <H4 fontWeight={`${singIn ? '100' : '600'} `}>Register</H4>
+            <H4 fontWeight={`${singIn ? '100' : '600'} `} color={`${colors.primary[100]}`}>
+              Register
+            </H4>
           </Button>
           {!singIn && (
             <FlexBox width={20} height={4} backgroundColor={`${colors.redAccent[500]}`} />
@@ -31,12 +27,14 @@ function Login({ open, onClose, onSingIn }: ILoginPorps) {
         </FlexColCenter>
         <FlexColCenter>
           <Button onClick={() => setSingIn(true)}>
-            <H4 fontWeight={`${singIn ? '600' : '100'} `}>Sign in</H4>
+            <H4 fontWeight={`${singIn ? '600' : '100'} `} color={`${colors.primary[100]}`}>
+              Sign in
+            </H4>
           </Button>
           {singIn && <FlexBox width={20} height={4} backgroundColor={`${colors.redAccent[500]}`} />}
         </FlexColCenter>
       </FlexRowCenter>
-      {singIn ? <SignIn onSingIn={onSingIn} /> : <SignUp></SignUp>}
+      {singIn ? <SignIn onClose={onClose} /> : <SignUp></SignUp>}
     </LayoutModal>
   );
 }

@@ -11,10 +11,10 @@ import { useState } from 'react';
 import { Link as RouteLink, useNavigate } from 'react-router-dom';
 
 import { auth } from '../services/firebase';
-import { StyledTextField } from '@/common/styledComponents';
 import OvalButton from '@/common/buttons/OvalButton';
 import { H4 } from '@/common/Typography';
 import { tokens } from '@/theme';
+import { StyledTextField } from '@/common/styles-components';
 
 export default function SignUp() {
   const theme = useTheme();

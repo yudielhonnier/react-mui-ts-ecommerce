@@ -31,70 +31,13 @@ import OvalButton from '@/common/buttons/OvalButton';
 import LayoutModal from '@/common/modal/LayoutModal';
 import Login from '@/common/modal/login';
 import { af } from 'date-fns/locale';
-
-interface ICustomAppBarProps {
-  open?: boolean;
-  drawerWidth: number;
-  handleDrawerOpen: () => void;
-  handleProfileMenuOpen: (event: React.MouseEvent<HTMLElement>) => void;
-  handleMobileMenuOpen: (event: React.MouseEvent<HTMLElement>) => void;
-  menuId: string;
-  mobileMenuId: string;
-}
-
-interface AppBarProps extends MuiAppBarProps {
-  open?: boolean;
-}
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})<AppBarProps>(({ theme }): {} => ({
-  transition: theme.transitions.create(['margin', 'width'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  zIndex: theme.zIndex.drawer + 1,
-}));
-
-const SearchDiv = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginLeft: 0,
-  width: '100%',
-  height: '78%',
-  [theme.breakpoints.up('sm')]: {
-    width: 'auto',
-  },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1),
-    color: theme.palette.common.white,
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    height: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
-  },
-}));
+import { ICustomAppBarProps } from '@/types';
+import {
+  SearchDiv,
+  SearchIconWrapper,
+  StyledAppBar,
+  StyledInputBase,
+} from '@/common/styles-components';
 
 const CustomAppBar = ({
   open,
@@ -124,12 +67,16 @@ const CustomAppBar = ({
   };
 
   return (
-    <AppBar
+    <StyledAppBar
       position='fixed'
-      sx={{ boxShadow: 'none' }}
+      sx={{
+        background: `${
+          theme.palette.mode === 'dark' ? colors.secondary[800] : colors.secondary[300]
+        }`,
+      }}
       open={open}
-      color='primary'
-      enableColorOnDark={true}
+      color='secondary'
+      // enableColorOnDark={true}
     >
       <Toolbar variant='dense'>
         {/* TODO:ADD TOOLTIP TO ALL THE BUTTONS */}
@@ -244,7 +191,7 @@ const CustomAppBar = ({
         //todo : see what do when te user is logged in
         onSingIn={() => console.log('singIn user')}
       />
-    </AppBar>
+    </StyledAppBar>
   );
 };
 

@@ -17,6 +17,7 @@ import { IItem } from '@/context/reducer.types';
 import { useAppDispatch } from '@/store/store';
 import { useAppSelector } from '@/store/hooks';
 import { addToBasket } from '@/store/slices/basket/basketSlice';
+import { tokens } from '@/theme';
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -48,6 +49,7 @@ export default function CardProduct({
   const [expanded, setExpanded] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   const priceFormated = useFormatMoney(price, '€');
 
@@ -76,7 +78,13 @@ export default function CardProduct({
   };
 
   return (
-    <Card sx={{ maxWidth: 200, margin: 'auto' }}>
+    <Card
+      sx={{
+        maxWidth: 200,
+        margin: 'auto',
+        background: `${theme.palette.mode === 'dark' ? colors.primary[500] : colors.primary[400]}`,
+      }}
+    >
       <StyledCardMedia image={image} />
       <CardContent sx={{ padding: '.5rem .5rem 0 .5rem' }}>
         <Typography

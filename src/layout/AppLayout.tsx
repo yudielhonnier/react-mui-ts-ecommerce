@@ -9,10 +9,13 @@ import CustomAppBar from './CustomAppBar';
 import CustomDrawer from './CustomDrawer';
 import { Main } from './Main';
 import MobileMenu from './MobileMenu';
+import useAuthFunctions from '@/modules/auth/hooks/useAuthFunctions';
 
 const drawerWidth = 240;
 
 export default function AppLayout() {
+  const { logout } = useAuthFunctions();
+
   const [open, setOpen] = React.useState(true);
 
   const handleDrawerOpen = () => {
@@ -40,6 +43,7 @@ export default function AppLayout() {
   };
 
   const handleMenuClose = () => {
+    logout();
     setAnchorEl(null);
     handleMobileMenuClose();
   };
@@ -60,7 +64,7 @@ export default function AppLayout() {
       onClose={handleMenuClose}
     >
       {/* TODO:ADD MORE FEACTURES . CHANGE ONCLICK ACCTION */}
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
     </Menu>
   );
 

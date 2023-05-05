@@ -59,7 +59,7 @@ export default function Products() {
         {view === 'grid' ? (
           <ProductTable />
         ) : (
-          <Grid container spacing={3}>
+          <Grid container rowSpacing={10}>
             {products ? (
               products.map((product: IItem) => (
                 <Grid key={product.id} xs={12} sm={6} md={4} lg={3}>

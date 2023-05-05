@@ -24,9 +24,9 @@ import useSignIn from '../hooks/useSignIn';
 import OvalButton from '@/common/buttons/OvalButton';
 import { H4 } from '@/common/Typography';
 import { tokens } from '@/theme';
-import { StyledTextField } from '@/common/styledComponents';
+import { StyledTextField } from '@/common/styles-components';
 
-export default function SignIn({ onSingIn }: { onSingIn: () => void }) {
+export default function SignIn({ onClose }: { onClose: () => void }) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [email, setEmail] = useState('');
@@ -49,10 +49,8 @@ export default function SignIn({ onSingIn }: { onSingIn: () => void }) {
     signIn({ email, password })
       .then(login)
       .catch((err) => alert(err.message));
-  };
 
-  const signinSubmit = (ev: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    ev.preventDefault();
+    onClose();
   };
 
   return (
@@ -60,7 +58,8 @@ export default function SignIn({ onSingIn }: { onSingIn: () => void }) {
       <CssBaseline />
       <Box
         sx={{
-          marginTop: 8,
+          marginTop: 3,
+          marginBottom: 5,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
