@@ -18,7 +18,7 @@ const Review = () => {
       </Typography>
       <List disablePadding>
         {basket?.map((product) => (
-          <ListItem key={product.id}>
+          <ListItem key={product.id} sx={{ py: 0, px: 2 }}>
             <ListItemText primary={product.name} secondary={`Qty:${product.quantity}`} />
             <Typography variant='body2'>
               {/* TODO:add format for this value */}

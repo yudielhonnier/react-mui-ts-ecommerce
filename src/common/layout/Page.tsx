@@ -21,7 +21,7 @@ export interface PageProps {
 
 const PageDiv = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(4),
-  width: '80%',
+  width: '100%',
   [theme.breakpoints.up('sm')]: {
     // paddingLeft: theme.spacing(3),
     // paddingRight: theme.spacing(3),

@@ -10,6 +10,7 @@ import AddressForm from '../components/checkoutForm/AddressForm';
 import Confirmation from '../components/checkoutForm/Confirmation';
 import PaymentForm from '../components/checkoutForm/PaymentForm';
 import { tokens } from '@/theme';
+import Page from '@/common/layout/Page';
 
 const Main = styled('div')(({ theme }) => ({
   width: 'auto',
@@ -62,7 +63,7 @@ const Checkout = () => {
   };
 
   return (
-    <>
+    <Page title='' help={<Typography>title</Typography>}>
       <Main>
         <CustomPaper
           variant='outlined'
@@ -86,7 +87,7 @@ const Checkout = () => {
           {activeStep === steps.length ? <Confirmation message='paymentMessage' /> : <Form />}
         </CustomPaper>
       </Main>
-    </>
+    </Page>
   );
 };
 

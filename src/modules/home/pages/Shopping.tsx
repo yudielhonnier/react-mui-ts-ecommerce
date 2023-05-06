@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 
 import Grid from '@mui/material/Unstable_Grid2';
 
@@ -12,6 +12,8 @@ import FlexBetweenStart from '@/common/flex-box/FlexBetweenStart';
 
 // TODO: FIX THIS PAGE
 export default function Shopping() {
+  const theme = useTheme();
+
   const { basket } = useAppSelector((state) => state.basket);
   function FormRow() {
     return (

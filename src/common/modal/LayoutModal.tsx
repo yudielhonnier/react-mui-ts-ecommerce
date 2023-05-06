@@ -1,4 +1,13 @@
-import { Box, Button, Dialog, DialogActions, DialogProps, DialogTitle } from '@mui/material';
+import { tokens } from '@/theme';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogProps,
+  DialogTitle,
+  useTheme,
+} from '@mui/material';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -34,17 +43,45 @@ function LayoutModal({
   color,
   maxWidth = 'md',
 }: ILayoutModalProps) {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   return (
-    <Dialog sx={{ zIndex: 1600 }} onClose={onClose} open={open} maxWidth={maxWidth}>
-      <DialogTitle color={color ? color : ''}>{title}</DialogTitle>
+    <Dialog
+      sx={{
+        zIndex: 1600,
+      }}
+      onClose={onClose}
+      open={open}
+      maxWidth={maxWidth}
+    >
+      <DialogTitle
+        color={color ? color : ''}
+        sx={{
+          background: `${
+            theme.palette.mode === 'dark' ? colors.primary[500] : colors.primary[400]
+          }`,
+        }}
+      >
+        {title}
+      </DialogTitle>
       <Box
         sx={{
           padding: '10px 20px',
+          background: `${
+            theme.palette.mode === 'dark' ? colors.primary[500] : colors.primary[400]
+          }`,
         }}
       >
         {children}
       </Box>
-      <DialogActions>
+      <DialogActions
+        sx={{
+          background: `${
+            theme.palette.mode === 'dark' ? colors.primary[500] : colors.primary[400]
+          }`,
+        }}
+      >
         {customShow ? (
           <Button variant='contained' color='primary' onClick={customAction}>
             {customText}
