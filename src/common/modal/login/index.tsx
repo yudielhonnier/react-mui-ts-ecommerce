@@ -22,7 +22,12 @@ function Login({ open, onClose, onSingIn }: ILoginPorps) {
             </H4>
           </Button>
           {!singIn && (
-            <FlexBox width={20} height={4} backgroundColor={`${colors.redAccent[500]}`} />
+            <FlexBox
+              width={20}
+              height={4}
+              backgroundColor={`${colors.redAccent[500]}`}
+              borderRadius='20%'
+            />
           )}
         </FlexColCenter>
         <FlexColCenter>
@@ -31,7 +36,14 @@ function Login({ open, onClose, onSingIn }: ILoginPorps) {
               Sign in
             </H4>
           </Button>
-          {singIn && <FlexBox width={20} height={4} backgroundColor={`${colors.redAccent[500]}`} />}
+          {singIn && (
+            <FlexBox
+              width={20}
+              height={4}
+              backgroundColor={`${colors.redAccent[500]}`}
+              borderRadius='20%'
+            />
+          )}
         </FlexColCenter>
       </FlexRowCenter>
       {singIn ? <SignIn onClose={onClose} /> : <SignUp></SignUp>}

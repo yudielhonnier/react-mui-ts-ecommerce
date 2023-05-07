@@ -37,7 +37,7 @@ export const tokens = (mode: string) => ({
           600: '#3da58a',
           700: '#2e7c67',
           800: '#1e5245',
-          900: '#0f2922',
+          900: 'rgb(17, 62, 53)',
         },
         greenAccent: {
           100: '#dbf5ee',
@@ -48,14 +48,14 @@ export const tokens = (mode: string) => ({
           600: '#3da58a',
           700: '#2e7c67',
           800: '#1e5245',
-          900: '#0f2922',
+          900: 'rgb(17, 62, 53)',
         },
         redAccent: {
           100: '#f8dcdb',
           200: '#f1b9b7',
           300: '#e99592',
           400: '#e2726e',
-          500: '#db4f4a',
+          500: 'rgb(151, 34, 30)',
           600: '#af3f3b',
           700: '#832f2c',
           800: '#58201e',
@@ -164,7 +164,7 @@ export const themeSettings = (mode: PaletteMode) => {
               light: colors.secondary[500],
             },
             background: {
-              default: colors.blueAccent[900],
+              default: colors.secondary[900],
             },
           } as ThemeOptions)
         : ({

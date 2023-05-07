@@ -117,7 +117,15 @@ const CustomAppBar = ({
         </SearchDiv>
 
         <SytledIconButton aria-label='show cart items' onClick={() => navigate('shopping-cart')}>
-          <Badge badgeContent={getQuantityProducts(basket)} color='error' showZero={true}>
+          <Badge
+            badgeContent={getQuantityProducts(basket)}
+            showZero={true}
+            sx={{
+              '& .MuiBadge-badge': {
+                backgroundColor: `${colors.redAccent[500]}`,
+              },
+            }}
+          >
             <ShoppingCart fontSize='medium' />
           </Badge>
         </SytledIconButton>

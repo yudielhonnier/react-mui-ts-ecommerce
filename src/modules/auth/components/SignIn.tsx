@@ -1,23 +1,7 @@
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import {
-  Avatar,
-  Box,
-  Button,
-  Checkbox,
-  CssBaseline,
-  FormControlLabel,
-  Grid,
-  Link,
-  styled,
-  TextField,
-  Typography,
-  useTheme,
-} from '@mui/material';
+import { Box, CssBaseline, useTheme } from '@mui/material';
 import Container from '@mui/material/Container';
-import { TypographyProps } from '@mui/material/Typography';
 import * as React from 'react';
 import { useState } from 'react';
-import { Link as RouteLink } from 'react-router-dom';
 
 import useAuthFunctions from '../hooks/useAuthFunctions';
 import useSignIn from '../hooks/useSignIn';

@@ -56,5 +56,11 @@ export const StyledTextField = styled(TextField)(({ theme }) => ({
   '& .MuiInputBase-root': {
     height: '2.5rem',
     padding: '1rem 0',
+    backgroundColor: 'primary',
+  },
+  '& .MuiOutlinedInput-input:-webkit-autofill': {
+    WebkitBoxShadow:
+      theme.palette.mode === 'dark' ? `0 0 0 100px #151632 inset` : `0 0 0 100px #dbf5ee inset`,
+    WebkitTextFillColor: 'default',
   },
 }));
