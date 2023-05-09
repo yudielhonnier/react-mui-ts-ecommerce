@@ -8,6 +8,10 @@ export const Main = styled('div', {
 }>(({ theme, open, marginleft: marginleft }) => ({
   // flexGrow: 1,
   padding: theme.spacing(3),
+  [theme.breakpoints.down('sm')]: {
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+  },
   transition: theme.transitions.create('margin', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,

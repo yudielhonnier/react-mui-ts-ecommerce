@@ -32,6 +32,10 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   transition: theme.transitions.create('transform', {
     duration: theme.transitions.duration.shortest,
   }),
+  '&:focus': {
+    outline: 'none',
+    boxShadow: 'none', // Set the boxShadow property to none when the IconButton is focused
+  },
 }));
 
 const StyledCardMedia = styled(CardMedia)(() => ({

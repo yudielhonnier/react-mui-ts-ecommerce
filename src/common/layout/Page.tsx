@@ -1,4 +1,4 @@
-import { Box, styled, Typography } from '@mui/material';
+import { Box, styled, Typography, useTheme } from '@mui/material';
 import type { PropsWithChildren, ReactNode } from 'react';
 import { Suspense } from 'react';
 
@@ -6,6 +6,7 @@ import AppSpin from '../feedback/AppSpin';
 import useSetHelp from '../feedback/useSetHelp';
 import Link from '../navigation/Link';
 import { H5 } from '../Typography';
+import { tokens } from '@/theme';
 
 export interface BreadcrumItem {
   key: string;
@@ -30,12 +31,14 @@ const PageDiv = styled(Box)(({ theme }) => ({
 }));
 
 export default function Page({ breadcrumbs, children, help, title }: PropsWithChildren<PageProps>) {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const setHelp = useSetHelp();
   setHelp(help);
 
   return (
     <PageDiv>
-      <H5 sx={{ paddingBottom: '1rem' }}>{title}</H5>
+      <H5 sx={{ paddingBottom: '1rem', color: colors.greenAccent[200] }}>{title}</H5>
       {breadcrumbs ? (
         breadcrumbs.map((b) => (
           // TODO:CREATE CORRECT BREADCRUMBS

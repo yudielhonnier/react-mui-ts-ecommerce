@@ -5,7 +5,7 @@ import {
   Help,
   LightModeOutlined,
   Menu as MenuIcon,
-  More,
+  DoubleArrow as DoubleArrowIcon,
   Notifications,
   Search,
   ShoppingCart,
@@ -105,7 +105,7 @@ const CustomAppBar = ({
           onClick={handleDrawerOpen}
           sx={{ mr: 5 }}
         >
-          <MenuIcon />
+          <DoubleArrowIcon />
         </SytledIconButton>
         <Box sx={{ flexGrow: 1 }} />
 
@@ -183,14 +183,14 @@ const CustomAppBar = ({
           </FlexRowCenter>
         </Box>
         <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-          <IconButton
+          <SytledIconButton
             aria-label='show more'
             aria-controls={mobileMenuId}
             aria-haspopup='true'
             onClick={handleMobileMenuOpen}
           >
-            <More />
-          </IconButton>
+            <MenuIcon />
+          </SytledIconButton>
         </Box>
       </Toolbar>
       <Login

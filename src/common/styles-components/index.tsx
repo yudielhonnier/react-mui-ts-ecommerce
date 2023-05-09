@@ -60,7 +60,7 @@ export const StyledTextField = styled(TextField)(({ theme }) => ({
   },
   '& .MuiOutlinedInput-input:-webkit-autofill': {
     WebkitBoxShadow:
-      theme.palette.mode === 'dark' ? `0 0 0 100px #151632 inset` : `0 0 0 100px #dbf5ee inset`,
+      theme.palette.mode === 'dark' ? `0 0 0 100px #141b2d inset` : `0 0 0 100px #dbf5ee inset`,
     WebkitTextFillColor: 'default',
   },
 }));

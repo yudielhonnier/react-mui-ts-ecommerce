@@ -64,7 +64,16 @@ const CustomDrawer = ({ open, drawerWidth, handleDrawerClose }: ICustomDrawerPro
     >
       <DrawerHeader>
         <Typography sx={{}}>Categories</Typography>
-        <IconButton onClick={handleDrawerClose} size='small'>
+        <IconButton
+          onClick={handleDrawerClose}
+          size='small'
+          sx={{
+            '&:focus': {
+              outline: 'none',
+              boxShadow: 'none', // Set the boxShadow property to none when the IconButton is focused
+            },
+          }}
+        >
           {theme.direction === 'rtl' ? <ChevronRight /> : <ChevronLeft />}
         </IconButton>
       </DrawerHeader>
