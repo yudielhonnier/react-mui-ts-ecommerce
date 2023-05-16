@@ -62,7 +62,7 @@ export default function Products() {
           <Grid container rowSpacing={10}>
             {products ? (
               products.map((product: IItem) => (
-                <Grid key={product.id} xs={12} sm={6} md={4} lg={3}>
+                <Grid key={product.id} xs={8} sm={6} md={4} lg={3}>
                   <CardProduct product={product} />
                 </Grid>
               ))

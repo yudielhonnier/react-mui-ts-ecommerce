@@ -57,6 +57,7 @@ export const StyledTextField = styled(TextField)(({ theme }) => ({
     height: '2.5rem',
     padding: '1rem 0',
     backgroundColor: 'primary',
+    borderRadius: 'inherit',
   },
   '& .MuiOutlinedInput-input:-webkit-autofill': {
     WebkitBoxShadow:

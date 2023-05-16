@@ -12,6 +12,7 @@ export const Main = styled('div', {
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
   },
+
   transition: theme.transitions.create('margin', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -22,6 +23,9 @@ export const Main = styled('div', {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    marginLeft: `${marginleft}px`,
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: `${marginleft}px`,
+    },
+    // marginLeft: `${marginleft}px`,
   }),
 }));

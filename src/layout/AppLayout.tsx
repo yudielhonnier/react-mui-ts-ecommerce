@@ -10,6 +10,7 @@ import CustomDrawer from './CustomDrawer';
 import { Main } from './Main';
 import MobileMenu from './MobileMenu';
 import useAuthFunctions from '@/modules/auth/hooks/useAuthFunctions';
+import { af } from 'date-fns/locale';
 
 const drawerWidth = 240;
 
@@ -64,7 +65,8 @@ export default function AppLayout() {
       onClose={handleMenuClose}
     >
       {/* TODO:ADD MORE FEACTURES . CHANGE ONCLICK ACCTION */}
-      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+      <MenuItem onClick={() => {}}>Login</MenuItem>
+      <MenuItem onClick={() => {}}>Logout</MenuItem>
     </Menu>
   );
 

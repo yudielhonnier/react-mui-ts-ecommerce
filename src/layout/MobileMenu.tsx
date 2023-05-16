@@ -1,4 +1,6 @@
-import { AccountCircle, Mail, Notifications } from '@mui/icons-material';
+import { H4, H5, H6 } from '@/common/Typography';
+import { SytledIconButton } from '@/common/layout/StyledIconButton';
+import { AccountCircle, Help, Mail, Notifications } from '@mui/icons-material';
 import { Badge, IconButton, Menu, MenuItem } from '@mui/material';
 
 interface IMovilMenuProps {
@@ -27,31 +29,31 @@ const MobileMenu = ({
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton aria-label='show 4 new mails' color='inherit'>
+        <SytledIconButton aria-label='show 4 new mails' colorIcon='primary'>
           <Badge badgeContent={4} color='secondary'>
-            <Mail />
+            <Help />
           </Badge>
-        </IconButton>
-        <p>Messages</p>
+        </SytledIconButton>
+        <H5>Help</H5>
       </MenuItem>
       <MenuItem>
-        <IconButton aria-label='show 11 new notifications' color='inherit'>
+        <SytledIconButton aria-label='show 11 new notifications' colorIcon='secondary'>
           <Badge badgeContent={11} color='secondary'>
             <Notifications />
           </Badge>
-        </IconButton>
-        <p>Notifications</p>
+        </SytledIconButton>
+        <H5>Notifications</H5>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
+        <SytledIconButton
           aria-label='account of current user'
           aria-controls='primary-search-account-menu'
           aria-haspopup='true'
-          color='inherit'
+          colorIcon='inherit'
         >
           <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
+        </SytledIconButton>
+        <H5>Profile</H5>
       </MenuItem>
     </Menu>
   );

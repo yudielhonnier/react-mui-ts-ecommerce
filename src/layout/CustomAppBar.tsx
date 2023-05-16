@@ -103,7 +103,6 @@ const CustomAppBar = ({
           edge='start'
           aria-label='open drawer'
           onClick={handleDrawerOpen}
-          sx={{ mr: 5 }}
         >
           <DoubleArrowIcon />
         </SytledIconButton>
