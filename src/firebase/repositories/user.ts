@@ -1,9 +1,10 @@
-import { getCollection } from 'firebaseSDK';
-import FirebaseBase from 'firebaseSDK/repositories/FirebaseBase';
+import FirebaseBase from '@/firebase/repositories/FirebaseBase';
+import { createUserCollectionReference } from '../factory/UserFactory';
+import User from '@/modules/auth/models/User';
 
-class UserRepository extends FirebaseBase {
+class UserRepository extends FirebaseBase<User> {
   constructor() {
-    super(getCollection('user'));
+    super(createUserCollectionReference());
   }
 }
 

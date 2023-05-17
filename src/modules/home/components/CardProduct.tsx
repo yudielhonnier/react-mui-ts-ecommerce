@@ -18,6 +18,7 @@ import { useAppDispatch } from '@/store/store';
 import { useAppSelector } from '@/store/hooks';
 import { addToBasket } from '@/store/slices/basket/basketSlice';
 import { tokens } from '@/theme';
+import Product from '../models/Product';
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -48,7 +49,7 @@ const StyledCardMedia = styled(CardMedia)(() => ({
 export default function CardProduct({
   product: { id, name, productType, price, rating, quantity, image, decriptionProd },
 }: {
-  product: IItem;
+  product: Product;
 }) {
   const [expanded, setExpanded] = useState<boolean>(false);
   const dispatch = useAppDispatch();

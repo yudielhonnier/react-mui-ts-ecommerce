@@ -41,7 +41,7 @@ export function getCollection<T>(name: string) {
   return collectionRef;
 }
 
-export function getAuthDb(name: string) {
+export function getAuthDb(name?: string): Auth {
   const app = setupFirebase();
   if (!authDbRef) {
     authDbRef = getAuth(app);

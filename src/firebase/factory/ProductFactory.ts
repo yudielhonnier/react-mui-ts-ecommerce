@@ -5,9 +5,11 @@ import {
   QueryDocumentSnapshot,
   SnapshotOptions,
 } from 'firebase/firestore';
+import { getCollection } from '@/firebase';
 
-class ProductCollectionReference extends CollectionReference<Product> {
-  public converter = {
+export function createProductCollectionReference(): CollectionReference<Product> {
+  const collection = getCollection('products') as CollectionReference<DocumentData>;
+  return collection.withConverter({
     toFirestore(product: Product): DocumentData {
       return { ...product };
     },
@@ -16,7 +18,7 @@ class ProductCollectionReference extends CollectionReference<Product> {
       options: SnapshotOptions
     ): Product {
       const data = snapshot.data(options);
-      return { ...data, id: snapshot.id };
+      return { ...data, id: snapshot.id } as Product;
     },
-  };
+  });
 }

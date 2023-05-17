@@ -18,6 +18,8 @@ import {
 import ProductTable from '../components/ProductTable';
 import { tokens } from '@/theme';
 import Link from '@/common/navigation/Link';
+import Product from '../models/Product';
+import productServices from '@/firebase/services/productServices';
 
 export default function Products() {
   const [view, setView] = useState<'grid' | 'cards'>('cards');
@@ -28,6 +30,11 @@ export default function Products() {
 
   useEffect(() => {
     dispatch(getProducts(100));
+    // const getProducts = async () => {
+    //   const data = await productServices.getAll();
+    //   console.log('data', data);
+    // };
+    // getProducts();
   }, [dispatch]);
 
   return (
@@ -61,7 +68,7 @@ export default function Products() {
         ) : (
           <Grid container rowSpacing={10}>
             {products ? (
-              products.map((product: IItem) => (
+              products.map((product: Product) => (
                 <Grid key={product.id} xs={8} sm={6} md={4} lg={3}>
                   <CardProduct product={product} />
                 </Grid>

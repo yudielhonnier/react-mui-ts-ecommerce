@@ -10,11 +10,12 @@ import * as React from 'react';
 import { useState } from 'react';
 import { Link as RouteLink, useNavigate } from 'react-router-dom';
 
-import { auth } from '../services/firebase';
+// import { auth } from '../services/firebase';
 import OvalButton from '@/common/buttons/OvalButton';
 import { H4 } from '@/common/Typography';
 import { tokens } from '@/theme';
 import { StyledTextField } from '@/common/styles-components';
+import authRepository from '@/firebase/repositories/Auth';
 
 export default function SignUp() {
   const theme = useTheme();
@@ -30,14 +31,7 @@ export default function SignUp() {
       email: data.get('email'),
       password: data.get('password'),
     });
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((auth) => {
-        console.log(auth);
-        if (auth) {
-          navigate('/');
-        }
-      })
-      .catch((err) => alert(err.message));
+    authRepository.createUser(email, password).catch((err) => alert(err.message));
   };
 
   return (

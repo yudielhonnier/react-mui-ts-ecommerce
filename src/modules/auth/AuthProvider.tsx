@@ -5,8 +5,9 @@ import { Outlet } from 'react-router-dom';
 import { AuthFunctionsContext, AuthStateContext } from './contexts/AuthContext';
 import AuthFunctions from './contexts/AuthFunctions';
 import AuthState from './contexts/AuthState';
-import { auth } from './services/firebase';
+// import { auth } from './services/firebase';
 import SignIn from './components/SignIn';
+import authRepository from '@/firebase/repositories/Auth';
 
 export default function AuthProvider() {
   // TODO: INVESTIGATE IF THIS UNDEFINED IS CORRECTLY
@@ -18,7 +19,7 @@ export default function AuthProvider() {
 
   useEffect(() => {
     console.log('authState', authState);
-    auth.onAuthStateChanged((authUser) => {
+    authRepository.setAuthStateChange((authUser) => {
       // TODO:MAKE SOME WITH THIS AUTHUSER
       if (authUser) {
         console.log('authUser', authUser);
