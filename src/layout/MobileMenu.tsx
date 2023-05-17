@@ -1,7 +1,8 @@
 import { H4, H5, H6 } from '@/common/Typography';
 import { SytledIconButton } from '@/common/layout/StyledIconButton';
+import { tokens } from '@/theme';
 import { AccountCircle, Help, Mail, Notifications } from '@mui/icons-material';
-import { Badge, IconButton, Menu, MenuItem } from '@mui/material';
+import { Badge, IconButton, Menu, MenuItem, useTheme } from '@mui/material';
 
 interface IMovilMenuProps {
   mobileMoreAnchorEl: null | HTMLElement;
@@ -18,6 +19,9 @@ const MobileMenu = ({
   handleMobileMenuClose,
   handleProfileMenuOpen,
 }: IMovilMenuProps) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   return (
     <Menu
       anchorEl={mobileMoreAnchorEl}
@@ -27,10 +31,15 @@ const MobileMenu = ({
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
+      sx={{
+        '& .MuiPaper-root  ': {
+          background: `${colors.secondary[800]}`,
+        },
+      }}
     >
       <MenuItem>
         <SytledIconButton aria-label='show 4 new mails' colorIcon='primary'>
-          <Badge badgeContent={4} color='secondary'>
+          <Badge badgeContent={4} color='error'>
             <Help />
           </Badge>
         </SytledIconButton>
@@ -38,7 +47,7 @@ const MobileMenu = ({
       </MenuItem>
       <MenuItem>
         <SytledIconButton aria-label='show 11 new notifications' colorIcon='secondary'>
-          <Badge badgeContent={11} color='secondary'>
+          <Badge badgeContent={11} color='error'>
             <Notifications />
           </Badge>
         </SytledIconButton>

@@ -45,7 +45,12 @@ export default function Total() {
         <h5>Total :</h5>
         <H6>{basketsFormated}</H6>
       </FlexRowBetween>
-      <Button variant='contained' color='secondary' onClick={() => navigate('checkout')}>
+      <Button
+        variant='contained'
+        color='secondary'
+        onClick={() => navigate('checkout')}
+        disabled={basket.length === 0}
+      >
         Check Out
       </Button>
     </FlexColBetween>
