@@ -6,11 +6,10 @@ import Typography from '@mui/material/Typography';
 import { getBasketTotal } from '../../../../context/reducer';
 import { useStateValue } from '../../../../context/StateProvider';
 import useFormatMoney from '../../../../hooks/useFormatMoney';
+import { useAppSelector } from '@/store/hooks';
 
 const Review = () => {
-  const {
-    state: { basket },
-  } = useStateValue();
+  const { basket } = useAppSelector((state) => state.basket);
 
   return (
     <>
@@ -19,7 +18,7 @@ const Review = () => {
       </Typography>
       <List disablePadding>
         {basket?.map((product) => (
-          <ListItem key={product.id}>
+          <ListItem key={product.id} sx={{ py: 0, px: 2 }}>
             <ListItemText primary={product.name} secondary={`Qty:${product.quantity}`} />
             <Typography variant='body2'>
               {/* TODO:add format for this value */}

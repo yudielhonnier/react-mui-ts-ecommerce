@@ -1,46 +1,71 @@
-// import Product from '@/modules/home/models/Product';
-// import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { HttpPostData } from '@/common/http/HttpClient';
+import Product from '@/modules/home/models/Product';
+import { createAsyncThunk, createSlice, AsyncThunk } from '@reduxjs/toolkit';
 
-// interface ICheckOut {
-//   message: string;
-// }
+interface ICheckOut {
+  message: string;
+  shipingData: {};
+}
+interface IPostData {
+  id: string;
+  amount: number;
+  limit: number;
+}
 
-// const initialState: ICheckOut = {
-//   message: '',
-// };
+const initialState: ICheckOut = {
+  message: '',
+  shipingData: {},
+};
 
-// export const getCheckout = createAsyncThunk<ICheckOut, number, { rejectValue: FetchProductsError }>(
-//   'products/fetch',
-//   async (limit: number, thunkAPI) => {
-//     const response = await fetch('http://localhost:3001/api/products', {
-//       method: 'GET',
-//     });
-//     const data = response.json();
-//     // Check if status is not okay:
-//     if (response.status !== 200) {
-//       // Return the error message:
-//       return thunkAPI.rejectWithValue({
-//         message: 'Failed to fetch todos.',
-//       });
-//     }
-//     return data;
-//   }
-// );
-// type FetchProductsError = {
-//   message: string;
-// };
+export const postCheckout = createAsyncThunk<string, IPostData, { rejectValue: PostCheckoutError }>(
+  'checkout/postCheckout',
+  async ({ limit, id, amount }: IPostData, thunkAPI) => {
+    console.log('postCheckoutinggggg ', id);
+    console.log('postCheckoutinggggg ', amount);
 
-// const productsSlice = createSlice({
-//   name: 'products',
-//   initialState: initialState,
-//   reducers: {
+    const response = await fetch('http://localhost:3001/api/checkout', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id: id, amount: amount }),
+    });
+    const data = response.json();
+    // Check if status is not okay:
+    if (response.status !== 200) {
+      // Return the error message:
+      return thunkAPI.rejectWithValue({
+        message: 'Failed to psot payment.',
+      });
+    }
+    return data;
+  }
+);
+type PostCheckoutError = {
+  message: string;
+};
 
-//   },
-//   extraReducers: (builder) => {
-//     builder.addCase(getCheckout.fulfilled, (state, action) => {
-//     });
-//   },
-// });
-// //actions creators
-// export const {  } = productsSlice.actions;
-// export default productsSlice.reducer;
+const checkoutSlice = createSlice({
+  name: 'checkout',
+  initialState: initialState,
+  reducers: {
+    setMessage: (state, actions) => {
+      console.log(actions.payload.message);
+      state.message = actions.payload.message;
+    },
+
+    setShippingData: (state, actions) => {
+      console.log(actions.payload);
+      state.shipingData = actions.payload;
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(postCheckout.fulfilled, (state, action) => {
+      state.message = action.payload;
+    });
+  },
+});
+//actions creators
+export const { setMessage, setShippingData } = checkoutSlice.actions;
+export default checkoutSlice.reducer;

@@ -1,10 +1,8 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 
 import Grid from '@mui/material/Unstable_Grid2';
-import { FlexBetween, FlexBox, FlexRowCenter } from '@/common/flex-box';
 
 import Page from '@/common/layout/Page';
-import { useStateValue } from '@/context/StateProvider';
 
 import CheckoutCart from '../components/CheckoutCart';
 import Total from '../components/Total';
@@ -13,7 +11,9 @@ import Product from '../models/Product';
 import FlexBetweenStart from '@/common/flex-box/FlexBetweenStart';
 
 // TODO: FIX THIS PAGE
-export default function ShoppingCart() {
+export default function Shopping() {
+  const theme = useTheme();
+
   const { basket } = useAppSelector((state) => state.basket);
   function FormRow() {
     return (
@@ -37,10 +37,8 @@ export default function ShoppingCart() {
         <Grid container spacing={3} xs={8} direction='column'>
           <FormRow />
         </Grid>
-        <Grid xs={4}>
-          <Typography align='center' gutterBottom variant='h4'>
-            <Total />
-          </Typography>
+        <Grid container xs={4}>
+          <Total />
         </Grid>
       </FlexBetweenStart>
     </Page>

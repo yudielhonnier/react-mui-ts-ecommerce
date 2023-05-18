@@ -1,3 +1,4 @@
+import productServices from '@/firebase/services/productServices';
 import Product from '@/modules/home/models/Product';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
@@ -17,21 +18,37 @@ type FetchProductsError = {
   message: string;
 };
 
-export const getProducts = createAsyncThunk<Product[], number, { rejectValue: FetchProductsError }>(
-  'products/fetch',
-  async (limit: number, thunkAPI) => {
-    const response = await fetch('http://localhost:3001/api/products', {
-      method: 'GET',
+export const getProductsWithFetch = createAsyncThunk<
+  Product[],
+  number,
+  { rejectValue: FetchProductsError }
+>('products/fetch', async (limit: number, thunkAPI) => {
+  const response = await fetch('http://localhost:3001/api/products', {
+    method: 'GET',
+  });
+  const data = response.json();
+  // Check if status is not okay:
+  if (response.status !== 200) {
+    // Return the error message:
+    return thunkAPI.rejectWithValue({
+      message: 'Failed to fetch products.',
     });
-    const data = response.json();
-    // Check if status is not okay:
-    if (response.status !== 200) {
-      // Return the error message:
+  }
+  return data;
+});
+
+export const getProducts = createAsyncThunk<Product[], number, { rejectValue: FetchProductsError }>(
+  'products/fetch-firebase',
+  async (limit: number, thunkAPI) => {
+    try {
+      console.log('trying fetching');
+      const data = await productServices.getAll();
+      return data.slice(0, limit);
+    } catch (error) {
       return thunkAPI.rejectWithValue({
-        message: 'Failed to fetch todos.',
+        message: 'Failed to fetch products.',
       });
     }
-    return data;
   }
 );
 

@@ -1,10 +1,11 @@
+import { useState, useContext } from 'react';
 import {
   AccountCircle,
   DarkModeOutlined,
   Help,
   LightModeOutlined,
   Menu as MenuIcon,
-  More,
+  DoubleArrow as DoubleArrowIcon,
   Notifications,
   Search,
   ShoppingCart,
@@ -20,72 +21,23 @@ import Logo from '../assets/ecommerce.png';
 import { useAppSelector } from '@/store/hooks';
 import Product from '@/modules/home/models/Product';
 import { tokens, ColorModeContext } from '@/theme';
-import { useContext } from 'react';
 import { SytledIconButton } from '@/common/layout/StyledIconButton';
+import useAuth from '@/modules/auth/hooks/useAuth';
+import { H4 } from '@/common/Typography';
+import { FlexBox, FlexRowCenter } from '@/common/flex-box';
 
-interface ICustomAppBarProps {
-  open?: boolean;
-  drawerWidth: number;
-  handleDrawerOpen: () => void;
-  handleProfileMenuOpen: (event: React.MouseEvent<HTMLElement>) => void;
-  handleMobileMenuOpen: (event: React.MouseEvent<HTMLElement>) => void;
-  menuId: string;
-  mobileMenuId: string;
-}
-
-interface AppBarProps extends MuiAppBarProps {
-  open?: boolean;
-}
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})<AppBarProps>(({ theme }) => ({
-  transition: theme.transitions.create(['margin', 'width'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  zIndex: theme.zIndex.drawer + 1,
-}));
-
-const SearchDiv = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginLeft: 0,
-  width: '100%',
-  height: '78%',
-  [theme.breakpoints.up('sm')]: {
-    width: 'auto',
-  },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1),
-    color: theme.palette.common.white,
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    height: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
-  },
-}));
+import { getNameFromEmail } from '@/utils/utilString';
+import OvalButton from '@/common/buttons/OvalButton';
+import LayoutModal from '@/common/modal/LayoutModal';
+import Login from '@/common/modal/login';
+import { af } from 'date-fns/locale';
+import { ICustomAppBarProps } from '@/types';
+import {
+  SearchDiv,
+  SearchIconWrapper,
+  StyledAppBar,
+  StyledInputBase,
+} from '@/common/styles-components';
 
 const CustomAppBar = ({
   open,
@@ -98,27 +50,33 @@ const CustomAppBar = ({
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
+  const [openLogin, setOpenLogin] = useState<boolean>(false);
 
   const navigate = useNavigate();
   const { basket } = useAppSelector((state) => state.basket);
 
   // TODO:ADD VALIDATION TO LOGGIN
-  const isLoggin = false;
+  const authState = useAuth();
+  const user = authState?.user;
+  const isLoggin = user ?? false;
 
   const getQuantityProducts = (basket: Product[]) => {
     let total = 0;
     basket.forEach((el) => (total += el.quantity));
-    console.log('totallll', total);
     return total;
   };
 
   return (
-    <AppBar
+    <StyledAppBar
       position='fixed'
-      sx={{ boxShadow: 'none' }}
+      sx={{
+        background: `${
+          theme.palette.mode === 'dark' ? colors.secondary[800] : colors.secondary[300]
+        }`,
+      }}
       open={open}
-      color='primary'
-      enableColorOnDark={true}
+      color='secondary'
+      // enableColorOnDark={true}
     >
       <Toolbar variant='dense'>
         {/* TODO:ADD TOOLTIP TO ALL THE BUTTONS */}
@@ -145,9 +103,8 @@ const CustomAppBar = ({
           edge='start'
           aria-label='open drawer'
           onClick={handleDrawerOpen}
-          sx={{ mr: 5 }}
         >
-          <MenuIcon />
+          <DoubleArrowIcon />
         </SytledIconButton>
         <Box sx={{ flexGrow: 1 }} />
 
@@ -159,7 +116,15 @@ const CustomAppBar = ({
         </SearchDiv>
 
         <SytledIconButton aria-label='show cart items' onClick={() => navigate('shopping-cart')}>
-          <Badge badgeContent={getQuantityProducts(basket)} color='error' showZero={true}>
+          <Badge
+            badgeContent={getQuantityProducts(basket)}
+            showZero={true}
+            sx={{
+              '& .MuiBadge-badge': {
+                backgroundColor: `${colors.redAccent[500]}`,
+              },
+            }}
+          >
             <ShoppingCart fontSize='medium' />
           </Badge>
         </SytledIconButton>
@@ -189,30 +154,51 @@ const CustomAppBar = ({
               <Notifications fontSize='medium' />
             </Badge>
           </SytledIconButton>
-
-          <SytledIconButton
-            theme={theme}
-            edge='end'
-            aria-label='account of current user'
-            aria-controls={menuId}
-            aria-haspopup='true'
-            onClick={handleProfileMenuOpen}
-          >
-            {isLoggin ? <AccountCircle fontSize='medium' /> : <p>SignIn</p>}
-          </SytledIconButton>
+          <FlexRowCenter gap={1}>
+            {isLoggin ? (
+              <SytledIconButton
+                theme={theme}
+                edge='end'
+                aria-label='account of current user'
+                aria-controls={menuId}
+                aria-haspopup='true'
+                onClick={handleProfileMenuOpen}
+              >
+                <AccountCircle fontSize='medium' />
+                <H4>Hi, {user?.email && getNameFromEmail(user?.email)}</H4>
+              </SytledIconButton>
+            ) : (
+              // todo: make a cta for this
+              <OvalButton
+                background={{
+                  normal: `${colors.redAccent[500]}`,
+                  hover: `${colors.greenAccent[500]}`,
+                }}
+                onClick={() => setOpenLogin(true)}
+              >
+                <H4>Sign in</H4>
+              </OvalButton>
+            )}
+          </FlexRowCenter>
         </Box>
         <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-          <IconButton
+          <SytledIconButton
             aria-label='show more'
             aria-controls={mobileMenuId}
             aria-haspopup='true'
             onClick={handleMobileMenuOpen}
           >
-            <More />
-          </IconButton>
+            <MenuIcon />
+          </SytledIconButton>
         </Box>
       </Toolbar>
-    </AppBar>
+      <Login
+        open={openLogin}
+        onClose={() => setOpenLogin(false)}
+        //todo : see what do when te user is logged in
+        onSingIn={() => console.log('singIn user')}
+      />
+    </StyledAppBar>
   );
 };
 

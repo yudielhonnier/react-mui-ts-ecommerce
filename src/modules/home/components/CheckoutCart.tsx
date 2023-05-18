@@ -1,26 +1,29 @@
-import { Delete as DeleteIcon } from '@mui/icons-material';
-import { Badge } from '@mui/material';
+import { Badge, Box, CardContent, Theme, useTheme } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
-import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { useState } from 'react';
 
 import useFormatMoney from '@/hooks/useFormatMoney';
 
 import { actionTypes, IItem } from '@/context/reducer.types';
 import { useAppDispatch } from '@/store/store';
-import { decQtyItem, removeFromBasket } from '@/store/slices/basket/basketSlice';
+import { decQtyItem, removeFromBasket, addToBasket } from '@/store/slices/basket/basketSlice';
+import { FlexBox, FlexRowCenter } from '@/common/flex-box';
+import { SytledIconButton } from '@/common/layout/StyledIconButton';
+import FlexBetweenCenter from '@/common/flex-box/FlexBetweenCenter';
+import FlexColBetween from '@/common/flex-box/FlexColBetween';
+import { H5 } from '@/common/Typography';
+import { tokens } from '@/theme';
 
 export default function CheckoutCart({
   product: { id, name, productType, price, rating, quantity, image, decriptionProd },
 }: {
   product: IItem;
 }) {
-  // const classes=useStyles();
   const dispatch = useAppDispatch();
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   const priceFormated = useFormatMoney(price, '€');
 
@@ -30,9 +33,9 @@ export default function CheckoutCart({
     image: image,
     alt: 'Running Shoes',
     sx: {
-      padding: '1rem 1rem 0 1rem',
-      height: '7rem',
-      width: '10rem',
+      padding: '.8rem 1rem 0 1rem',
+      height: '5rem',
+      width: '7rem',
     },
   };
 
@@ -64,49 +67,89 @@ export default function CheckoutCart({
         );
   };
 
+  const incItem = () => {
+    dispatch(
+      addToBasket({
+        id,
+        name,
+        productType,
+        image,
+        price,
+        rating,
+        quantity,
+        decriptionProd,
+      })
+    );
+  };
+
   return (
     <Card
       sx={{
-        // maxWidth: 345,
         margin: 'auto',
+        background: `${theme.palette.mode === 'dark' ? colors.primary[500] : colors.primary[400]}`,
       }}
+      color='primary'
     >
-      <CardHeader
-        action={
-          <Typography variant='h5' color='textSecondary'>
-            {priceFormated}
-          </Typography>
-        }
-        title={name}
-        titleTypographyProps={{ noWrap: true }}
-        subheader='In Stock'
-        sx={{
-          '& .MuiCardHeader-content': {
-            overflow: 'hidden',
-          },
-        }}
-      />
-
-      <CardMedia component='img' {...CardMediaProps} />
+      <CardContent sx={{ padding: '.5rem 1rem 0 1rem' }}>
+        <Typography
+          sx={{
+            fontSize: '.8rem',
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
+        >
+          <span>{name}</span>
+        </Typography>
+      </CardContent>
+      <FlexBox>
+        <CardMedia component='img' {...CardMediaProps} />
+        <FlexColBetween sx={{ pt: '.5rem', pr: '1rem' }}>
+          <Typography> {decriptionProd}</Typography>
+          <Typography sx={{ fontWeight: 'bold' }}> {priceFormated}</Typography>
+        </FlexColBetween>
+      </FlexBox>
       <CardActions
         disableSpacing
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
           textAlign: 'center',
+          p: '1rem',
+          py: '.5rem',
         }}
       >
-        <div style={{ display: 'flex' }}>
+        <Box style={{ display: 'flex' }}>
           {Array(rating)
             .fill(0)
             .map((_, i) => (
               <p key={i}>&#11088;</p>
             ))}
-        </div>
-        <Badge color='error' badgeContent={quantity}></Badge>
-        <IconButton onClick={removeItem}>
-          <DeleteIcon fontSize='large' />
-        </IconButton>
+        </Box>
+        <FlexBetweenCenter gap={1} sx={{ px: '.5rem' }}>
+          <SytledIconButton
+            sx={{ height: '1rem', width: '1rem' }}
+            size='small'
+            edge='start'
+            aria-label='increment items'
+            onClick={removeItem}
+            theme={theme}
+            colorIcon='primary'
+          >
+            <H5 sx={{ p: '0px' }}>-</H5>
+          </SytledIconButton>
+          <Typography sx={{ p: '0px' }}>{quantity}</Typography>
+          <SytledIconButton
+            sx={{ height: '1rem', width: '1rem' }}
+            size='small'
+            edge='start'
+            aria-label='increment items'
+            onClick={incItem}
+            theme={theme}
+            colorIcon='primary'
+          >
+            <H5 sx={{ p: '0px' }}>+</H5>
+          </SytledIconButton>
+        </FlexBetweenCenter>
       </CardActions>
     </Card>
   );

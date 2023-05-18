@@ -3,7 +3,7 @@ import { lazy } from 'react';
 import type RouteConfig from '@/routing/RouteConfig';
 
 const Products = lazy(async () => import('./Products'));
-const SelectedProducts = lazy(async () => import('./ShoppingCart'));
+const SelectedProducts = lazy(async () => import('./Shopping'));
 const Checkout = lazy(async () => import('./Checkout'));
 const Orders = lazy(async () => import('./Orders'));
 

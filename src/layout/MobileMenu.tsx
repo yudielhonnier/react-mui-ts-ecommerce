@@ -1,5 +1,8 @@
-import { AccountCircle, Mail, Notifications } from '@mui/icons-material';
-import { Badge, IconButton, Menu, MenuItem } from '@mui/material';
+import { H4, H5, H6 } from '@/common/Typography';
+import { SytledIconButton } from '@/common/layout/StyledIconButton';
+import { tokens } from '@/theme';
+import { AccountCircle, Help, Mail, Notifications } from '@mui/icons-material';
+import { Badge, IconButton, Menu, MenuItem, useTheme } from '@mui/material';
 
 interface IMovilMenuProps {
   mobileMoreAnchorEl: null | HTMLElement;
@@ -16,6 +19,9 @@ const MobileMenu = ({
   handleMobileMenuClose,
   handleProfileMenuOpen,
 }: IMovilMenuProps) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   return (
     <Menu
       anchorEl={mobileMoreAnchorEl}
@@ -25,33 +31,38 @@ const MobileMenu = ({
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
+      sx={{
+        '& .MuiPaper-root  ': {
+          background: `${colors.secondary[800]}`,
+        },
+      }}
     >
       <MenuItem>
-        <IconButton aria-label='show 4 new mails' color='inherit'>
-          <Badge badgeContent={4} color='secondary'>
-            <Mail />
+        <SytledIconButton aria-label='show 4 new mails' colorIcon='primary'>
+          <Badge badgeContent={4} color='error'>
+            <Help />
           </Badge>
-        </IconButton>
-        <p>Messages</p>
+        </SytledIconButton>
+        <H5>Help</H5>
       </MenuItem>
       <MenuItem>
-        <IconButton aria-label='show 11 new notifications' color='inherit'>
-          <Badge badgeContent={11} color='secondary'>
+        <SytledIconButton aria-label='show 11 new notifications' colorIcon='secondary'>
+          <Badge badgeContent={11} color='error'>
             <Notifications />
           </Badge>
-        </IconButton>
-        <p>Notifications</p>
+        </SytledIconButton>
+        <H5>Notifications</H5>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
+        <SytledIconButton
           aria-label='account of current user'
           aria-controls='primary-search-account-menu'
           aria-haspopup='true'
-          color='inherit'
+          colorIcon='inherit'
         >
           <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
+        </SytledIconButton>
+        <H5>Profile</H5>
       </MenuItem>
     </Menu>
   );

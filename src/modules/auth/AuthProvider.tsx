@@ -5,28 +5,31 @@ import { Outlet } from 'react-router-dom';
 import { AuthFunctionsContext, AuthStateContext } from './contexts/AuthContext';
 import AuthFunctions from './contexts/AuthFunctions';
 import AuthState from './contexts/AuthState';
-import { auth } from './services/firebase';
+// import { auth } from './services/firebase';
+import SignIn from './components/SignIn';
+import authRepository from '@/firebase/repositories/Auth';
 
 export default function AuthProvider() {
-  const [authState, setAuthState] = useState<AuthState | null>(null);
+  // TODO: INVESTIGATE IF THIS UNDEFINED IS CORRECTLY
+  const [authState, setAuthState] = useState<AuthState | undefined>();
   const functions: AuthFunctions = {
     login: setAuthState,
-    logout: () => setAuthState(null),
+    logout: () => setAuthState(undefined),
   };
 
   useEffect(() => {
-    auth.onAuthStateChanged((authUser) => {
+    console.log('authState', authState);
+    authRepository.setAuthStateChange((authUser) => {
       // TODO:MAKE SOME WITH THIS AUTHUSER
-      // if (authUser) {
-      // }
+      if (authUser) {
+        console.log('authUser', authUser);
+      }
     });
-  }, []);
+  }, [authState]);
 
   return (
     <AuthFunctionsContext.Provider value={functions}>
-      {/* //TODO:FIX THIS NULL ASSERTION */}
-      <AuthStateContext.Provider value={authState!}>
-        {/* TODO:CONNECT TO FIREBASE */}
+      <AuthStateContext.Provider value={authState}>
         {/* {authState ? <Outlet /> : <SignIn />} */}
         <Outlet />
       </AuthStateContext.Provider>

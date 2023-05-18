@@ -1,3 +1,4 @@
+import { tokens } from '@/theme';
 import { ChevronLeft, ChevronRight, Inbox, Mail } from '@mui/icons-material';
 import {
   Divider,
@@ -37,6 +38,7 @@ const drawerVariant = (open: boolean) => {
 
 const CustomDrawer = ({ open, drawerWidth, handleDrawerClose }: ICustomDrawerProps) => {
   const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   return (
     <Drawer
@@ -47,13 +49,14 @@ const CustomDrawer = ({ open, drawerWidth, handleDrawerClose }: ICustomDrawerPro
         '& .MuiDrawer-paper': {
           width: drawerWidth,
           boxSizing: 'border-box',
-          // backgroundColor: theme.palette.primary.main,
+          background: `${colors.secondary[800]}`,
         },
       }}
       anchor='left'
       open={open}
       PaperProps={{
         sx: {
+          // backgroundColor: `${theme.palette.primary}`,
           height: '100%',
           top: '44px',
         },
@@ -61,7 +64,16 @@ const CustomDrawer = ({ open, drawerWidth, handleDrawerClose }: ICustomDrawerPro
     >
       <DrawerHeader>
         <Typography sx={{}}>Categories</Typography>
-        <IconButton onClick={handleDrawerClose} size='small'>
+        <IconButton
+          onClick={handleDrawerClose}
+          size='small'
+          sx={{
+            '&:focus': {
+              outline: 'none',
+              boxShadow: 'none', // Set the boxShadow property to none when the IconButton is focused
+            },
+          }}
+        >
           {theme.direction === 'rtl' ? <ChevronRight /> : <ChevronLeft />}
         </IconButton>
       </DrawerHeader>

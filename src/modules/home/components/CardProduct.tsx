@@ -17,6 +17,8 @@ import { IItem } from '@/context/reducer.types';
 import { useAppDispatch } from '@/store/store';
 import { useAppSelector } from '@/store/hooks';
 import { addToBasket } from '@/store/slices/basket/basketSlice';
+import { tokens } from '@/theme';
+import Product from '../models/Product';
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -31,6 +33,10 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   transition: theme.transitions.create('transform', {
     duration: theme.transitions.duration.shortest,
   }),
+  '&:focus': {
+    outline: 'none',
+    boxShadow: 'none', // Set the boxShadow property to none when the IconButton is focused
+  },
 }));
 
 const StyledCardMedia = styled(CardMedia)(() => ({
@@ -43,11 +49,12 @@ const StyledCardMedia = styled(CardMedia)(() => ({
 export default function CardProduct({
   product: { id, name, productType, price, rating, quantity, image, decriptionProd },
 }: {
-  product: IItem;
+  product: Product;
 }) {
   const [expanded, setExpanded] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   const priceFormated = useFormatMoney(price, '€');
 
@@ -76,7 +83,13 @@ export default function CardProduct({
   };
 
   return (
-    <Card sx={{ maxWidth: 200, margin: 'auto' }}>
+    <Card
+      sx={{
+        maxWidth: 200,
+        margin: 'auto',
+        background: `${theme.palette.mode === 'dark' ? colors.primary[500] : colors.primary[400]}`,
+      }}
+    >
       <StyledCardMedia image={image} />
       <CardContent sx={{ padding: '.5rem .5rem 0 .5rem' }}>
         <Typography
@@ -92,7 +105,11 @@ export default function CardProduct({
         </Typography>
       </CardContent>
       <CardActions disableSpacing sx={{ height: '2.4rem', px: '0.1rem' }}>
-        <SytledIconButton aria-label='Add to Cart' onClick={addProductToBasket} colorIcon={'white'}>
+        <SytledIconButton
+          aria-label='Add to Cart'
+          onClick={addProductToBasket}
+          colorIcon={theme.palette.mode}
+        >
           <AddShoppingCart fontSize='medium' />
         </SytledIconButton>
         {Array(convertRating(rating))
