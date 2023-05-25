@@ -5,6 +5,7 @@ import { createAsyncThunk, createSlice, AsyncThunk } from '@reduxjs/toolkit';
 interface ICheckOut {
   message: string;
   shipingData: {};
+  isLoading: boolean;
 }
 interface IPostData {
   id: string;
@@ -15,6 +16,7 @@ interface IPostData {
 const initialState: ICheckOut = {
   message: '',
   shipingData: {},
+  isLoading: false,
 };
 
 export const postCheckout = createAsyncThunk<string, IPostData, { rejectValue: PostCheckoutError }>(
@@ -61,9 +63,17 @@ const checkoutSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(postCheckout.fulfilled, (state, action) => {
-      state.message = action.payload;
-    });
+    builder
+      .addCase(postCheckout.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(postCheckout.fulfilled, (state, action) => {
+        state.message = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(postCheckout.rejected, (state, action) => {
+        state.isLoading = false;
+      });
   },
 });
 //actions creators

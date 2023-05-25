@@ -1,6 +1,10 @@
+import Shoe from '@/common/icons/Shoe';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { getCategories } from '@/store/slices/categories';
 import { tokens } from '@/theme';
-import { ChevronLeft, ChevronRight, Inbox, Mail } from '@mui/icons-material';
+import { ChevronLeft, ChevronRight, Inbox, Key, Mail } from '@mui/icons-material';
 import {
+  CircularProgress,
   Divider,
   Drawer,
   IconButton,
@@ -9,9 +13,12 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Stack,
   Typography,
 } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface ICustomDrawerProps {
   open: boolean;
@@ -39,6 +46,16 @@ const drawerVariant = (open: boolean) => {
 const CustomDrawer = ({ open, drawerWidth, handleDrawerClose }: ICustomDrawerProps) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const { categories, isLoading } = useAppSelector((state) => state.categories);
+  // todo: fix show the circularProgress
+  console.log('isLoading', isLoading);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log('open', open);
+    dispatch(getCategories(100));
+  }, [dispatch]);
 
   return (
     <Drawer
@@ -62,54 +79,53 @@ const CustomDrawer = ({ open, drawerWidth, handleDrawerClose }: ICustomDrawerPro
         },
       }}
     >
-      <DrawerHeader>
-        <Typography sx={{}}>Categories</Typography>
-        <IconButton
-          onClick={handleDrawerClose}
-          size='small'
-          sx={{
-            '&:focus': {
-              outline: 'none',
-              boxShadow: 'none', // Set the boxShadow property to none when the IconButton is focused
-            },
-          }}
-        >
-          {theme.direction === 'rtl' ? <ChevronRight /> : <ChevronLeft />}
-        </IconButton>
-      </DrawerHeader>
       <Divider />
+      {isLoading ? (
+        <Stack alignItems='center' my={4}>
+          <CircularProgress />
+        </Stack>
+      ) : (
+        <></>
+      )}
+      {/* todo: add icons */}
+      <Typography sx={{}}>Categories</Typography>
+
       <List>
-        {[
-          'Shoes',
-          'Technology',
-          'Clothes',
-          'Jewerly & Watches',
-          'Bags & Shoes',
-          'Toy, Kids & Babies',
-          'Automobiles & Motocycles',
-        ].map((text, index) => (
-          <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? 'initial' : 'center',
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
+        {categories ? (
+          categories.map((category, index) => (
+            <ListItem key={category.id} disablePadding sx={{ display: 'block' }}>
+              <ListItemButton
                 sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : 'auto',
-                  justifyContent: 'center',
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
                 }}
               >
-                {index % 2 === 0 ? <Inbox /> : <Mail />}
-              </ListItemIcon>
-              <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                  }}
+                >
+                  {/* <CustomIcon paths={category.iconPath} /> */}
+                </ListItemIcon>
+                <ListItemText primary={category.name} sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton>
+            </ListItem>
+          ))
+        ) : (
+          <></>
+        )}
       </List>
+      {/* TODO: FIX THIS */}
+      <ListItem
+        disablePadding
+        sx={{ display: 'block' }}
+        onClick={() => navigate('admin/categories')}
+      >
+        Admin Categories
+      </ListItem>
     </Drawer>
   );
 };

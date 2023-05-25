@@ -6,9 +6,13 @@ import {
   LightModeOutlined,
   Menu as MenuIcon,
   DoubleArrow as DoubleArrowIcon,
+  KeyboardDoubleArrowLeft as LeftArrowIcon,
+  KeyboardDoubleArrowRight as RightArrowIcon,
   Notifications,
   Search,
   ShoppingCart,
+  ChevronRight,
+  ChevronLeft,
 } from '@mui/icons-material';
 import { alpha, Badge, Box, IconButton, InputBase, Toolbar, styled, useTheme } from '@mui/material';
 
@@ -42,6 +46,7 @@ import {
 const CustomAppBar = ({
   open,
   handleDrawerOpen,
+  handleDrawerClose,
   menuId,
   mobileMenuId,
   handleProfileMenuOpen,
@@ -102,10 +107,11 @@ const CustomAppBar = ({
           size='large'
           edge='start'
           aria-label='open drawer'
-          onClick={handleDrawerOpen}
+          onClick={open ? handleDrawerClose : handleDrawerOpen}
         >
-          <DoubleArrowIcon />
+          {open ? <LeftArrowIcon /> : <MenuIcon />}
         </SytledIconButton>
+
         <Box sx={{ flexGrow: 1 }} />
 
         <SearchDiv>

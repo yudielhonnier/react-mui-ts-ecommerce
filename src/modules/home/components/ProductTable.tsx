@@ -4,12 +4,11 @@ import { Menu as MenuIcon, GridViewOutlined, ViewListOutlined } from '@mui/icons
 
 import productListMock from '@/data/products-data.json';
 import { tokens } from '@/theme';
+import Product from '../models/Product';
 
-const ProductTable = () => {
+const ProductTable = ({ products }: { products: Product[] }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
-  const rows = productListMock.products;
 
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', flex: 0.4 },
@@ -39,7 +38,7 @@ const ProductTable = () => {
       flex: 0.4,
     },
     {
-      field: 'decriptionProd',
+      field: 'decription',
       headerName: 'Description',
       type: 'string',
       flex: 1,
@@ -50,7 +49,7 @@ const ProductTable = () => {
       flex: 1,
     },
     {
-      field: 'productType',
+      field: 'type',
       headerName: 'Type',
       type: 'string',
       headerAlign: 'left',
@@ -96,11 +95,7 @@ const ProductTable = () => {
         },
       }}
     >
-      <DataGrid
-        rows={productListMock.products}
-        columns={columns}
-        components={{ Toolbar: GridToolbar }}
-      />
+      <DataGrid rows={products} columns={columns} components={{ Toolbar: GridToolbar }} />
     </Box>
   );
 };

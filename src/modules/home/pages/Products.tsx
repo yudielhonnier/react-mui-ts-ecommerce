@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from '@mui/material';
+import { Box, CircularProgress, Stack, Typography, useTheme } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 
 import Page from '@/common/layout/Page';
@@ -19,22 +19,16 @@ import ProductTable from '../components/ProductTable';
 import { tokens } from '@/theme';
 import Link from '@/common/navigation/Link';
 import Product from '../models/Product';
-import productServices from '@/firebase/services/productServices';
 
 export default function Products() {
   const [view, setView] = useState<'grid' | 'cards'>('cards');
   const dispatch = useAppDispatch();
-  const { products } = useAppSelector((state) => state.products);
+  const { products, isLoading } = useAppSelector((state) => state.products);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   useEffect(() => {
     dispatch(getProducts(100));
-    // const getProducts = async () => {
-    //   const data = await productServices.getAll();
-    //   console.log('data', data);
-    // };
-    // getProducts();
   }, [dispatch]);
 
   return (
@@ -63,8 +57,15 @@ export default function Products() {
             <ViewListOutlinedIcon />
           </SytledIconButton>
         </Box>
+        {isLoading ? (
+          <Stack alignItems='center' my={4}>
+            <CircularProgress />
+          </Stack>
+        ) : (
+          <></>
+        )}
         {view === 'grid' ? (
-          <ProductTable />
+          <ProductTable products={products} />
         ) : (
           <Grid container rowSpacing={10}>
             {products ? (

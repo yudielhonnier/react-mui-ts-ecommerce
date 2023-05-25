@@ -21,10 +21,12 @@ export default function AppLayout() {
 
   const handleDrawerOpen = () => {
     setOpen(true);
+    console.log('aaaaa');
   };
 
   const handleDrawerClose = () => {
     setOpen(false);
+    console.log('bbbbbbbbbbbb');
   };
 
   const helpNode = useRef<ReactNode | null>(null);
@@ -79,6 +81,7 @@ export default function AppLayout() {
           drawerWidth={drawerWidth}
           open={open}
           handleDrawerOpen={handleDrawerOpen}
+          handleDrawerClose={handleDrawerClose}
           menuId={menuId}
           mobileMenuId={mobileMenuId}
           handleProfileMenuOpen={handleProfileMenuOpen}

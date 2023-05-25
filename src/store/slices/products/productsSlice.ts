@@ -41,7 +41,7 @@ export const getProducts = createAsyncThunk<Product[], number, { rejectValue: Fe
   'products/fetch-firebase',
   async (limit: number, thunkAPI) => {
     try {
-      console.log('trying fetching');
+      console.log('fetching products...');
       const data = await productServices.getAll();
       return data.slice(0, limit);
     } catch (error) {
@@ -67,9 +67,17 @@ const productsSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getProducts.fulfilled, (state, action) => {
-      state.products = action.payload;
-    });
+    builder
+      .addCase(getProducts.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(getProducts.fulfilled, (state, action) => {
+        state.products = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(getProducts.rejected, (state, action) => {
+        state.isLoading = false;
+      });
   },
 });
 //actions creators
