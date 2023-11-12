@@ -19,6 +19,7 @@ const CategoryRow = ({ category, isUserAdmin }: CategoryRowProps) => {
   const navigate = useNavigate();
 
   const name = category['name'];
+  const Shoe = category['image'];
 
   return (
     <StyledTableRow tabIndex={-1} role='checkbox'>
@@ -37,7 +38,9 @@ const CategoryRow = ({ category, isUserAdmin }: CategoryRowProps) => {
           fontWeight: 400,
         }}
       >
-        <img src='#' alt={`${name}`} />
+        <img src={`${category.image}`} alt={`${name}`} />
+        todo: fetch a name and transform in a icon
+        <Shoe></Shoe>
       </StyledTableCell>
 
       <StyledTableCell align='center'>

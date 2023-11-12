@@ -55,6 +55,11 @@ const CategoriesTable = ({ categories }: { categories: Category[] }) => {
       label: 'Image',
       align: 'left',
     },
+    {
+      id: 'action',
+      label: 'Actions',
+      align: 'left',
+    },
   ];
 
   return (
